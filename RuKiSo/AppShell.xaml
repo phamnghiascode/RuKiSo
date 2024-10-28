@@ -4,12 +4,26 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RuKiSo"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:pages="clr-namespace:RuKiSo.Views"
+    Shell.FlyoutBehavior="Flyout"
     Title="RuKiSo">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem Title="Sản phẩm" Icon="dotnet_bot.png">
+        <ShellContent
+            ContentTemplate="{DataTemplate pages:ProductPage}"
+            Route="Features/Products/Views/Products" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Sản xuất" Icon="dotnet_bot.png">
+        <ShellContent
+            ContentTemplate="{DataTemplate pages:BatchePage}"
+            Route="Features/Products/Views/Batches" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Nguyên liệu" Icon="dotnet_bot.png">
+        <ShellContent
+            ContentTemplate="{DataTemplate pages:IngredientPage}"
+            Route="Features/Products/Views/Ingredients" />
+    </FlyoutItem>
 
 </Shell>

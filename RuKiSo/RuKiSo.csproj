@@ -74,8 +74,40 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\" />
-	  <Folder Include="Utils\Navigation\" />
+	  <Folder Include="DataAccess\Entities\" />
+	  <Folder Include="Features\Batches\Models\" />
+	  <Folder Include="Features\Batches\Services\" />
+	  <Folder Include="Features\Ingredients\Models\" />
+	  <Folder Include="Features\Ingredients\Services\" />
+	  <Folder Include="Features\Products\Models\" />
+	  <Folder Include="Features\Products\Services\Imps\" />
+	  <Folder Include="Features\Auth\" />
+	  <Folder Include="UI\Converters\" />
+	  <Folder Include="UI\Views\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Features\Batches\Views\BatchPage.xaml.cs">
+	    <DependentUpon>BatchPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\Ingredients\Views\IngredientPage.xaml.cs">
+	    <DependentUpon>IngredientPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\Products\Views\ProductPage.xaml.cs">
+	    <DependentUpon>ProductPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Features\Batches\Views\BatchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\Ingredients\Views\IngredientPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\Products\Views\ProductPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
