@@ -1,8 +1,8 @@
 namespace RuKiSo.Views;
 
-public partial class BatchePage : ContentPage
+public partial class BatchPage : ContentPage
 {
-	public BatchePage()
+	public BatchPage()
 	{
 		InitializeComponent();
 	}

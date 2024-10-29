@@ -11,19 +11,19 @@
     <FlyoutItem Title="Sản phẩm" Icon="dotnet_bot.png">
         <ShellContent
             ContentTemplate="{DataTemplate pages:ProductPage}"
-            Route="Features/Products/Views/Products" />
+            Route="ProductPage" />
     </FlyoutItem>
 
     <FlyoutItem Title="Sản xuất" Icon="dotnet_bot.png">
         <ShellContent
-            ContentTemplate="{DataTemplate pages:BatchePage}"
-            Route="Features/Products/Views/Batches" />
+            ContentTemplate="{DataTemplate pages:BatchPage}"
+            Route="BatchPage" />
     </FlyoutItem>
 
     <FlyoutItem Title="Nguyên liệu" Icon="dotnet_bot.png">
         <ShellContent
             ContentTemplate="{DataTemplate pages:IngredientPage}"
-            Route="Features/Products/Views/Ingredients" />
+            Route="IngredientPage" />
     </FlyoutItem>
 
 </Shell>

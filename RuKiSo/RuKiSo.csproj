@@ -74,7 +74,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="DataAccess\Entities\" />
 	  <Folder Include="Features\Batches\Models\" />
 	  <Folder Include="Features\Batches\Services\" />
 	  <Folder Include="Features\Ingredients\Models\" />

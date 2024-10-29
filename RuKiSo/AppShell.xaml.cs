@@ -8,9 +8,9 @@ namespace RuKiSo
         {
             InitializeComponent();
 
-            Routing.RegisterRoute("Features/Products/Views/Products", typeof(ProductPage));
-            Routing.RegisterRoute("Features/Products/Views/Batches", typeof(BatchePage));
-            Routing.RegisterRoute("Features/Products/Views/Ingredients", typeof(IngredientPage));
+            Routing.RegisterRoute(nameof(ProductPage), typeof(ProductPage));
+            Routing.RegisterRoute(nameof(BatchPage), typeof(BatchPage));
+            Routing.RegisterRoute(nameof(IngredientPage), typeof(IngredientPage));
         }
     }
 }
