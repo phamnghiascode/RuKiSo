@@ -1,4 +1,4 @@
-﻿using RuKiSo.Enums;
+﻿using RuKiSo.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace RuKiSo.Entities

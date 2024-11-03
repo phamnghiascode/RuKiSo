@@ -57,6 +57,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
+	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
+	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
+	  <None Remove="Resources\Images\rukiso.png" />
+	  <None Remove="Resources\Images\rukisoicon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
@@ -81,6 +89,7 @@
 	  <Folder Include="Features\Products\Models\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
 	  <Folder Include="Features\Auth\" />
+	  <Folder Include="Resources\Templates\DataTemplates\" />
 	  <Folder Include="UI\Converters\" />
 	  <Folder Include="UI\Views\" />
 	</ItemGroup>
@@ -95,6 +104,18 @@
 	  <Compile Update="Features\Products\Views\ProductPage.xaml.cs">
 	    <DependentUpon>ProductPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Resources\Text\AppTexts.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppTexts.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Text\AppTexts.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppTexts.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

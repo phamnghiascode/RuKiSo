@@ -1,4 +1,4 @@
-﻿namespace RuKiSo.Enums
+﻿namespace RuKiSo.Resources
 {
     public enum BatchStatus
     {
