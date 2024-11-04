@@ -104,5 +104,23 @@ namespace RuKiSo.Resources {
                 return ResourceManager.GetString("Products", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhập.
+        /// </summary>
+        internal static string Purchase {
+            get {
+                return ResourceManager.GetString("Purchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xuất.
+        /// </summary>
+        internal static string Sell {
+            get {
+                return ResourceManager.GetString("Sell", resourceCulture);
+            }
+        }
     }
 }

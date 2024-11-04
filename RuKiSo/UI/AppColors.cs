@@ -9,5 +9,8 @@
         public static readonly Color LightBlue = Color.FromArgb("#718EBF");
         public static readonly Color Red = Color.FromArgb("#FF0000");
         public static readonly Color White = Color.FromArgb("#FFFFFF");
+        public static readonly Color DarkBlue = Color.FromArgb("#1814F3");
+        public static readonly Color BrightAqua = Color.FromArgb("#16DBCC");
+        public static readonly Color LightSteelBlue = Color.FromArgb("#718EBF");
     }
 }

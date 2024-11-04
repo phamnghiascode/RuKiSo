@@ -3,13 +3,96 @@
     x:Class="RuKiSo.Views.DashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
-    xmlns:ui="clr-namespace:RuKiSo.UI">
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels"
+    BindingContext="{vm:DashBoardViewModel}">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"
         RowDefinitions="auto, *">
         <controls:Header Title="{x:Static resource:AppTexts.DashBoard}" HorizontalOptions="Fill" />
+        <Grid
+            Grid.Row="1"
+            Padding="40,24,40,24"
+            RowDefinitions="300, *,323, *">
+            <Grid ColumnDefinitions="600, *, 280">
+                <Border Style="{StaticResource Border25BackGroundWhite}">
+                    <Grid ColumnDefinitions="30, auto, 152*, 15, 10, auto, 25, 15, 10, auto, 30" RowDefinitions="28, 20, 27, *, 27">
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            BackgroundColor="{x:Static ui:AppColors.DarkBlue}"
+                            Style="{StaticResource LabelChart}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="5"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="{x:Static resource:AppTexts.Sell}" />
+
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="7"
+                            BackgroundColor="{x:Static ui:AppColors.BrightAqua}"
+                            Style="{StaticResource LabelChart}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="9"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="{x:Static resource:AppTexts.Purchase}" />
+                        <chart:SfCartesianChart
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="9">
+                            <chart:SfCartesianChart.BindingContext>
+                                <vm:DashBoardViewModel />
+                            </chart:SfCartesianChart.BindingContext>
+                            <chart:ColumnSeries
+                                CornerRadius="10"
+                                EnableAnimation="True"
+                                EnableTooltip="True"
+                                Fill="{x:Static ui:AppColors.DarkBlue}"
+                                ItemsSource="{Binding WeeklyHistories}"
+                                ShowDataLabels="False"
+                                Spacing="0.3"
+                                XBindingPath="Date"
+                                YBindingPath="Sell" />
+
+                            <chart:ColumnSeries
+                                CornerRadius="10"
+                                EnableTooltip="True"
+                                Fill="{x:Static ui:AppColors.BrightAqua}"
+                                ItemsSource="{Binding WeeklyHistories}"
+                                ShowDataLabels="False"
+                                Spacing="0.3"
+                                XBindingPath="Date"
+                                YBindingPath="Purchase" />
+                            <chart:SfCartesianChart.XAxes>
+                                <chart:CategoryAxis LabelPlacement="BetweenTicks" ShowMajorGridLines="False">
+                                    <chart:CategoryAxis.MajorTickStyle>
+                                        <chart:ChartAxisTickStyle StrokeWidth="0" />
+                                    </chart:CategoryAxis.MajorTickStyle>
+
+                                    <chart:CategoryAxis.LabelStyle>
+                                        <chart:ChartAxisLabelStyle FontSize="13" TextColor="Black" />
+                                    </chart:CategoryAxis.LabelStyle>
+
+                                    <chart:CategoryAxis.AxisLineStyle>
+                                        <chart:ChartLineStyle Stroke="Transparent" />
+                                    </chart:CategoryAxis.AxisLineStyle>
+                                </chart:CategoryAxis>
+                            </chart:SfCartesianChart.XAxes>
+
+                            <chart:SfCartesianChart.YAxes>
+                                <chart:NumericalAxis IsVisible="True" ShowMajorGridLines="True" />
+                            </chart:SfCartesianChart.YAxes>
+
+                        </chart:SfCartesianChart>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </ContentPage>

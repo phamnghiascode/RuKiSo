@@ -428,6 +428,20 @@
     </Style>
 
     <!--  CUSTOM STYLE  -->
+    <!--  BORDER  -->
+    <Style x:Key="Border25BackGroundWhite" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{x:Static ui:AppColors.White}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 25" />
+    </Style>
+
+    <Style x:Key="LabelChart" TargetType="Border">
+        <Setter Property="HeightRequest" Value="15" />
+        <Setter Property="WidthRequest" Value="15" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 5" />
+        <Setter Property="StrokeThickness" Value="0" />
+    </Style>
+
     <!--  LABEL  -->
     <Style x:Key="PageTitleLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{x:Static ui:AppDimens.FontSize28}" />
@@ -436,5 +450,10 @@
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="Margin" Value="10, 0, 0, 0" />
+    </Style>
+
+    <Style x:Key="Size16ColorBlue" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{x:Static ui:AppColors.LightSteelBlue}" />
     </Style>
 </ResourceDictionary>

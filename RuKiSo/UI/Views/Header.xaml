@@ -16,6 +16,7 @@
             Margin="0,0,20,0"
             HeightRequest="30"
             ItemsSource="{Binding ScaleValues}"
+            SelectedIndex="0"
             WidthRequest="100" />
         <controls:NotificationButton Grid.Column="3" />
     </Grid>

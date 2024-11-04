@@ -132,4 +132,10 @@
   <data name="Ingredients" xml:space="preserve">
     <value>Nguyên liệu</value>
   </data>
+  <data name="Sell" xml:space="preserve">
+    <value>Xuất</value>
+  </data>
+  <data name="Purchase" xml:space="preserve">
+    <value>Nhập</value>
+  </data>
 </root>
