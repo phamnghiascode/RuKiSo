@@ -11,7 +11,7 @@
     Shell.FlyoutBehavior="Locked">
 
     <Shell.FlyoutHeader>
-        <Grid HeightRequest="60">
+        <Grid HeightRequest="{x:Static ui:AppDimens.Height60}">
             <Grid
                 ColumnDefinitions="auto,16,auto"
                 HorizontalOptions="Center"
@@ -43,7 +43,7 @@
         <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}" Route="DashboardPage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{x:Static resource:AppTexts.DashBoard}">
+    <FlyoutItem Title="{x:Static resource:AppTexts.Products}">
         <FlyoutItem.Icon>
             <FontImageSource
                 FontFamily="FaSolid"

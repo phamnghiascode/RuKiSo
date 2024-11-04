@@ -12,10 +12,19 @@ public partial class CircleButton : ContentView
     }
 
     public static readonly BindableProperty SizeProperty =
-            BindableProperty.Create(nameof(Size), typeof(double), typeof(CircleButton), 60.0, propertyChanged: OnSizeChanged);
+        BindableProperty.Create(nameof(Size), typeof(double), typeof(CircleButton), 60.0, propertyChanged: OnSizeChanged);
 
     public static readonly BindableProperty CustomCornerRadiusProperty =
         BindableProperty.Create(nameof(CustomCornerRadius), typeof(double), typeof(CircleButton), 30.0);
+
+    public static readonly BindableProperty NotificationCountProperty =
+        BindableProperty.Create(nameof(NotificationCount), typeof(int), typeof(CircleButton), 0);
+
+    public int NotificationCount
+    {
+        get => (int)GetValue(NotificationCountProperty);
+        set => SetValue(NotificationCountProperty, value);
+    }
 
     public double Size
     {
@@ -29,11 +38,12 @@ public partial class CircleButton : ContentView
         private set => SetValue(CustomCornerRadiusProperty, value);
     }
 
-
     public CircleButton()
     {
         InitializeComponent();
+        BindingContext = this;
     }
+
     private static void OnSizeChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var control = (CircleButton)bindable;

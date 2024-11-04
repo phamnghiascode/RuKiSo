@@ -14,8 +14,10 @@
         public const double FontSize24 = 24.0;
         public const double FontSize26 = 26.0;
         public const double FontSize28 = 28.0;
+        public const double FontSize30 = 30.0;
 
         // Heights
+        public const double Height0 = 0.0;
         public const double Height10 = 10.0;
         public const double Height20 = 20.0;
         public const double Height25 = 25.0;

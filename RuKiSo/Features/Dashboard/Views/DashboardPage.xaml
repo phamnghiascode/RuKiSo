@@ -3,11 +3,13 @@
     x:Class="RuKiSo.Views.DashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:RuKiSo.UI.Views">
-    <Grid ColumnDefinitions="*" RowDefinitions="auto, *">
-        <controls:Header
-            Title="Hehe"
-            BackgroundColor="Red"
-            HorizontalOptions="End" />
+    xmlns:controls="clr-namespace:RuKiSo.UI.Views"
+    xmlns:resource="clr-namespace:RuKiSo.Resources"
+    xmlns:ui="clr-namespace:RuKiSo.UI">
+    <Grid
+        BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
+        ColumnDefinitions="*"
+        RowDefinitions="auto, *">
+        <controls:Header Title="{x:Static resource:AppTexts.DashBoard}" HorizontalOptions="Fill" />
     </Grid>
 </ContentPage>

@@ -3,6 +3,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI">
 
     <Style TargetType="ActivityIndicator">
@@ -427,4 +428,13 @@
     </Style>
 
     <!--  CUSTOM STYLE  -->
+    <!--  LABEL  -->
+    <Style x:Key="PageTitleLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{x:Static ui:AppDimens.FontSize28}" />
+        <Setter Property="TextColor" Value="{x:Static ui:AppColors.SecondaryColor}" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Margin" Value="10, 0, 0, 0" />
+    </Style>
 </ResourceDictionary>
