@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RuKiSo.Resources.Text {
+namespace RuKiSo.Resources {
     using System;
     
     
@@ -66,6 +66,42 @@ namespace RuKiSo.Resources.Text {
         internal static string AppName {
             get {
                 return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sản xuất.
+        /// </summary>
+        internal static string Batches {
+            get {
+                return ResourceManager.GetString("Batches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tổng quan.
+        /// </summary>
+        internal static string DashBoard {
+            get {
+                return ResourceManager.GetString("DashBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nguyên liệu.
+        /// </summary>
+        internal static string Ingredients {
+            get {
+                return ResourceManager.GetString("Ingredients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sản phẩm.
+        /// </summary>
+        internal static string Products {
+            get {
+                return ResourceManager.GetString("Products", resourceCulture);
             }
         }
     }

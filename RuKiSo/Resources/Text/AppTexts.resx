@@ -120,4 +120,16 @@
   <data name="AppName" xml:space="preserve">
     <value>RUKISO</value>
   </data>
+  <data name="DashBoard" xml:space="preserve">
+    <value>Tổng quan</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Sản phẩm</value>
+  </data>
+  <data name="Batches" xml:space="preserve">
+    <value>Sản xuất</value>
+  </data>
+  <data name="Ingredients" xml:space="preserve">
+    <value>Nguyên liệu</value>
+  </data>
 </root>
