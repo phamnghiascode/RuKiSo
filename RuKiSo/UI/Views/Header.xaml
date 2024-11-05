@@ -9,7 +9,7 @@
     <Grid
         BackgroundColor="{x:Static ui:AppColors.White}"
         ColumnDefinitions="auto, *, auto, auto"
-        HeightRequest="{x:Static ui:AppDimens.Height80}">
+        HeightRequest="{x:Static ui:AppDimens.Height60}">
         <Label Style="{x:StaticResource PageTitleLabelStyle}" Text="{Binding Title}" />
         <Picker
             Grid.Column="2"

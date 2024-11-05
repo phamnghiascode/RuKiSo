@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="RuKiSo.Resources.Templates.DataTemplates.DataTemplate"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <DataTemplate x:Key="MostPurchaseCustomers">
+        <Grid HeightRequest="127" WidthRequest="85">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
+                <RowDefinition Height="11" />
+                <RowDefinition Height="21" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <Border
+                HeightRequest="70"
+                StrokeShape="RoundRectangle 35"
+                WidthRequest="70">
+                <Image Aspect="AspectFill" Source="{Binding Img}" />
+            </Border>
+            <Label
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                Style="{StaticResource Size16ColorBlack}"
+                Text="{Binding Name}" />
+            <Label
+                Grid.Row="3"
+                HorizontalOptions="Center"
+                Style="{StaticResource Size15ColorBlue}"
+                Text="{Binding Quantity}" />
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

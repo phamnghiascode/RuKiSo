@@ -61,8 +61,13 @@
 	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
 	  <None Remove="Resources\Images\bell.png" />
+	  <None Remove="Resources\Images\defautavatar.jpg" />
+	  <None Remove="Resources\Images\liviabator.png" />
+	  <None Remove="Resources\Images\nextbutton.png" />
+	  <None Remove="Resources\Images\randypress.png" />
 	  <None Remove="Resources\Images\rukiso.png" />
 	  <None Remove="Resources\Images\rukisoicon.png" />
+	  <None Remove="Resources\Images\workman.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -92,7 +97,6 @@
 	  <Folder Include="Features\Products\Models\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
 	  <Folder Include="Features\Auth\" />
-	  <Folder Include="Resources\Templates\DataTemplates\" />
 	  <Folder Include="UI\Converters\" />
 	</ItemGroup>
 
@@ -134,10 +138,16 @@
 	  <MauiXaml Update="Features\Products\Views\ProductPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Resources\Templates\DataTemplates\DataTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\CircleButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\Header.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Views\MostPurchaseCustomers.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\NotificationButton.xaml">

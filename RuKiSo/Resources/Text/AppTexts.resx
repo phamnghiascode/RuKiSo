@@ -138,4 +138,13 @@
   <data name="Purchase" xml:space="preserve">
     <value>Nhập</value>
   </data>
+  <data name="WeeklyGoodsMovementChart" xml:space="preserve">
+    <value>Dữ liệu nhập xuất tuần</value>
+  </data>
+  <data name="TopSellerChart" xml:space="preserve">
+    <value>Bán chạy nhất</value>
+  </data>
+  <data name="MostPurchaseCustomers" xml:space="preserve">
+    <value>Khách mua nhiều nhất</value>
+  </data>
 </root>

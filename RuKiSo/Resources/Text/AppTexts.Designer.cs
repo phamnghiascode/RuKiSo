@@ -97,6 +97,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Khách mua nhiều nhất.
+        /// </summary>
+        internal static string MostPurchaseCustomers {
+            get {
+                return ResourceManager.GetString("MostPurchaseCustomers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sản phẩm.
         /// </summary>
         internal static string Products {
@@ -120,6 +129,24 @@ namespace RuKiSo.Resources {
         internal static string Sell {
             get {
                 return ResourceManager.GetString("Sell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bán chạy nhất.
+        /// </summary>
+        internal static string TopSellerChart {
+            get {
+                return ResourceManager.GetString("TopSellerChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dữ liệu nhập xuất tuần.
+        /// </summary>
+        internal static string WeeklyGoodsMovementChart {
+            get {
+                return ResourceManager.GetString("WeeklyGoodsMovementChart", resourceCulture);
             }
         }
     }

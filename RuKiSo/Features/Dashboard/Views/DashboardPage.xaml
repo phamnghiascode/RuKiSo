@@ -9,17 +9,19 @@
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
     BindingContext="{vm:DashBoardViewModel}">
-    <Grid
-        BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
-        ColumnDefinitions="*"
-        RowDefinitions="auto, *">
+    <Grid BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}" RowDefinitions="auto, *">
         <controls:Header Title="{x:Static resource:AppTexts.DashBoard}" HorizontalOptions="Fill" />
         <Grid
             Grid.Row="1"
-            Padding="40,24,40,24"
-            RowDefinitions="300, *,323, *">
-            <Grid ColumnDefinitions="600, *, 280">
-                <Border Style="{StaticResource Border25BackGroundWhite}">
+            Padding="20,8,20,8"
+            RowDefinitions="320,*">
+            <Grid ColumnDefinitions="610, *, 340" RowDefinitions="30,*">
+                <Label Style="{x:StaticResource PrimaryLabelStyle}" Text="{x:Static resource:AppTexts.WeeklyGoodsMovementChart}" />
+                <Label
+                    Grid.Column="2"
+                    Style="{x:StaticResource PrimaryLabelStyle}"
+                    Text="{x:Static resource:AppTexts.TopSellerChart}" />
+                <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
                     <Grid ColumnDefinitions="30, auto, 152*, 15, 10, auto, 25, 15, 10, auto, 30" RowDefinitions="28, 20, 27, *, 27">
                         <Border
                             Grid.Row="1"
@@ -92,7 +94,43 @@
                         </chart:SfCartesianChart>
                     </Grid>
                 </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Style="{StaticResource Border25BackGroundWhite}">
+                    <chart:SfCircularChart>
+                        <chart:SfCircularChart.BindingContext>
+                            <vm:DashBoardViewModel />
+                        </chart:SfCircularChart.BindingContext>
+                        <chart:SfCircularChart.Legend>
+                            <chart:ChartLegend />
+                        </chart:SfCircularChart.Legend>
+                        <chart:PieSeries
+                            EnableAnimation="True"
+                            EnableTooltip="True"
+                            ExplodeOnTouch="True"
+                            ItemsSource="{Binding TopSellers}"
+                            Radius="0.9"
+                            ShowDataLabels="True"
+                            XBindingPath="Name"
+                            YBindingPath="Quantity" />
+                    </chart:SfCircularChart>
+                </Border>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Margin="0,10,0,0"
+                ColumnDefinitions="390, *, 610"
+                RowDefinitions="30, *">
+                <Label Style="{StaticResource PrimaryLabelStyle}" Text="{x:Static resource:AppTexts.MostPurchaseCustomers}" />
+                <Border Grid.Row="2" Style="{StaticResource Border25BackGroundWhite}">
+                    <controls:MostPurchaseCustomers />
+                </Border>
             </Grid>
         </Grid>
+
+
     </Grid>
 </ContentPage>

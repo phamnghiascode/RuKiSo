@@ -443,6 +443,12 @@
     </Style>
 
     <!--  LABEL  -->
+    <Style x:Key="PrimaryLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{x:Static ui:AppDimens.FontSize18}" />
+        <Setter Property="TextColor" Value="{x:Static ui:AppColors.SecondaryColor}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
     <Style x:Key="PageTitleLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{x:Static ui:AppDimens.FontSize28}" />
         <Setter Property="TextColor" Value="{x:Static ui:AppColors.SecondaryColor}" />
@@ -453,7 +459,17 @@
     </Style>
 
     <Style x:Key="Size16ColorBlue" TargetType="Label">
-        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontSize" Value="{x:Static ui:AppDimens.FontSize16}" />
+        <Setter Property="TextColor" Value="{x:Static ui:AppColors.LightSteelBlue}" />
+    </Style>
+
+    <Style x:Key="Size16ColorBlack" TargetType="Label">
+        <Setter Property="FontSize" Value="{x:Static ui:AppDimens.FontSize16}" />
+        <Setter Property="TextColor" Value="{x:Static ui:AppColors.Black}" />
+    </Style>
+
+    <Style x:Key="Size15ColorBlue" TargetType="Label">
+        <Setter Property="FontSize" Value="{x:Static ui:AppDimens.FontSize16}" />
         <Setter Property="TextColor" Value="{x:Static ui:AppColors.LightSteelBlue}" />
     </Style>
 </ResourceDictionary>
