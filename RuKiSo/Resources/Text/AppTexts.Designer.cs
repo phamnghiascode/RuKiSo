@@ -198,9 +198,9 @@ namespace RuKiSo.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Tổng giá trị.
         /// </summary>
-        internal static string TotolValue {
+        internal static string TotalValue {
             get {
-                return ResourceManager.GetString("TotolValue", resourceCulture);
+                return ResourceManager.GetString("TotalValue", resourceCulture);
             }
         }
         

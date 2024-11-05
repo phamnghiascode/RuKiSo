@@ -26,7 +26,7 @@
                     DesciptionText="10"
                     ImageSource="totalproduct.png" />
                 <controls:OverViewCard
-                    Title="{x:Static resource:AppTexts.TotolValue}"
+                    Title="{x:Static resource:AppTexts.TotalValue}"
                     Grid.Column="2"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
                     DesciptionText="50000"
