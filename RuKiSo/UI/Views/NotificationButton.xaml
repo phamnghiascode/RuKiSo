@@ -28,7 +28,7 @@
                 HeightRequest="{x:Static ui:AppDimens.FontSize12}"
                 IsVisible="True"
                 StrokeShape="RoundRectangle 6"
-                StrokeThickness="{x:Static ui:AppDimens.Height0}"
+                StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
                 WidthRequest="{x:Static ui:AppDimens.FontSize12}" />
         </AbsoluteLayout>
     </Border>

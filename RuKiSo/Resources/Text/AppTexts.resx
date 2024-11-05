@@ -162,4 +162,10 @@
   <data name="EstimatedProfit" xml:space="preserve">
     <value>Lợi nhuận ước tính</value>
   </data>
+  <data name="ProductList" xml:space="preserve">
+    <value>Danh sách sản phẩm</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>Thêm sản phẩm</value>
+  </data>
 </root>

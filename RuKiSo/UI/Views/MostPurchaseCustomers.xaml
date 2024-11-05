@@ -23,7 +23,7 @@
             Grid.Column="1"
             Aspect="AspectFill"
             Clicked="Button_Clicked"
-            CornerRadius="25"
+            CornerRadius="{x:Static ui:AppDimens.Corner25}"
             HeightRequest="{x:Static ui:AppDimens.Height50}"
             Source="nextbutton.png"
             WidthRequest="{x:Static ui:AppDimens.Height50}" />

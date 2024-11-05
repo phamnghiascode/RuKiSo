@@ -53,33 +53,33 @@
                                 <vm:DashBoardViewModel />
                             </chart:SfCartesianChart.BindingContext>
                             <chart:ColumnSeries
-                                CornerRadius="10"
+                                CornerRadius="{x:Static ui:AppDimens.CornerDouble10}"
                                 EnableAnimation="True"
                                 EnableTooltip="True"
                                 Fill="{x:Static ui:AppColors.DarkBlue}"
                                 ItemsSource="{Binding WeeklyHistories}"
                                 ShowDataLabels="False"
-                                Spacing="0.3"
+                                Spacing="{x:Static ui:AppDimens.Space03}"
                                 XBindingPath="Date"
                                 YBindingPath="Sell" />
 
                             <chart:ColumnSeries
-                                CornerRadius="10"
+                                CornerRadius="{x:Static ui:AppDimens.CornerDouble10}"
                                 EnableTooltip="True"
                                 Fill="{x:Static ui:AppColors.BrightAqua}"
                                 ItemsSource="{Binding WeeklyHistories}"
                                 ShowDataLabels="False"
-                                Spacing="0.3"
+                                Spacing="{x:Static ui:AppDimens.Space03}"
                                 XBindingPath="Date"
                                 YBindingPath="Purchase" />
                             <chart:SfCartesianChart.XAxes>
                                 <chart:CategoryAxis LabelPlacement="BetweenTicks" ShowMajorGridLines="False">
                                     <chart:CategoryAxis.MajorTickStyle>
-                                        <chart:ChartAxisTickStyle StrokeWidth="0" />
+                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
                                     </chart:CategoryAxis.MajorTickStyle>
 
                                     <chart:CategoryAxis.LabelStyle>
-                                        <chart:ChartAxisLabelStyle FontSize="13" TextColor="Black" />
+                                        <chart:ChartAxisLabelStyle FontSize="{x:Static ui:AppDimens.FontSize13}" TextColor="{x:Static ui:AppColors.SecondaryColor}" />
                                     </chart:CategoryAxis.LabelStyle>
 
                                     <chart:CategoryAxis.AxisLineStyle>
@@ -91,7 +91,6 @@
                             <chart:SfCartesianChart.YAxes>
                                 <chart:NumericalAxis IsVisible="True" ShowMajorGridLines="True" />
                             </chart:SfCartesianChart.YAxes>
-
                         </chart:SfCartesianChart>
                     </Grid>
                 </Border>
@@ -143,16 +142,16 @@
                             <chart:SfCartesianChart.XAxes>
                                 <chart:DateTimeAxis ShowMajorGridLines="True">
                                     <chart:DateTimeAxis.AxisLineStyle>
-                                        <chart:ChartLineStyle StrokeWidth="{x:Static ui:AppDimens.Height0}" />
+                                        <chart:ChartLineStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
                                     </chart:DateTimeAxis.AxisLineStyle>
                                     <chart:DateTimeAxis.MajorTickStyle>
-                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Height0}" />
+                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
                                     </chart:DateTimeAxis.MajorTickStyle>
                                     <chart:DateTimeAxis.LabelStyle>
                                         <chart:ChartAxisLabelStyle
                                             FontSize="{x:Static ui:AppDimens.FontSize13}"
                                             LabelFormat="{x:Static resource:AppTexts.MonthYearStringFormat}"
-                                            TextColor="{x:Static ui:AppColors.LightSteelBlue}" />
+                                            TextColor="{x:Static ui:AppColors.SecondaryColor}" />
                                     </chart:DateTimeAxis.LabelStyle>
                                 </chart:DateTimeAxis>
                             </chart:SfCartesianChart.XAxes>
@@ -160,13 +159,13 @@
                             <chart:SfCartesianChart.YAxes>
                                 <chart:NumericalAxis ShowMajorGridLines="True">
                                     <chart:NumericalAxis.MajorGridLineStyle>
-                                        <chart:ChartLineStyle StrokeDashArray="4,2" StrokeWidth="1" />
+                                        <chart:ChartLineStyle StrokeDashArray="4,2" StrokeWidth="{x:Static ui:AppDimens.Stroke1}" />
                                     </chart:NumericalAxis.MajorGridLineStyle>
                                     <chart:NumericalAxis.MajorTickStyle>
-                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Height0}" />
+                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
                                     </chart:NumericalAxis.MajorTickStyle>
                                     <chart:NumericalAxis.LabelStyle>
-                                        <chart:ChartAxisLabelStyle FontSize="{x:Static ui:AppDimens.FontSize13}" TextColor="{x:Static ui:AppColors.LightSteelBlue}" />
+                                        <chart:ChartAxisLabelStyle FontSize="{x:Static ui:AppDimens.FontSize13}" TextColor="{x:Static ui:AppColors.SecondaryColor}" />
                                     </chart:NumericalAxis.LabelStyle>
                                 </chart:NumericalAxis>
                             </chart:SfCartesianChart.YAxes>
@@ -176,7 +175,7 @@
                                 EnableTooltip="True"
                                 Fill="{x:Static ui:AppColors.BrightAqua}"
                                 ItemsSource="{Binding MonthlyProfit}"
-                                StrokeWidth="{x:Static ui:AppDimens.Height3}"
+                                StrokeWidth="{x:Static ui:AppDimens.Stroke3}"
                                 XBindingPath="Date"
                                 YBindingPath="Profit" />
                         </chart:SfCartesianChart>

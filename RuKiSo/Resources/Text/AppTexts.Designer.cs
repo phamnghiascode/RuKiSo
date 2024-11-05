@@ -61,6 +61,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm sản phẩm.
+        /// </summary>
+        internal static string AddProduct {
+            get {
+                return ResourceManager.GetString("AddProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to RUKISO.
         /// </summary>
         internal static string AppName {
@@ -129,6 +138,15 @@ namespace RuKiSo.Resources {
         internal static string MostPurchaseCustomers {
             get {
                 return ResourceManager.GetString("MostPurchaseCustomers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách sản phẩm.
+        /// </summary>
+        internal static string ProductList {
+            get {
+                return ResourceManager.GetString("ProductList", resourceCulture);
             }
         }
         

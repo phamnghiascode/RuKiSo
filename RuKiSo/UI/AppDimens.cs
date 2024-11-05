@@ -37,7 +37,24 @@
         public const double Height110 = 110.0;
         public const double Height120 = 120.0;
         public const double Height127 = 127.0;
+        public const double Height150 = 150.0;
+        public const double Height160 = 160.0;
+        public const double Height180 = 180.0;
+        public const double Height300 = 300.0;
         public const double Height325 = 325.0;
         public const double Height394 = 394.0;
+
+        //StrokeThickness
+
+        public const double Stroke0 = 0;
+        public const double Stroke1 = 1;
+        public const double Stroke3 = 3;
+
+        //CornerRadius
+        public const double CornerDouble10 = 10;
+        public const int Corner25 = 25;
+
+        //ItemSpacing
+        public const double Space03 = 0.3;
     }
 }

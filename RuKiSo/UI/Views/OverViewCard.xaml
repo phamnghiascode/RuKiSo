@@ -8,7 +8,7 @@
     x:Name="this">
     <Border
         BindingContext="{x:Reference this}"
-        HeightRequest="120"
+        HeightRequest="{x:Static ui:AppDimens.Height120}"
         Style="{StaticResource Border25BackGroundWhite}"
         WidthRequest="{Binding CustomWidthRequest}">
         <Grid
@@ -23,7 +23,7 @@
                 <Border
                     Grid.RowSpan="5"
                     StrokeShape="RoundRectangle 35"
-                    StrokeThickness="{x:Static ui:AppDimens.Height0}"
+                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
                     VerticalOptions="Center">
                     <Image Aspect="AspectFill" Source="{Binding ImageSource}" />
                 </Border>

@@ -14,10 +14,10 @@
         <Picker
             Grid.Column="2"
             Margin="0,0,20,0"
-            HeightRequest="30"
+            HeightRequest="{x:Static ui:AppDimens.Height30}"
             ItemsSource="{Binding ScaleValues}"
             SelectedIndex="0"
-            WidthRequest="100" />
+            WidthRequest="{x:Static ui:AppDimens.Height100}" />
         <controls:NotificationButton Grid.Column="3" />
     </Grid>
 </ContentView>

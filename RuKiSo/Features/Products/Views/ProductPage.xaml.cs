@@ -6,4 +6,9 @@ public partial class ProductPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void AddProductBtn_Clicked(object sender, EventArgs e)
+    {
+        AddProductPopup.Show();
+    }
 }
