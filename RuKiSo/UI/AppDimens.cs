@@ -6,7 +6,9 @@
         public const double FontSize8 = 8.0;
         public const double FontSize10 = 10.0;
         public const double FontSize12 = 12.0;
+        public const double FontSize13 = 13.0;
         public const double FontSize14 = 14.0;
+        public const double FontSize15 = 15.0;
         public const double FontSize16 = 16.0;
         public const double FontSize18 = 18.0;
         public const double FontSize20 = 20.0;
@@ -18,6 +20,8 @@
 
         // Heights
         public const double Height0 = 0.0;
+        public const double Height1 = 1.0;
+        public const double Height3 = 3.0;
         public const double Height10 = 10.0;
         public const double Height20 = 20.0;
         public const double Height25 = 25.0;

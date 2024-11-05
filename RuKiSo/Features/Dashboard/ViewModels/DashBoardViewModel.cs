@@ -1,4 +1,4 @@
-﻿using RuKiSo.Models;
+﻿using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 
@@ -9,6 +9,7 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<WeeklyHistoryDTO> WeeklyHistories { get; set; }
         public ObservableCollection<TopSellerDTO> TopSellers { get; set; }
         public ObservableCollection<CustomerDTO> MostPurchaseCustomers { get; set; }
+        public ObservableCollection<ProfitDTO> MonthlyProfit { get; set; }
         public DashBoardViewModel()
         {
             InitChartData();
@@ -41,6 +42,19 @@ namespace RuKiSo.ViewModels
                 new(){ Name = "Hoang Pham", Quantity = 80, Img="randypress.png"},
                 new(){ Name = "Long Pham", Quantity = 80},
             };
+            MonthlyProfit = new ObservableCollection<ProfitDTO>
+                {
+                    new ProfitDTO{Date = new DateTime(2024,3,31), Profit = 18.3},
+                    new ProfitDTO{Date = new DateTime(2024,4,30), Profit = 14.2},
+                    new ProfitDTO{Date = new DateTime(2024,5,31), Profit = 16.7},
+                    new ProfitDTO{Date = new DateTime(2024,6,30), Profit = 10.9},
+                    new ProfitDTO{Date = new DateTime(2024,7,31), Profit = 13.4},
+                    new ProfitDTO{Date = new DateTime(2024,8,31), Profit = 17.6},
+                    new ProfitDTO{Date = new DateTime(2024,9,30), Profit = 19.2},
+                    new ProfitDTO{Date = new DateTime(2024,10,31), Profit = 15.5},
+                    new ProfitDTO{Date = new DateTime(2024,11,30), Profit = 12.3},
+                    new ProfitDTO{Date = new DateTime(2024,12,31), Profit = 18.7},
+                };
         }
     }
 }

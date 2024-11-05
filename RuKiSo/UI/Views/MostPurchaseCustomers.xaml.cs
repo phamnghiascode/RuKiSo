@@ -1,4 +1,5 @@
-using RuKiSo.Models;
+
+using RuKiSo.Features.Models;
 
 namespace RuKiSo.UI.Views;
 

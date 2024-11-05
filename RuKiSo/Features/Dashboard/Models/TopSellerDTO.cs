@@ -1,6 +1,6 @@
 ﻿using RuKiSo.Utils.MVVM;
 
-namespace RuKiSo.Models
+namespace RuKiSo.Features.Models
 {
     public class TopSellerDTO : BaseModel
     {

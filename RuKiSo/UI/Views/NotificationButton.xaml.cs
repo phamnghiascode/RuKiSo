@@ -1,5 +1,3 @@
-using System.Runtime.Intrinsics.Arm;
-
 namespace RuKiSo.UI.Views;
 
 public partial class NotificationButton : ContentView

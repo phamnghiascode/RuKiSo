@@ -88,11 +88,38 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lợi nhuận ước tính.
+        /// </summary>
+        internal static string EstimatedProfit {
+            get {
+                return ResourceManager.GetString("EstimatedProfit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nguyên liệu.
         /// </summary>
         internal static string Ingredients {
             get {
                 return ResourceManager.GetString("Ingredients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lợi nhuận.
+        /// </summary>
+        internal static string MonthlyProfitChart {
+            get {
+                return ResourceManager.GetString("MonthlyProfitChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MM/yy.
+        /// </summary>
+        internal static string MonthYearStringFormat {
+            get {
+                return ResourceManager.GetString("MonthYearStringFormat", resourceCulture);
             }
         }
         
@@ -138,6 +165,24 @@ namespace RuKiSo.Resources {
         internal static string TopSellerChart {
             get {
                 return ResourceManager.GetString("TopSellerChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tổng số sản phẩm.
+        /// </summary>
+        internal static string TotalProduct {
+            get {
+                return ResourceManager.GetString("TotalProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tổng giá trị.
+        /// </summary>
+        internal static string TotolValue {
+            get {
+                return ResourceManager.GetString("TotolValue", resourceCulture);
             }
         }
         

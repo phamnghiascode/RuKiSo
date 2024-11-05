@@ -147,4 +147,19 @@
   <data name="MostPurchaseCustomers" xml:space="preserve">
     <value>Khách mua nhiều nhất</value>
   </data>
+  <data name="MonthlyProfitChart" xml:space="preserve">
+    <value>Lợi nhuận</value>
+  </data>
+  <data name="MonthYearStringFormat" xml:space="preserve">
+    <value>MM/yy</value>
+  </data>
+  <data name="TotalProduct" xml:space="preserve">
+    <value>Tổng số sản phẩm</value>
+  </data>
+  <data name="TotolValue" xml:space="preserve">
+    <value>Tổng giá trị</value>
+  </data>
+  <data name="EstimatedProfit" xml:space="preserve">
+    <value>Lợi nhuận ước tính</value>
+  </data>
 </root>

@@ -62,11 +62,14 @@
 	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
 	  <None Remove="Resources\Images\bell.png" />
 	  <None Remove="Resources\Images\defautavatar.jpg" />
+	  <None Remove="Resources\Images\estimatedprofit.png" />
 	  <None Remove="Resources\Images\liviabator.png" />
 	  <None Remove="Resources\Images\nextbutton.png" />
 	  <None Remove="Resources\Images\randypress.png" />
 	  <None Remove="Resources\Images\rukiso.png" />
 	  <None Remove="Resources\Images\rukisoicon.png" />
+	  <None Remove="Resources\Images\totalproduct.png" />
+	  <None Remove="Resources\Images\totalvalue.png" />
 	  <None Remove="Resources\Images\workman.png" />
 	</ItemGroup>
 
@@ -151,6 +154,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\NotificationButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Views\OverViewCard.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

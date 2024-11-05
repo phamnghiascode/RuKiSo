@@ -5,11 +5,37 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
-    xmlns:ui="clr-namespace:RuKiSo.UI">
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels"
+    BindingContext="{vm:ProductViewModel}">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"
         RowDefinitions="auto, *">
         <controls:Header Title="{x:Static resource:AppTexts.Products}" HorizontalOptions="Fill" />
+        <Grid
+            Grid.Row="1"
+            Padding="20,8,20,8"
+            RowDefinitions="120,*">
+            <Grid ColumnDefinitions="300,*,300,*,300">
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.TotalProduct}"
+                    CustomWidthRequest="300"
+                    DesciptionText="10"
+                    ImageSource="totalproduct.png" />
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.TotolValue}"
+                    Grid.Column="2"
+                    CustomWidthRequest="300"
+                    DesciptionText="50000"
+                    ImageSource="totalvalue.png" />
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.EstimatedProfit}"
+                    Grid.Column="4"
+                    CustomWidthRequest="300"
+                    DesciptionText="50000"
+                    ImageSource="estimatedprofit.png" />
+            </Grid>
+        </Grid>
     </Grid>
 </ContentPage>
