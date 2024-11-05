@@ -23,6 +23,7 @@
         public const double Height1 = 1.0;
         public const double Height3 = 3.0;
         public const double Height10 = 10.0;
+        public const double Height14 = 14.0;
         public const double Height20 = 20.0;
         public const double Height25 = 25.0;
         public const double Height30 = 30.0;
@@ -35,5 +36,8 @@
         public const double Height100 = 100.0;
         public const double Height110 = 110.0;
         public const double Height120 = 120.0;
+        public const double Height127 = 127.0;
+        public const double Height325 = 325.0;
+        public const double Height394 = 394.0;
     }
 }

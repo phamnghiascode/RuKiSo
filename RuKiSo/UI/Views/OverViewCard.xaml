@@ -23,7 +23,7 @@
                 <Border
                     Grid.RowSpan="5"
                     StrokeShape="RoundRectangle 35"
-                    StrokeThickness="0"
+                    StrokeThickness="{x:Static ui:AppDimens.Height0}"
                     VerticalOptions="Center">
                     <Image Aspect="AspectFill" Source="{Binding ImageSource}" />
                 </Border>
