@@ -5,10 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
+    xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
-    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
+    x:DataType="{x:Type vm:ProductViewModel}"
     BindingContext="{vm:ProductViewModel}">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
@@ -23,19 +24,19 @@
                 <controls:OverViewCard
                     Title="{x:Static resource:AppTexts.TotalProduct}"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="10"
+                    DesciptionText="{Binding TotalProduct}"
                     ImageSource="totalproduct.png" />
                 <controls:OverViewCard
                     Title="{x:Static resource:AppTexts.TotalValue}"
                     Grid.Column="2"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="50000"
+                    DesciptionText="{Binding TotalValue}"
                     ImageSource="totalvalue.png" />
                 <controls:OverViewCard
                     Title="{x:Static resource:AppTexts.EstimatedProfit}"
                     Grid.Column="4"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="50000"
+                    DesciptionText="{Binding EstimatedProfit}"
                     ImageSource="estimatedprofit.png" />
             </Grid>
             <Grid
@@ -58,7 +59,16 @@
                     Text="{x:Static resource:AppTexts.AddProduct}"
                     TextColor="{x:Static ui:AppColors.SecondaryColor}"
                     WidthRequest="{x:Static ui:AppDimens.Height180}" />
-                <syncfusion:SfPopup x:Name="AddProductPopup" />
+                <CollectionView
+                    Grid.Row="1"
+                    ItemTemplate="{StaticResource ProductItemDataTemplate}"
+                    ItemsSource="{Binding Products}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+                <popup:SfPopup x:Name="AddProductPopup" HeaderTitle="Thêm sản phẩm" />
+                <popup:SfPopup x:Name="EditProductPopup" HeaderTitle="Sửa sản phẩm" />
             </Grid>
         </Grid>
     </Grid>

@@ -168,4 +168,10 @@
   <data name="AddProduct" xml:space="preserve">
     <value>Thêm sản phẩm</value>
   </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Số lượng</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Giá bán</value>
+  </data>
 </root>

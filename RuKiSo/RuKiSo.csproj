@@ -99,7 +99,6 @@
 	  <Folder Include="Features\Batches\Services\" />
 	  <Folder Include="Features\Ingredients\Models\" />
 	  <Folder Include="Features\Ingredients\Services\" />
-	  <Folder Include="Features\Products\Models\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
 	  <Folder Include="Features\Auth\" />
 	  <Folder Include="UI\Converters\" />
