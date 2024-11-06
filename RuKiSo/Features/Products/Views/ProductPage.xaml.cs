@@ -1,3 +1,6 @@
+using CommunityToolkit.Maui.Views;
+using RuKiSo.UI.Views;
+
 namespace RuKiSo.Views;
 
 public partial class ProductPage : ContentPage

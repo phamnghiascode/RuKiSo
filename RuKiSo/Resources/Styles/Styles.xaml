@@ -428,6 +428,8 @@
     </Style>
 
     <!--  CUSTOM STYLE  -->
+
+    <!--  BUTTON  -->
     <!--  BORDER  -->
     <Style x:Key="Border25BackGroundWhite" TargetType="Border">
         <Setter Property="StrokeThickness" Value="0" />

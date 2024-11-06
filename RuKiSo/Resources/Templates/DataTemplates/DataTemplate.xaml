@@ -112,4 +112,53 @@
             </Grid>
         </Border>
     </DataTemplate>
+    <DataTemplate x:Key="UpSertProductPopup">
+        <Grid
+            Padding="10,10,0,10"
+            ColumnDefinitions="300,300"
+            RowDefinitions="30,50,30,50,10,auto">
+            <Label Grid.Row="0" Text="Tên sản phẩm" />
+            <Entry
+                Grid.Row="1"
+                HorizontalOptions="Start"
+                WidthRequest="280" />
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Nguyên liệu chính" />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                WidthRequest="280" />
+
+            <Label Grid.Row="2" Text="Số lượng" />
+            <Entry
+                Grid.Row="3"
+                HorizontalOptions="Start"
+                WidthRequest="280" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="Giá bán" />
+            <Entry
+                Grid.Row="3"
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                WidthRequest="280" />
+            <Button
+                Grid.Row="5"
+                BackgroundColor="Red"
+                HorizontalOptions="Center"
+                Text="Thoát"
+                TextColor="Black" />
+            <Button
+                Grid.Row="5"
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                Text="Lưu" />
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>

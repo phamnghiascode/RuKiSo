@@ -67,7 +67,13 @@
                         <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                 </CollectionView>
-                <popup:SfPopup x:Name="AddProductPopup" HeaderTitle="Thêm sản phẩm" />
+                <popup:SfPopup
+                    x:Name="AddProductPopup"
+                    ContentTemplate="{StaticResource UpSertProductPopup}"
+                    HeaderTitle="Thêm sản phẩm"
+                    HeightRequest="300"
+                    HorizontalOptions="Center"
+                    WidthRequest="610" />
                 <popup:SfPopup x:Name="EditProductPopup" HeaderTitle="Sửa sản phẩm" />
             </Grid>
         </Grid>
