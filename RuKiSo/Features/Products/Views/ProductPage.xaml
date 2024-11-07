@@ -47,18 +47,39 @@
                     Style="{StaticResource PrimaryLabelStyle}"
                     Text="{x:Static resource:AppTexts.ProductList}"
                     VerticalOptions="Center" />
-                <buttons:SfButton
-                    Background="Transparent"
-                    Clicked="AddProductBtn_Clicked"
-                    FontSize="{x:Static ui:AppDimens.FontSize15}"
-                    HorizontalOptions="End"
-                    ImageSource="plus.png"
-                    ShowIcon="True"
-                    Stroke="{x:Static ui:AppColors.SecondaryColor}"
-                    StrokeThickness="{x:Static ui:AppDimens.Stroke1}"
-                    Text="{x:Static resource:AppTexts.AddProduct}"
-                    TextColor="{x:Static ui:AppColors.SecondaryColor}"
-                    WidthRequest="{x:Static ui:AppDimens.Height180}" />
+                <HorizontalStackLayout HorizontalOptions="End">
+                    <Label Text="{x:Static resource:AppTexts.Quantity}" VerticalOptions="Center" />
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding QuantityFilterCommand}"
+                        FontFamily="FaSolid"
+                        FontSize="{x:Static ui:AppDimens.FontSize15}"
+                        Text="{x:Static resource:AwesomeIcon.Filter}"
+                        TextColor="{x:Static ui:AppColors.Black}" />
+                    <Label
+                        Margin="18,0,0,0"
+                        Text="{x:Static resource:AppTexts.Price}"
+                        VerticalOptions="Center" />
+                    <Button
+                        Margin="0,0,100,0"
+                        BackgroundColor="Transparent"
+                        Command="{Binding PriceFilterCommand}"
+                        FontFamily="FaSolid"
+                        FontSize="{x:Static ui:AppDimens.FontSize15}"
+                        Text="{x:Static resource:AwesomeIcon.Filter}"
+                        TextColor="{x:Static ui:AppColors.Black}" />
+                    <buttons:SfButton
+                        Background="Transparent"
+                        Command="{Binding AddProductCommand}"
+                        FontSize="{x:Static ui:AppDimens.FontSize15}"
+                        ImageSource="plus.png"
+                        ShowIcon="True"
+                        Stroke="{x:Static ui:AppColors.SecondaryColor}"
+                        StrokeThickness="{x:Static ui:AppDimens.Stroke1}"
+                        Text="{x:Static resource:AppTexts.AddProduct}"
+                        TextColor="{x:Static ui:AppColors.SecondaryColor}"
+                        WidthRequest="{x:Static ui:AppDimens.Height180}" />
+                </HorizontalStackLayout>
                 <CollectionView
                     Grid.Row="1"
                     ItemTemplate="{StaticResource ProductItemDataTemplate}"
@@ -68,13 +89,13 @@
                     </CollectionView.ItemsLayout>
                 </CollectionView>
                 <popup:SfPopup
-                    x:Name="AddProductPopup"
+                    x:Name="UpSertProductPopup"
                     ContentTemplate="{StaticResource UpSertProductPopup}"
-                    HeaderTitle="Thêm sản phẩm"
+                    HeaderTitle="{Binding SelectedProduct.Name, Converter={StaticResource AddEditButtonConverter}}"
                     HeightRequest="300"
                     HorizontalOptions="Center"
+                    IsOpen="{Binding IsPopupOpen}"
                     WidthRequest="610" />
-                <popup:SfPopup x:Name="EditProductPopup" HeaderTitle="Sửa sản phẩm" />
             </Grid>
         </Grid>
     </Grid>

@@ -116,10 +116,12 @@
             Padding="10,10,0,10"
             ColumnDefinitions="300,300"
             RowDefinitions="30,50,30,50,10,auto">
+
             <Label Grid.Row="0" Text="Tên sản phẩm" />
             <Entry
                 Grid.Row="1"
                 HorizontalOptions="Start"
+                Text="{Binding SelectedProduct.Name, Mode=TwoWay}"
                 WidthRequest="280" />
 
             <Label
@@ -130,12 +132,15 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 HorizontalOptions="Start"
+                Text="{Binding SelectedProduct.Ingredients, Mode=TwoWay}"
                 WidthRequest="280" />
 
             <Label Grid.Row="2" Text="Số lượng" />
             <Entry
                 Grid.Row="3"
                 HorizontalOptions="Start"
+                Keyboard="Numeric"
+                Text="{Binding SelectedProduct.Quantity, Mode=TwoWay}"
                 WidthRequest="280" />
 
             <Label
@@ -146,18 +151,25 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 HorizontalOptions="Start"
+                Keyboard="Numeric"
+                Text="{Binding SelectedProduct.Price, Mode=TwoWay}"
                 WidthRequest="280" />
+
             <Button
                 Grid.Row="5"
                 BackgroundColor="Red"
+                Command="{Binding ClosePopupCommand}"
                 HorizontalOptions="Center"
                 Text="Thoát"
                 TextColor="Black" />
+
             <Button
                 Grid.Row="5"
                 Grid.Column="1"
+                Command="{Binding SaveProductCommand}"
                 HorizontalOptions="Center"
                 Text="Lưu" />
         </Grid>
     </DataTemplate>
+
 </ResourceDictionary>

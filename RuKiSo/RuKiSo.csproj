@@ -71,6 +71,7 @@
 	  <None Remove="Resources\Images\rukisoicon.png" />
 	  <None Remove="Resources\Images\totalproduct.png" />
 	  <None Remove="Resources\Images\totalvalue.png" />
+	  <None Remove="Resources\Images\winebottle.png" />
 	  <None Remove="Resources\Images\workman.png" />
 	</ItemGroup>
 
@@ -101,7 +102,6 @@
 	  <Folder Include="Features\Ingredients\Services\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
 	  <Folder Include="Features\Auth\" />
-	  <Folder Include="UI\Converters\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -143,6 +143,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Templates\DataTemplates\DataTemplate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Converters\CustomConverters.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\AddProductPopup.xaml">
