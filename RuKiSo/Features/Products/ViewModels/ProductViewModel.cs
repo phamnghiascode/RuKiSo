@@ -142,6 +142,15 @@ namespace RuKiSo.ViewModels
                 {
                     Products.Add(SelectedProduct);
                 }
+                else
+                {
+                    var updateProduct = Products.FirstOrDefault(p => p.Id == SelectedProduct.Id);
+                    {
+                        updateProduct.Name = SelectedProduct.Name;
+                        updateProduct.Quantity = SelectedProduct.Quantity;
+                        updateProduct.Price = SelectedProduct.Price;
+                    }
+                }
                 UpdateCardsInfo();
                 IsPopupOpen = false;
             }

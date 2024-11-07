@@ -25,19 +25,19 @@
                     Title="{x:Static resource:AppTexts.TotalProduct}"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
                     DesciptionText="{Binding TotalProduct}"
-                    ImageSource="totalproduct.png" />
+                    ImageSource="{x:Static ui:StaticImage.TotalProduct}" />
                 <controls:OverViewCard
                     Title="{x:Static resource:AppTexts.TotalValue}"
                     Grid.Column="2"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
                     DesciptionText="{Binding TotalValue}"
-                    ImageSource="totalvalue.png" />
+                    ImageSource="{x:Static ui:StaticImage.TotalValue}" />
                 <controls:OverViewCard
                     Title="{x:Static resource:AppTexts.EstimatedProfit}"
                     Grid.Column="4"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
                     DesciptionText="{Binding EstimatedProfit}"
-                    ImageSource="estimatedprofit.png" />
+                    ImageSource="{x:Static ui:StaticImage.EstimatedProfit}" />
             </Grid>
             <Grid
                 Grid.Row="1"
@@ -52,7 +52,7 @@
                     <Button
                         BackgroundColor="Transparent"
                         Command="{Binding QuantityFilterCommand}"
-                        FontFamily="FaSolid"
+                        FontFamily="{x:Static ui:FontNames.FaSolid}"
                         FontSize="{x:Static ui:AppDimens.FontSize15}"
                         Text="{x:Static resource:AwesomeIcon.Filter}"
                         TextColor="{x:Static ui:AppColors.Black}" />
@@ -64,7 +64,7 @@
                         Margin="0,0,100,0"
                         BackgroundColor="Transparent"
                         Command="{Binding PriceFilterCommand}"
-                        FontFamily="FaSolid"
+                        FontFamily="{x:Static ui:FontNames.FaSolid}"
                         FontSize="{x:Static ui:AppDimens.FontSize15}"
                         Text="{x:Static resource:AwesomeIcon.Filter}"
                         TextColor="{x:Static ui:AppColors.Black}" />
@@ -72,7 +72,7 @@
                         Background="Transparent"
                         Command="{Binding AddProductCommand}"
                         FontSize="{x:Static ui:AppDimens.FontSize15}"
-                        ImageSource="plus.png"
+                        ImageSource="{x:Static ui:StaticImage.Plus}"
                         ShowIcon="True"
                         Stroke="{x:Static ui:AppColors.SecondaryColor}"
                         StrokeThickness="{x:Static ui:AppDimens.Stroke1}"
@@ -92,10 +92,10 @@
                     x:Name="UpSertProductPopup"
                     ContentTemplate="{StaticResource UpSertProductPopup}"
                     HeaderTitle="{Binding SelectedProduct.Name, Converter={StaticResource AddEditButtonConverter}}"
-                    HeightRequest="300"
+                    HeightRequest="{x:Static ui:AppDimens.Height300}"
                     HorizontalOptions="Center"
                     IsOpen="{Binding IsPopupOpen}"
-                    WidthRequest="610" />
+                    WidthRequest="{x:Static ui:AppDimens.Height610}" />
             </Grid>
         </Grid>
     </Grid>

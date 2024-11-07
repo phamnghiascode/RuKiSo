@@ -8,7 +8,7 @@
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels">
     <DataTemplate x:Key="MostPurchaseCustomers">
-        <Grid HeightRequest="127" WidthRequest="85">
+        <Grid HeightRequest="{x:Static ui:AppDimens.Height127}" WidthRequest="{x:Static ui:AppDimens.Height85}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70" />
                 <RowDefinition Height="11" />
@@ -16,9 +16,9 @@
                 <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <Border
-                HeightRequest="70"
+                HeightRequest="{x:Static ui:AppDimens.Height70}"
                 StrokeShape="RoundRectangle 35"
-                WidthRequest="70">
+                WidthRequest="{x:Static ui:AppDimens.Height70}">
                 <Image Aspect="AspectFill" Source="{Binding Img}" />
             </Border>
             <Label
@@ -35,7 +35,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="ProductItemDataTemplate">
-        <Border StrokeShape="RoundRectangle 20" StrokeThickness="0">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{StaticResource White}"
                 ColumnDefinitions="15, 60, 0.2*, 360, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
@@ -45,7 +45,7 @@
                     Grid.RowSpan="5"
                     Grid.Column="1"
                     StrokeShape="RoundRectangle 20"
-                    StrokeThickness="0">
+                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
                     <Image Source="{Binding ImageUrl}" />
                 </Border>
 
@@ -99,15 +99,15 @@
                     Grid.Column="11"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=EditProductCommand}"
                     CommandParameter="{Binding}"
-                    Text="Sửa" />
+                    Text="{x:Static resource:AppTexts.Edit}" />
                 <Button
                     Grid.Row="2"
                     Grid.RowSpan="3"
                     Grid.Column="13"
-                    BackgroundColor="Red"
+                    BackgroundColor="{x:Static ui:AppColors.Red}"
                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=DeleteProductCommand}"
                     CommandParameter="{Binding}"
-                    Text="Xóa" />
+                    Text="{x:Static resource:AppTexts.Delete}" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -117,58 +117,58 @@
             ColumnDefinitions="300,300"
             RowDefinitions="30,50,30,50,10,auto">
 
-            <Label Grid.Row="0" Text="Tên sản phẩm" />
+            <Label Grid.Row="0" Text="{x:Static resource:AppTexts.ProductName}" />
             <Entry
                 Grid.Row="1"
                 HorizontalOptions="Start"
                 Text="{Binding SelectedProduct.Name, Mode=TwoWay}"
-                WidthRequest="280" />
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
             <Label
                 Grid.Row="0"
                 Grid.Column="1"
-                Text="Nguyên liệu chính" />
+                Text="{x:Static resource:AppTexts.MainIngredients}" />
             <Entry
                 Grid.Row="1"
                 Grid.Column="1"
                 HorizontalOptions="Start"
                 Text="{Binding SelectedProduct.Ingredients, Mode=TwoWay}"
-                WidthRequest="280" />
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
-            <Label Grid.Row="2" Text="Số lượng" />
+            <Label Grid.Row="2" Text="{x:Static resource:AppTexts.Quantity}" />
             <Entry
                 Grid.Row="3"
                 HorizontalOptions="Start"
                 Keyboard="Numeric"
                 Text="{Binding SelectedProduct.Quantity, Mode=TwoWay}"
-                WidthRequest="280" />
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
             <Label
                 Grid.Row="2"
                 Grid.Column="1"
-                Text="Giá bán" />
+                Text="{x:Static resource:AppTexts.Price}" />
             <Entry
                 Grid.Row="3"
                 Grid.Column="1"
                 HorizontalOptions="Start"
                 Keyboard="Numeric"
                 Text="{Binding SelectedProduct.Price, Mode=TwoWay}"
-                WidthRequest="280" />
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
             <Button
                 Grid.Row="5"
                 BackgroundColor="Red"
                 Command="{Binding ClosePopupCommand}"
                 HorizontalOptions="Center"
-                Text="Thoát"
-                TextColor="Black" />
+                Text="{x:Static resource:AppTexts.Exit}"
+                TextColor="{x:Static ui:AppColors.Black}" />
 
             <Button
                 Grid.Row="5"
                 Grid.Column="1"
                 Command="{Binding SaveProductCommand}"
                 HorizontalOptions="Center"
-                Text="Lưu" />
+                Text="{x:Static resource:AppTexts.Save}" />
         </Grid>
     </DataTemplate>
 

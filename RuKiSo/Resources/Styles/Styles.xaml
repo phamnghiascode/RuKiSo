@@ -432,16 +432,16 @@
     <!--  BUTTON  -->
     <!--  BORDER  -->
     <Style x:Key="Border25BackGroundWhite" TargetType="Border">
-        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeThickness" Value="{x:Static ui:AppDimens.Stroke0}" />
         <Setter Property="BackgroundColor" Value="{x:Static ui:AppColors.White}" />
         <Setter Property="StrokeShape" Value="RoundRectangle 25" />
     </Style>
 
     <Style x:Key="LabelChart" TargetType="Border">
-        <Setter Property="HeightRequest" Value="15" />
-        <Setter Property="WidthRequest" Value="15" />
+        <Setter Property="HeightRequest" Value="{x:Static ui:AppDimens.Height15}" />
+        <Setter Property="WidthRequest" Value="{x:Static ui:AppDimens.Height15}" />
         <Setter Property="StrokeShape" Value="RoundRectangle 5" />
-        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeThickness" Value="{x:Static ui:AppDimens.Stroke0}" />
     </Style>
 
     <!--  LABEL  -->

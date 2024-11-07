@@ -174,4 +174,22 @@
   <data name="Price" xml:space="preserve">
     <value>Giá bán</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Tên sản phẩm</value>
+  </data>
+  <data name="MainIngredients" xml:space="preserve">
+    <value>Nguyên liệu chính</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Thoát</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Sửa</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
 </root>

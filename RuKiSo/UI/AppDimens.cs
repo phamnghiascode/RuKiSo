@@ -24,6 +24,7 @@
         public const double Height3 = 3.0;
         public const double Height10 = 10.0;
         public const double Height14 = 14.0;
+        public const double Height15 = 15.0;
         public const double Height20 = 20.0;
         public const double Height25 = 25.0;
         public const double Height30 = 30.0;
@@ -32,6 +33,7 @@
         public const double Height60 = 60.0;
         public const double Height70 = 70.0;
         public const double Height80 = 80.0;
+        public const double Height85 = 85.0;
         public const double Height90 = 90.0;
         public const double Height100 = 100.0;
         public const double Height110 = 110.0;
@@ -40,9 +42,11 @@
         public const double Height150 = 150.0;
         public const double Height160 = 160.0;
         public const double Height180 = 180.0;
+        public const double Height280 = 280.0;
         public const double Height300 = 300.0;
         public const double Height325 = 325.0;
         public const double Height394 = 394.0;
+        public const double Height610 = 610.0;
 
         //StrokeThickness
 
