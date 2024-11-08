@@ -5,11 +5,57 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
-    xmlns:ui="clr-namespace:RuKiSo.UI">
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels"
+    x:DataType="vm:BatchViewModel"
+    BindingContext="{vm:BatchViewModel}">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"
         RowDefinitions="auto, *">
         <controls:Header Title="{x:Static resource:AppTexts.Batches}" HorizontalOptions="Fill" />
+        <Grid
+            Grid.Row="1"
+            Padding="20,8,20,8"
+            ColumnDefinitions="320,*, 650"
+            RowDefinitions="30,*">
+            <Label Style="{StaticResource PrimaryLabelStyle}" Text="Tạo mẻ rượu mới" />
+            <Label
+                Grid.Column="2"
+                Style="{StaticResource PrimaryLabelStyle}"
+                Text="Đang lên men" />
+            <Border
+                Grid.Row="1"
+                Padding="10,10,10,10"
+                Style="{StaticResource Border25BackGroundWhite}"
+                VerticalOptions="Start">
+                <Grid RowDefinitions="auto,auto,auto, *,auto">
+                    <Entry Placeholder="Tên" />
+                    <Label
+                        Grid.Row="1"
+                        Text="Ngày bắt đầu"
+                        VerticalOptions="Center" />
+                    <DatePicker Grid.Row="1" HorizontalOptions="End" />
+                    <Label
+                        Grid.Row="2"
+                        Text="Ngày kết thúc dự kiến"
+                        VerticalOptions="Center" />
+                    <DatePicker Grid.Row="2" HorizontalOptions="End" />
+                    <CollectionView
+                        Grid.Row="3"
+                        ItemTemplate="{StaticResource BatchIngredientItem}"
+                        ItemsSource="{Binding Ingredients}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                    <Button Grid.Row="4" Text="Thêm" />
+                </Grid>
+            </Border>
+            <Border
+                Grid.Row="1"
+                Grid.Column="2"
+                Style="{StaticResource Border25BackGroundWhite}" />
+        </Grid>
     </Grid>
 </ContentPage>

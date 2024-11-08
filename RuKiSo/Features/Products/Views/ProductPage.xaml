@@ -85,7 +85,7 @@
                     ItemTemplate="{StaticResource ProductItemDataTemplate}"
                     ItemsSource="{Binding Products}">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                        <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                 </CollectionView>
                 <popup:SfPopup

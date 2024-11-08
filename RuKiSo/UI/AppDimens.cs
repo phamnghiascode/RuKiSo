@@ -60,5 +60,6 @@
 
         //ItemSpacing
         public const double Space03 = 0.3;
+        public const double Space10 = 10;
     }
 }

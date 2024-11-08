@@ -57,6 +57,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Features\Auth\**" />
+	  <Compile Remove="Features\Auth\**" />
+	  <EmbeddedResource Remove="Features\Auth\**" />
+	  <MauiCss Remove="Features\Auth\**" />
+	  <MauiXaml Remove="Features\Auth\**" />
+	  <None Remove="Features\Auth\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
@@ -96,12 +105,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\Batches\Models\" />
 	  <Folder Include="Features\Batches\Services\" />
 	  <Folder Include="Features\Ingredients\Models\" />
 	  <Folder Include="Features\Ingredients\Services\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
-	  <Folder Include="Features\Auth\" />
 	</ItemGroup>
 
 	<ItemGroup>
