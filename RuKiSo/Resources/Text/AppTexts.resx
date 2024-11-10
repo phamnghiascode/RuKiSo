@@ -192,4 +192,7 @@
   <data name="Delete" xml:space="preserve">
     <value>Xóa</value>
   </data>
+  <data name="TotalIngredient" xml:space="preserve">
+    <value>Tổng số nguyên liệu</value>
+  </data>
 </root>

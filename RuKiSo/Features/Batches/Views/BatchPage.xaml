@@ -17,45 +17,69 @@
         <Grid
             Grid.Row="1"
             Padding="20,8,20,8"
-            ColumnDefinitions="320,*, 650"
-            RowDefinitions="30,*">
-            <Label Style="{StaticResource PrimaryLabelStyle}" Text="Tạo mẻ rượu mới" />
-            <Label
-                Grid.Column="2"
-                Style="{StaticResource PrimaryLabelStyle}"
-                Text="Đang lên men" />
-            <Border
+            RowDefinitions="120, *">
+            <!--<Grid ColumnDefinitions="300,*,300,*,300">
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.TotalProduct}"
+                    CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
+                    DesciptionText="{Binding TotalProduct}"
+                    ImageSource="{x:Static ui:StaticImage.TotalProduct}" />
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.TotalValue}"
+                    Grid.Column="2"
+                    CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
+                    DesciptionText="{Binding TotalValue}"
+                    ImageSource="{x:Static ui:StaticImage.TotalValue}" />
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.EstimatedProfit}"
+                    Grid.Column="4"
+                    CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
+                    DesciptionText="{Binding EstimatedProfit}"
+                    ImageSource="{x:Static ui:StaticImage.EstimatedProfit}" />
+            </Grid>-->
+            <Grid
                 Grid.Row="1"
-                Padding="10,10,10,10"
-                Style="{StaticResource Border25BackGroundWhite}"
-                VerticalOptions="Start">
-                <Grid RowDefinitions="auto,auto,auto, *,auto">
-                    <Entry Placeholder="Tên" />
-                    <Label
-                        Grid.Row="1"
-                        Text="Ngày bắt đầu"
-                        VerticalOptions="Center" />
-                    <DatePicker Grid.Row="1" HorizontalOptions="End" />
-                    <Label
-                        Grid.Row="2"
-                        Text="Ngày kết thúc dự kiến"
-                        VerticalOptions="Center" />
-                    <DatePicker Grid.Row="2" HorizontalOptions="End" />
-                    <CollectionView
-                        Grid.Row="3"
-                        ItemTemplate="{StaticResource BatchIngredientItem}"
-                        ItemsSource="{Binding Ingredients}">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
-                        </CollectionView.ItemsLayout>
-                    </CollectionView>
-                    <Button Grid.Row="4" Text="Thêm" />
-                </Grid>
-            </Border>
-            <Border
-                Grid.Row="1"
-                Grid.Column="2"
-                Style="{StaticResource Border25BackGroundWhite}" />
+                Margin="0,10,0,0"
+                ColumnDefinitions="320,*, 650"
+                RowDefinitions="30,*">
+                <Label Style="{StaticResource PrimaryLabelStyle}" Text="Tạo mẻ rượu mới" />
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource PrimaryLabelStyle}"
+                    Text="Đang lên men" />
+                <Border
+                    Grid.Row="1"
+                    Padding="10,10,10,10"
+                    Style="{StaticResource Border25BackGroundWhite}"
+                    VerticalOptions="Start">
+                    <Grid RowDefinitions="auto,auto,auto, *,auto">
+                        <Entry Placeholder="Tên" />
+                        <Label
+                            Grid.Row="1"
+                            Text="Ngày bắt đầu"
+                            VerticalOptions="Center" />
+                        <DatePicker Grid.Row="1" HorizontalOptions="End" />
+                        <Label
+                            Grid.Row="2"
+                            Text="Ngày kết thúc dự kiến"
+                            VerticalOptions="Center" />
+                        <DatePicker Grid.Row="2" HorizontalOptions="End" />
+                        <CollectionView
+                            Grid.Row="3"
+                            ItemTemplate="{StaticResource BatchIngredientItem}"
+                            ItemsSource="{Binding Ingredients}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                        </CollectionView>
+                        <Button Grid.Row="4" Text="Thêm" />
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Style="{StaticResource Border25BackGroundWhite}" />
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>

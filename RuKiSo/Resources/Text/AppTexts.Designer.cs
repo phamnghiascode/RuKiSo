@@ -259,6 +259,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tổng số nguyên liệu.
+        /// </summary>
+        internal static string TotalIngredient {
+            get {
+                return ResourceManager.GetString("TotalIngredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tổng số sản phẩm.
         /// </summary>
         internal static string TotalProduct {

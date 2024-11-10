@@ -106,7 +106,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Features\Batches\Services\" />
-	  <Folder Include="Features\Ingredients\Models\" />
 	  <Folder Include="Features\Ingredients\Services\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
 	</ItemGroup>
