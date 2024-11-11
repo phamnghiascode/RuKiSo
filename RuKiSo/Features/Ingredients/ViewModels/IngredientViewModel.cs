@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace RuKiSo.ViewModels
 {
-    public class IngredientViewModels : BaseViewModel
+    public class IngredientViewModel : BaseViewModel
     {
         private IngredientDTO selectedIngredient;
         private bool isPopupOpen;
@@ -60,7 +60,7 @@ namespace RuKiSo.ViewModels
             }
         }
         public ObservableCollection<IngredientDTO> Ingredients { get; set; }
-        public IngredientViewModels()
+        public IngredientViewModel()
         {
             InitData();
         }
@@ -76,6 +76,7 @@ namespace RuKiSo.ViewModels
                 new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
                 new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
             };
+            UpdateCardsInfo();
         }
         private void UpdateCardsInfo()
         {

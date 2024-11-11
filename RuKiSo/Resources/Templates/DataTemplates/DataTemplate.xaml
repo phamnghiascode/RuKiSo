@@ -208,88 +208,10 @@
         </Border>
     </DataTemplate>
 
-    <DataTemplate x:Key="BatchItemDatatemplate">
-        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
-            <Grid
-                BackgroundColor="{StaticResource White}"
-                ColumnDefinitions="15, 60, 0.2*, 360, *, auto, *, auto, *, auto, 0.2*, auto, 15"
-                RowDefinitions="15, 7, 21, 4, 21, 7, 15">
-                <Border
-                    Grid.Row="1"
-                    Grid.RowSpan="5"
-                    Grid.Column="1"
-                    StrokeShape="RoundRectangle 20"
-                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
-                    <Image Source="{Binding ImageUrl}" />
-                </Border>
-
-                <!--  row 2  -->
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="3"
-                    Style="{StaticResource Size16ColorBlack}"
-                    Text="{Binding Name}" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="5"
-                    Style="{StaticResource Size16ColorBlack}"
-                    Text="{x:Static resource:AppTexts.Quantity}" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="7"
-                    Style="{StaticResource Size16ColorBlack}"
-                    Text="{x:Static resource:AppTexts.Price}" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="9"
-                    Style="{StaticResource Size16ColorBlack}"
-                    Text="{x:Static resource:AppTexts.TotalValue}" />
-
-                <!--  row 4  -->
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="3"
-                    Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Ingredients}" />
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="5"
-                    Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Quantity}" />
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="7"
-                    Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Price}" />
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="9"
-                    Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding TotalValue}" />
-
-                <Button
-                    Grid.Row="2"
-                    Grid.RowSpan="3"
-                    Grid.Column="11"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=EditProductCommand}"
-                    CommandParameter="{Binding}"
-                    Text="{x:Static resource:AppTexts.Edit}" />
-                <Button
-                    Grid.Row="2"
-                    Grid.RowSpan="3"
-                    Grid.Column="13"
-                    BackgroundColor="{x:Static ui:AppColors.Red}"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=DeleteProductCommand}"
-                    CommandParameter="{Binding}"
-                    Text="{x:Static resource:AppTexts.Delete}" />
-            </Grid>
-        </Border>
-    </DataTemplate>
-
     <DataTemplate x:Key="IngredientItemDataTemplate">
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
-                BackgroundColor="{StaticResource White}"
+                BackgroundColor="{x:Static ui:AppColors.White}"
                 ColumnDefinitions="15, 60, 0.2*, 360, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
                 RowDefinitions="15, 7, 21, 4, 21, 7, 15">
                 <Border
@@ -316,7 +238,7 @@
                     Grid.Row="2"
                     Grid.Column="7"
                     Style="{StaticResource Size16ColorBlack}"
-                    Text="{x:Static resource:AppTexts.Price}" />
+                    Text="{x:Static resource:AppTexts.PurchasePrice}" />
                 <Label
                     Grid.Row="2"
                     Grid.Column="9"
@@ -364,4 +286,41 @@
         </Border>
     </DataTemplate>
 
+    <DataTemplate x:Key="BatchDatatemplate">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid
+                BackgroundColor="{x:Static ui:AppColors.White}"
+                ColumnDefinitions="0.5*,160,*,100,0.2*,100,5*"
+                HeightRequest="60"
+                RowDefinitions="1, 7, auto  , 8">
+                <Border Grid.ColumnSpan="7" BackgroundColor="{x:Static ui:AppColors.SecondaryColor}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding Name}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding StartDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="5"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding EstimateEndDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                    VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Row="2" Grid.Column="6">
+                    <Button BackgroundColor="{x:Static ui:AppColors.BrightAqua}" Text="{x:Static resource:AppTexts.Cook}" />
+                    <Button Margin="10,0,0,0" Text="{x:Static resource:AppTexts.Edit}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        BackgroundColor="{x:Static ui:AppColors.Red}"
+                        Text="{x:Static resource:AppTexts.Delete}" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+    </DataTemplate>
 </ResourceDictionary>

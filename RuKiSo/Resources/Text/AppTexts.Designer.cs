@@ -61,6 +61,33 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hành động.
+        /// </summary>
+        internal static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thêm.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thêm nguyên liệu.
+        /// </summary>
+        internal static string AddIngredient {
+            get {
+                return ResourceManager.GetString("AddIngredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thêm sản phẩm.
         /// </summary>
         internal static string AddProduct {
@@ -84,6 +111,15 @@ namespace RuKiSo.Resources {
         internal static string Batches {
             get {
                 return ResourceManager.GetString("Batches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nấu.
+        /// </summary>
+        internal static string Cook {
+            get {
+                return ResourceManager.GetString("Cook", resourceCulture);
             }
         }
         
@@ -115,11 +151,29 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kết thúc.
+        /// </summary>
+        internal static string End {
+            get {
+                return ResourceManager.GetString("End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lợi nhuận ước tính.
         /// </summary>
         internal static string EstimatedProfit {
             get {
                 return ResourceManager.GetString("EstimatedProfit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dự kiến hoàn thành.
+        /// </summary>
+        internal static string EstimateEndDate {
+            get {
+                return ResourceManager.GetString("EstimateEndDate", resourceCulture);
             }
         }
         
@@ -133,11 +187,29 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Đang lên men.
+        /// </summary>
+        internal static string Fermenting {
+            get {
+                return ResourceManager.GetString("Fermenting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nguyên liệu.
         /// </summary>
-        internal static string Ingredients {
+        internal static string Ingredient {
             get {
-                return ResourceManager.GetString("Ingredients", resourceCulture);
+                return ResourceManager.GetString("Ingredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh sách nguyên liệu.
+        /// </summary>
+        internal static string IngredientsList {
+            get {
+                return ResourceManager.GetString("IngredientsList", resourceCulture);
             }
         }
         
@@ -178,6 +250,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tên.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Giá bán.
         /// </summary>
         internal static string Price {
@@ -214,11 +295,29 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sản lượng dự kiến.
+        /// </summary>
+        internal static string ProjectedYield {
+            get {
+                return ResourceManager.GetString("ProjectedYield", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nhập.
         /// </summary>
         internal static string Purchase {
             get {
                 return ResourceManager.GetString("Purchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Giá nhập.
+        /// </summary>
+        internal static string PurchasePrice {
+            get {
+                return ResourceManager.GetString("PurchasePrice", resourceCulture);
             }
         }
         
@@ -246,6 +345,24 @@ namespace RuKiSo.Resources {
         internal static string Sell {
             get {
                 return ResourceManager.GetString("Sell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bắt đầu.
+        /// </summary>
+        internal static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thời gian bắt đầu.
+        /// </summary>
+        internal static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         

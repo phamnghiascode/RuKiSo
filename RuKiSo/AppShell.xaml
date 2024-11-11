@@ -65,7 +65,7 @@
         <ShellContent ContentTemplate="{DataTemplate pages:BatchPage}" Route="BatchPage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="{x:Static resource:AppTexts.Ingredients}">
+    <FlyoutItem Title="{x:Static resource:AppTexts.Ingredient}">
         <FlyoutItem.Icon>
             <FontImageSource
                 FontFamily="FaSolid"

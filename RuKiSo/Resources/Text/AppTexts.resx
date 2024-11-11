@@ -129,7 +129,7 @@
   <data name="Batches" xml:space="preserve">
     <value>Sản xuất</value>
   </data>
-  <data name="Ingredients" xml:space="preserve">
+  <data name="Ingredient" xml:space="preserve">
     <value>Nguyên liệu</value>
   </data>
   <data name="Sell" xml:space="preserve">
@@ -194,5 +194,44 @@
   </data>
   <data name="TotalIngredient" xml:space="preserve">
     <value>Tổng số nguyên liệu</value>
+  </data>
+  <data name="IngredientsList" xml:space="preserve">
+    <value>Danh sách nguyên liệu</value>
+  </data>
+  <data name="PurchasePrice" xml:space="preserve">
+    <value>Giá nhập</value>
+  </data>
+  <data name="AddIngredient" xml:space="preserve">
+    <value>Thêm nguyên liệu</value>
+  </data>
+  <data name="ProjectedYield" xml:space="preserve">
+    <value>Sản lượng dự kiến</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Thời gian bắt đầu</value>
+  </data>
+  <data name="EstimateEndDate" xml:space="preserve">
+    <value>Dự kiến hoàn thành</value>
+  </data>
+  <data name="Fermenting" xml:space="preserve">
+    <value>Đang lên men</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Thêm</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Bắt đầu</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>Kết thúc</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Hành động</value>
+  </data>
+  <data name="Cook" xml:space="preserve">
+    <value>Nấu</value>
   </data>
 </root>

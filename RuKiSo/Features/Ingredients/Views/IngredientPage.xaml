@@ -9,13 +9,13 @@
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
-    x:DataType="{x:Type vm:IngredientViewModels}"
-    BindingContext="{vm:IngredientViewModels}">
+    x:DataType="{x:Type vm:IngredientViewModel}"
+    BindingContext="{vm:IngredientViewModel}">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"
         RowDefinitions="auto, *">
-        <controls:Header Title="{x:Static resource:AppTexts.Ingredients}" HorizontalOptions="Fill" />
+        <controls:Header Title="{x:Static resource:AppTexts.Ingredient}" HorizontalOptions="Fill" />
         <Grid
             Grid.Row="1"
             Padding="20,8,20,8"
@@ -45,7 +45,7 @@
                 RowDefinitions="40,*">
                 <Label
                     Style="{StaticResource PrimaryLabelStyle}"
-                    Text="{x:Static resource:AppTexts.ProductList}"
+                    Text="{x:Static resource:AppTexts.IngredientsList}"
                     VerticalOptions="Center" />
                 <HorizontalStackLayout HorizontalOptions="End">
                     <Label Text="{x:Static resource:AppTexts.Quantity}" VerticalOptions="Center" />
@@ -57,7 +57,7 @@
                         TextColor="{x:Static ui:AppColors.Black}" />
                     <Label
                         Margin="18,0,0,0"
-                        Text="{x:Static resource:AppTexts.Price}"
+                        Text="{x:Static resource:AppTexts.PurchasePrice}"
                         VerticalOptions="Center" />
                     <Button
                         Margin="0,0,100,0"
@@ -73,7 +73,7 @@
                         ShowIcon="True"
                         Stroke="{x:Static ui:AppColors.SecondaryColor}"
                         StrokeThickness="{x:Static ui:AppDimens.Stroke1}"
-                        Text="{x:Static resource:AppTexts.AddProduct}"
+                        Text="{x:Static resource:AppTexts.AddIngredient}"
                         TextColor="{x:Static ui:AppColors.SecondaryColor}"
                         WidthRequest="{x:Static ui:AppDimens.Height180}" />
                 </HorizontalStackLayout>
