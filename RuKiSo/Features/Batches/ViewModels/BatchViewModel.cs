@@ -1,4 +1,5 @@
-﻿using RuKiSo.Features.Batches.Models;
+﻿using CommunityToolkit.Mvvm.Input;
+using RuKiSo.Features.Batches.Models;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
 {
-    public class BatchViewModel : BaseViewModel
+    public partial class BatchViewModel : BaseViewModel
     {
         private bool isPopupOpen;
         private int totalBatch;
@@ -16,6 +17,7 @@ namespace RuKiSo.ViewModels
         private DateTime startDate;
         private DateTime estimateEndDate;
         public ICommand AddBatchCommand { get; }
+        public ICommand DeleteBatchCommand { get; }
         public string BatchName
         {
             get { return batchName; }
@@ -86,8 +88,18 @@ namespace RuKiSo.ViewModels
        
         public BatchViewModel()
         {
-            AddBatchCommand = new Command(AddBatch);
+            DeleteBatchCommand = new RelayCommand<BatchDTO>(DeleteBatch);
+            AddBatchCommand = new RelayCommand(AddBatch);
             InitData();
+        }
+
+        private void DeleteBatch(BatchDTO batch)
+        {
+            if (batch != null && Batches.Contains(batch))
+            {
+                Batches.Remove(batch);
+                UpdateCardsData();
+            }
         }
 
         public List<BatchIngredientDTO> GetSelectedIngredients()
@@ -95,7 +107,7 @@ namespace RuKiSo.ViewModels
             return Ingredients.Where(ingredient => ingredient.IsSelected && ingredient.UsedQuantity > 0).ToList();
         }
 
-        private void AddBatch(object obj)
+        private void AddBatch()
         {
             var selectedIngredients = GetSelectedIngredients();
 
