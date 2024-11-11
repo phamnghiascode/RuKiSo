@@ -175,7 +175,10 @@
     <DataTemplate x:Key="BatchIngredientItem">
         <Border StrokeShape="RoundRectangle 10" StrokeThickness="{x:Static ui:AppDimens.Stroke1}">
             <Grid ColumnDefinitions="auto, 140, auto, 10, auto" RowDefinitions="*,*">
-                <CheckBox x:Name="IngredientCheckBox" Grid.RowSpan="2" />
+                <CheckBox
+                    x:Name="IngredientCheckBox"
+                    Grid.RowSpan="2"
+                    IsChecked="{Binding IsSelected, Mode=TwoWay}" />
                 <Label
                     Grid.Row="0"
                     Grid.Column="1"

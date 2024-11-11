@@ -2,6 +2,7 @@
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
 {
@@ -11,6 +12,37 @@ namespace RuKiSo.ViewModels
         private int totalBatch;
         private double totalValue;
         private double projectedYield;
+        private string batchName;
+        private DateTime startDate;
+        private DateTime estimateEndDate;
+        public ICommand AddBatchCommand { get; }
+        public string BatchName
+        {
+            get { return batchName; }
+            set
+            {
+                batchName = value;
+                OnPropertyChanged(nameof(BatchName));
+            }
+        }
+        public DateTime StartDate
+        {
+            get { return startDate; }
+            set
+            {
+                startDate = value;
+                OnPropertyChanged(nameof(StartDate));
+            }
+        }
+        public DateTime EstimateEndDate
+        {
+            get { return estimateEndDate; }
+            set
+            {
+                estimateEndDate = value;
+                OnPropertyChanged(nameof(EstimateEndDate));
+            }
+        }
         public bool IsPopupOpen
         {
             get { return isPopupOpen; }
@@ -51,9 +83,32 @@ namespace RuKiSo.ViewModels
         }
         public ObservableCollection<BatchIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<BatchDTO> Batches { get; set; }
+       
         public BatchViewModel()
         {
+            AddBatchCommand = new Command(AddBatch);
             InitData();
+        }
+
+        public List<BatchIngredientDTO> GetSelectedIngredients()
+        {
+            return Ingredients.Where(ingredient => ingredient.IsSelected && ingredient.UsedQuantity > 0).ToList();
+        }
+
+        private void AddBatch(object obj)
+        {
+            var selectedIngredients = GetSelectedIngredients();
+
+            var newBatch = new BatchDTO
+            {
+                Name = BatchName,
+                StartDate = StartDate,
+                EstimateEndDate = EstimateEndDate,
+                Ingredients = selectedIngredients
+            };
+
+            Batches.Add(newBatch);
+            UpdateCardsData();
         }
 
         private void InitData()

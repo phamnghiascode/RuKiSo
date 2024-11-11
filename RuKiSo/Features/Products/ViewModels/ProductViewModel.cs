@@ -10,7 +10,6 @@ namespace RuKiSo.ViewModels
     {
         public ProductViewModel()
         {
-            // Khởi tạo các lệnh
             EditProductCommand = new RelayCommand<ProductDTO>(OpenEditProductPopup);
             DeleteProductCommand = new RelayCommand<ProductDTO>(DeleteProduct);
             QuantityFilterCommand = new RelayCommand(OnQuantityFilter);
@@ -22,20 +21,6 @@ namespace RuKiSo.ViewModels
             InitData();
         }
 
-        //[ObservableProperty]
-        //private ProductDTO selectedProduct;
-
-        //[ObservableProperty]
-        //private bool isPopupOpen;
-
-        //[ObservableProperty]
-        //private int totalProduct;
-
-        //[ObservableProperty]
-        //private double totalValue;
-
-        //[ObservableProperty]
-        //private double estimatedProfit;
         private ProductDTO selectedProduct;
         private bool isPopupOpen;
         private int totalProduct;
@@ -90,7 +75,7 @@ namespace RuKiSo.ViewModels
         }
 
 
-    private readonly double percentProfit = 0.35;
+        private readonly double percentProfit = 0.35;
 
         public ObservableCollection<ProductDTO> Products { get; private set; } = new();
 

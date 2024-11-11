@@ -10,5 +10,6 @@ namespace RuKiSo.Features.Models
         public double UsedQuantity { get; set; }
         public double PricePerUnit { get; set; }
         public double Price => UsedQuantity * PricePerUnit;
+        public bool IsSelected { get; set; }
     }
 }
