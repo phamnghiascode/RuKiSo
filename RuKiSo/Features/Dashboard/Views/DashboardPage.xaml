@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="RuKiSo.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+    xmlns:controls="clr-namespace:RuKiSo.UI.Views"
+    xmlns:resource="clr-namespace:RuKiSo.Resources"
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels"
+    BindingContext="{vm:DashBoardViewModel}">
+    <Grid BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}" RowDefinitions="auto, *">
+        <controls:Header Title="{x:Static resource:AppTexts.DashBoard}" HorizontalOptions="Fill" />
+        <Grid
+            Grid.Row="1"
+            Padding="20,8,20,8"
+            RowDefinitions="310,*">
+            <Grid ColumnDefinitions="610, *, 340" RowDefinitions="30,*">
+                <Label Style="{x:StaticResource PrimaryLabelStyle}" Text="{x:Static resource:AppTexts.WeeklyGoodsMovementChart}" />
+                <Label
+                    Grid.Column="2"
+                    Style="{x:StaticResource PrimaryLabelStyle}"
+                    Text="{x:Static resource:AppTexts.TopSellerChart}" />
+
+                <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
+                    <Grid ColumnDefinitions="30, auto, 152*, 15, 10, auto, 25, 15, 10, auto, 30" RowDefinitions="28, 20, 27, *, 27">
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            BackgroundColor="{x:Static ui:AppColors.DarkBlue}"
+                            Style="{StaticResource LabelChart}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="5"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="{x:Static resource:AppTexts.Sell}" />
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="7"
+                            BackgroundColor="{x:Static ui:AppColors.BrightAqua}"
+                            Style="{StaticResource LabelChart}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="9"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="{x:Static resource:AppTexts.Purchase}" />
+
+                        <chart:SfCartesianChart
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="9">
+                            <chart:SfCartesianChart.BindingContext>
+                                <vm:DashBoardViewModel />
+                            </chart:SfCartesianChart.BindingContext>
+                            <chart:ColumnSeries
+                                CornerRadius="{x:Static ui:AppDimens.CornerDouble10}"
+                                EnableAnimation="True"
+                                EnableTooltip="True"
+                                Fill="{x:Static ui:AppColors.DarkBlue}"
+                                ItemsSource="{Binding WeeklyHistories}"
+                                ShowDataLabels="False"
+                                Spacing="{x:Static ui:AppDimens.Space03}"
+                                XBindingPath="Date"
+                                YBindingPath="Sell" />
+
+                            <chart:ColumnSeries
+                                CornerRadius="{x:Static ui:AppDimens.CornerDouble10}"
+                                EnableTooltip="True"
+                                Fill="{x:Static ui:AppColors.BrightAqua}"
+                                ItemsSource="{Binding WeeklyHistories}"
+                                ShowDataLabels="False"
+                                Spacing="{x:Static ui:AppDimens.Space03}"
+                                XBindingPath="Date"
+                                YBindingPath="Purchase" />
+                            <chart:SfCartesianChart.XAxes>
+                                <chart:CategoryAxis LabelPlacement="BetweenTicks" ShowMajorGridLines="False">
+                                    <chart:CategoryAxis.MajorTickStyle>
+                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
+                                    </chart:CategoryAxis.MajorTickStyle>
+
+                                    <chart:CategoryAxis.LabelStyle>
+                                        <chart:ChartAxisLabelStyle FontSize="{x:Static ui:AppDimens.FontSize13}" TextColor="{x:Static ui:AppColors.SecondaryColor}" />
+                                    </chart:CategoryAxis.LabelStyle>
+
+                                    <chart:CategoryAxis.AxisLineStyle>
+                                        <chart:ChartLineStyle Stroke="Transparent" />
+                                    </chart:CategoryAxis.AxisLineStyle>
+                                </chart:CategoryAxis>
+                            </chart:SfCartesianChart.XAxes>
+
+                            <chart:SfCartesianChart.YAxes>
+                                <chart:NumericalAxis IsVisible="True" ShowMajorGridLines="True" />
+                            </chart:SfCartesianChart.YAxes>
+                        </chart:SfCartesianChart>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Style="{StaticResource Border25BackGroundWhite}">
+                    <chart:SfCircularChart>
+                        <chart:SfCircularChart.BindingContext>
+                            <vm:DashBoardViewModel />
+                        </chart:SfCircularChart.BindingContext>
+                        <chart:SfCircularChart.Legend>
+                            <chart:ChartLegend />
+                        </chart:SfCircularChart.Legend>
+                        <chart:PieSeries
+                            EnableAnimation="True"
+                            EnableTooltip="True"
+                            ExplodeOnTouch="True"
+                            ItemsSource="{Binding TopSellers}"
+                            Radius="0.9"
+                            ShowDataLabels="True"
+                            XBindingPath="Name"
+                            YBindingPath="Quantity" />
+                    </chart:SfCircularChart>
+                </Border>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Margin="0,10,0,0"
+                ColumnDefinitions="394, *, 580"
+                RowDefinitions="30, *">
+                <Label Style="{StaticResource PrimaryLabelStyle}" Text="{x:Static resource:AppTexts.MostPurchaseCustomers}" />
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource PrimaryLabelStyle}"
+                    Text="{x:Static resource:AppTexts.MonthlyProfitChart}" />
+
+                <Border Grid.Row="2" Style="{StaticResource Border25BackGroundWhite}">
+                    <controls:MostPurchaseCustomers />
+                </Border>
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Style="{StaticResource Border25BackGroundWhite}">
+                    <Grid ColumnDefinitions="30, *, 30">
+                        <chart:SfCartesianChart Grid.Column="1">
+
+                            <chart:SfCartesianChart.XAxes>
+                                <chart:DateTimeAxis ShowMajorGridLines="True">
+                                    <chart:DateTimeAxis.AxisLineStyle>
+                                        <chart:ChartLineStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
+                                    </chart:DateTimeAxis.AxisLineStyle>
+                                    <chart:DateTimeAxis.MajorTickStyle>
+                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
+                                    </chart:DateTimeAxis.MajorTickStyle>
+                                    <chart:DateTimeAxis.LabelStyle>
+                                        <chart:ChartAxisLabelStyle
+                                            FontSize="{x:Static ui:AppDimens.FontSize13}"
+                                            LabelFormat="{x:Static resource:AppTexts.MonthYearStringFormat}"
+                                            TextColor="{x:Static ui:AppColors.SecondaryColor}" />
+                                    </chart:DateTimeAxis.LabelStyle>
+                                </chart:DateTimeAxis>
+                            </chart:SfCartesianChart.XAxes>
+
+                            <chart:SfCartesianChart.YAxes>
+                                <chart:NumericalAxis ShowMajorGridLines="True">
+                                    <chart:NumericalAxis.MajorGridLineStyle>
+                                        <chart:ChartLineStyle StrokeDashArray="4,2" StrokeWidth="{x:Static ui:AppDimens.Stroke1}" />
+                                    </chart:NumericalAxis.MajorGridLineStyle>
+                                    <chart:NumericalAxis.MajorTickStyle>
+                                        <chart:ChartAxisTickStyle StrokeWidth="{x:Static ui:AppDimens.Stroke0}" />
+                                    </chart:NumericalAxis.MajorTickStyle>
+                                    <chart:NumericalAxis.LabelStyle>
+                                        <chart:ChartAxisLabelStyle FontSize="{x:Static ui:AppDimens.FontSize13}" TextColor="{x:Static ui:AppColors.SecondaryColor}" />
+                                    </chart:NumericalAxis.LabelStyle>
+                                </chart:NumericalAxis>
+                            </chart:SfCartesianChart.YAxes>
+
+                            <chart:SplineSeries
+                                EnableAnimation="True"
+                                EnableTooltip="True"
+                                Fill="{x:Static ui:AppColors.BrightAqua}"
+                                ItemsSource="{Binding MonthlyProfit}"
+                                StrokeWidth="{x:Static ui:AppDimens.Stroke3}"
+                                XBindingPath="Date"
+                                YBindingPath="Profit" />
+                        </chart:SfCartesianChart>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

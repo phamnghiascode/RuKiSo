@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>RUKISO</value>
+  </data>
+  <data name="DashBoard" xml:space="preserve">
+    <value>Tổng quan</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Sản phẩm</value>
+  </data>
+  <data name="Batches" xml:space="preserve">
+    <value>Sản xuất</value>
+  </data>
+  <data name="Ingredient" xml:space="preserve">
+    <value>Nguyên liệu</value>
+  </data>
+  <data name="Sell" xml:space="preserve">
+    <value>Xuất</value>
+  </data>
+  <data name="Purchase" xml:space="preserve">
+    <value>Nhập</value>
+  </data>
+  <data name="WeeklyGoodsMovementChart" xml:space="preserve">
+    <value>Dữ liệu nhập xuất tuần</value>
+  </data>
+  <data name="TopSellerChart" xml:space="preserve">
+    <value>Bán chạy nhất</value>
+  </data>
+  <data name="MostPurchaseCustomers" xml:space="preserve">
+    <value>Khách mua nhiều nhất</value>
+  </data>
+  <data name="MonthlyProfitChart" xml:space="preserve">
+    <value>Lợi nhuận</value>
+  </data>
+  <data name="MonthYearStringFormat" xml:space="preserve">
+    <value>MM/yy</value>
+  </data>
+  <data name="TotalProduct" xml:space="preserve">
+    <value>Tổng số sản phẩm</value>
+  </data>
+  <data name="TotalValue" xml:space="preserve">
+    <value>Tổng giá trị</value>
+  </data>
+  <data name="EstimatedProfit" xml:space="preserve">
+    <value>Lợi nhuận ước tính</value>
+  </data>
+  <data name="ProductList" xml:space="preserve">
+    <value>Danh sách sản phẩm</value>
+  </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>Thêm sản phẩm</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Số lượng</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Giá bán</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Tên sản phẩm</value>
+  </data>
+  <data name="MainIngredients" xml:space="preserve">
+    <value>Nguyên liệu chính</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Thoát</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Sửa</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="TotalIngredient" xml:space="preserve">
+    <value>Tổng số nguyên liệu</value>
+  </data>
+  <data name="IngredientsList" xml:space="preserve">
+    <value>Danh sách nguyên liệu</value>
+  </data>
+  <data name="PurchasePrice" xml:space="preserve">
+    <value>Giá nhập</value>
+  </data>
+  <data name="AddIngredient" xml:space="preserve">
+    <value>Thêm nguyên liệu</value>
+  </data>
+  <data name="ProjectedYield" xml:space="preserve">
+    <value>Sản lượng dự kiến</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Thời gian bắt đầu</value>
+  </data>
+  <data name="EstimateEndDate" xml:space="preserve">
+    <value>Dự kiến hoàn thành</value>
+  </data>
+  <data name="Fermenting" xml:space="preserve">
+    <value>Đang lên men</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Thêm</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Bắt đầu</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>Kết thúc</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Hành động</value>
+  </data>
+  <data name="Cook" xml:space="preserve">
+    <value>Nấu</value>
+  </data>
+  <data name="Transaction" xml:space="preserve">
+    <value>Nhập xuất</value>
+  </data>
+  <data name="IngredientPage" xml:space="preserve">
+    <value>IngredientPage</value>
+  </data>
+  <data name="BatchPage" xml:space="preserve">
+    <value>BatchPage</value>
+  </data>
+  <data name="ProductPage" xml:space="preserve">
+    <value>ProductPage</value>
+  </data>
+  <data name="TransactionPage" xml:space="preserve">
+    <value>TransactionPage</value>
+  </data>
+  <data name="DashboardPage" xml:space="preserve">
+    <value>DashboardPage</value>
+  </data>
+  <data name="Transactions" xml:space="preserve">
+    <value>Các giao dịch</value>
+  </data>
+  <data name="Customers_Supplier" xml:space="preserve">
+    <value>Khách hàng/nhà cung cấp</value>
+  </data>
+  <data name="Edit_Cook" xml:space="preserve">
+    <value>Sửa/Nấu</value>
+  </data>
+</root>

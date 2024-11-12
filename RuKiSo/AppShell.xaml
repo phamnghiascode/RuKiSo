@@ -5,25 +5,86 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RuKiSo"
     xmlns:pages="clr-namespace:RuKiSo.Views"
-    Shell.FlyoutBehavior="Flyout"
-    Title="RuKiSo">
+    xmlns:resource="clr-namespace:RuKiSo.Resources"
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    FlyoutWidth="250"
+    Shell.FlyoutBehavior="Locked">
 
-    <FlyoutItem Title="Sản phẩm" Icon="dotnet_bot.png">
-        <ShellContent
-            ContentTemplate="{DataTemplate pages:ProductPage}"
-            Route="ProductPage" />
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="{x:Static ui:AppDimens.Height60}">
+            <Grid
+                ColumnDefinitions="auto,16,auto"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Image
+                    Aspect="Fill"
+                    HeightRequest="{x:Static ui:AppDimens.Height60}"
+                    Source="{x:Static ui:StaticImage.AppLogo}"
+                    WidthRequest="{x:Static ui:AppDimens.Height60}" />
+                <Label
+                    Grid.Column="2"
+                    FontAttributes="Bold"
+                    FontSize="{x:Static ui:AppDimens.FontSize24}"
+                    Text="{x:Static resource:AppTexts.AppName}"
+                    TextColor="{x:Static ui:AppColors.PrimaryColor}"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="{x:Static resource:AppTexts.DashBoard}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
+                Glyph="{x:Static resource:AwesomeIcon.House}"
+                Size="{x:Static ui:AppDimens.FontSize24}"
+                Color="{x:Static ui:AppColors.Black}" />
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}" Route="{x:Static resource:AppTexts.DashboardPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Sản xuất" Icon="dotnet_bot.png">
-        <ShellContent
-            ContentTemplate="{DataTemplate pages:BatchPage}"
-            Route="BatchPage" />
+    <FlyoutItem Title="{x:Static resource:AppTexts.Transaction}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
+                Glyph="{x:Static resource:AwesomeIcon.House}"
+                Size="{x:Static ui:AppDimens.FontSize24}"
+                Color="{x:Static ui:AppColors.Black}" />
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate pages:TransactionPage}" Route="{x:Static resource:AppTexts.TransactionPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Nguyên liệu" Icon="dotnet_bot.png">
-        <ShellContent
-            ContentTemplate="{DataTemplate pages:IngredientPage}"
-            Route="IngredientPage" />
+    <FlyoutItem Title="{x:Static resource:AppTexts.Products}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
+                Glyph="{x:Static resource:AwesomeIcon.WineBottle}"
+                Size="{x:Static ui:AppDimens.FontSize24}"
+                Color="{x:Static ui:AppColors.Black}" />
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate pages:ProductPage}" Route="{x:Static resource:AppTexts.ProductPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{x:Static resource:AppTexts.Batches}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
+                Glyph="{x:Static resource:AwesomeIcon.Industry}"
+                Size="{x:Static ui:AppDimens.FontSize24}"
+                Color="{x:Static ui:AppColors.Black}" />
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate pages:BatchPage}" Route="{x:Static resource:AppTexts.BatchPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{x:Static resource:AppTexts.Ingredient}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
+                Glyph="{x:Static resource:AwesomeIcon.BowlRice}"
+                Size="{x:Static ui:AppDimens.FontSize24}"
+                Color="{x:Static ui:AppColors.Black}" />
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate pages:IngredientPage}" Route="{x:Static resource:AppTexts.IngredientPage}" />
     </FlyoutItem>
 
 </Shell>

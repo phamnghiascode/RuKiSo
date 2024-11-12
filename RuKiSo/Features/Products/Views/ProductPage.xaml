@@ -1,12 +1,102 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RuKiSo.Views.ProductPage"
-             Title="Products">
-    <VerticalStackLayout>
-        <Label 
-            Text="Sản phẩm ProductPage"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="RuKiSo.Views.ProductPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:controls="clr-namespace:RuKiSo.UI.Views"
+    xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    xmlns:resource="clr-namespace:RuKiSo.Resources"
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels"
+    x:DataType="{x:Type vm:ProductViewModel}"
+    BindingContext="{vm:ProductViewModel}">
+    <Grid
+        BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
+        ColumnDefinitions="*"
+        RowDefinitions="auto, *">
+        <controls:Header Title="{x:Static resource:AppTexts.Products}" HorizontalOptions="Fill" />
+        <Grid
+            Grid.Row="1"
+            Padding="20,8,20,8"
+            RowDefinitions="120,*">
+            <Grid ColumnDefinitions="300,*,300,*,300">
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.TotalProduct}"
+                    CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
+                    DesciptionText="{Binding TotalProduct}"
+                    ImageSource="{x:Static ui:StaticImage.TotalProduct}" />
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.TotalValue}"
+                    Grid.Column="2"
+                    CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
+                    DesciptionText="{Binding TotalValue}"
+                    ImageSource="{x:Static ui:StaticImage.TotalValue}" />
+                <controls:OverViewCard
+                    Title="{x:Static resource:AppTexts.EstimatedProfit}"
+                    Grid.Column="4"
+                    CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
+                    DesciptionText="{Binding EstimatedProfit}"
+                    ImageSource="{x:Static ui:StaticImage.EstimatedProfit}" />
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                Margin="0,10,0,0"
+                RowDefinitions="40,*">
+                <Label
+                    Style="{StaticResource PrimaryLabelStyle}"
+                    Text="{x:Static resource:AppTexts.ProductList}"
+                    VerticalOptions="Center" />
+                <HorizontalStackLayout HorizontalOptions="End">
+                    <Label Text="{x:Static resource:AppTexts.Quantity}" VerticalOptions="Center" />
+                    <Button
+                        BackgroundColor="Transparent"
+                        Command="{Binding QuantityFilterCommand}"
+                        FontFamily="{x:Static ui:FontNames.FaSolid}"
+                        FontSize="{x:Static ui:AppDimens.FontSize15}"
+                        Text="{x:Static resource:AwesomeIcon.Filter}"
+                        TextColor="{x:Static ui:AppColors.Black}" />
+                    <Label
+                        Margin="18,0,0,0"
+                        Text="{x:Static resource:AppTexts.Price}"
+                        VerticalOptions="Center" />
+                    <Button
+                        Margin="0,0,100,0"
+                        BackgroundColor="Transparent"
+                        Command="{Binding PriceFilterCommand}"
+                        FontFamily="{x:Static ui:FontNames.FaSolid}"
+                        FontSize="{x:Static ui:AppDimens.FontSize15}"
+                        Text="{x:Static resource:AwesomeIcon.Filter}"
+                        TextColor="{x:Static ui:AppColors.Black}" />
+                    <buttons:SfButton
+                        Background="Transparent"
+                        Command="{Binding AddProductCommand}"
+                        FontSize="{x:Static ui:AppDimens.FontSize15}"
+                        ImageSource="{x:Static ui:StaticImage.Plus}"
+                        ShowIcon="True"
+                        Stroke="{x:Static ui:AppColors.SecondaryColor}"
+                        StrokeThickness="{x:Static ui:AppDimens.Stroke1}"
+                        Text="{x:Static resource:AppTexts.AddProduct}"
+                        TextColor="{x:Static ui:AppColors.SecondaryColor}"
+                        WidthRequest="{x:Static ui:AppDimens.Height180}" />
+                </HorizontalStackLayout>
+                <CollectionView
+                    Grid.Row="1"
+                    ItemTemplate="{StaticResource ProductItemDataTemplate}"
+                    ItemsSource="{Binding Products}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+                <popup:SfPopup
+                    x:Name="UpSertProductPopup"
+                    ContentTemplate="{StaticResource UpSertProductPopup}"
+                    HeaderTitle="{Binding SelectedProduct.Name, Converter={StaticResource AddEditButtonConverter}}"
+                    HeightRequest="{x:Static ui:AppDimens.Height300}"
+                    HorizontalOptions="Center"
+                    IsOpen="{Binding IsPopupOpen}"
+                    WidthRequest="{x:Static ui:AppDimens.Height610}" />
+            </Grid>
+        </Grid>
+    </Grid>
 </ContentPage>

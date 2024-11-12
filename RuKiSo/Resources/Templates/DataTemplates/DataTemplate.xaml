@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="RuKiSo.Resources.Templates.DataTemplates.DataTemplate"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resource="clr-namespace:RuKiSo.Resources"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels">
+    <DataTemplate x:Key="MostPurchaseCustomers">
+        <Grid HeightRequest="{x:Static ui:AppDimens.Height127}" WidthRequest="{x:Static ui:AppDimens.Height85}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
+                <RowDefinition Height="11" />
+                <RowDefinition Height="21" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <Border
+                HeightRequest="{x:Static ui:AppDimens.Height70}"
+                StrokeShape="RoundRectangle 35"
+                WidthRequest="{x:Static ui:AppDimens.Height70}">
+                <Image Aspect="AspectFill" Source="{Binding Img}" />
+            </Border>
+            <Label
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                Style="{StaticResource Size16ColorBlack}"
+                Text="{Binding Name}" />
+            <Label
+                Grid.Row="3"
+                HorizontalOptions="Center"
+                Style="{StaticResource Size15ColorBlue}"
+                Text="{Binding Quantity}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ProductItemDataTemplate">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid
+                BackgroundColor="{StaticResource White}"
+                ColumnDefinitions="15, 60, 0.2*, 360, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
+                RowDefinitions="15, 7, 21, 4, 21, 7, 15">
+                <Border
+                    Grid.Row="1"
+                    Grid.RowSpan="5"
+                    Grid.Column="1"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+                    <Image Source="{x:Static ui:StaticImage.Product}" />
+                </Border>
+
+                <!--  row 2  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding Name}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="5"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Quantity}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="7"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Price}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="9"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.TotalValue}" />
+
+                <!--  row 4  -->
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Ingredients}" />
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="5"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Quantity}" />
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="7"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Price}" />
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="9"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding TotalValue}" />
+
+                <Button
+                    Grid.Row="2"
+                    Grid.RowSpan="3"
+                    Grid.Column="11"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=EditProductCommand}"
+                    CommandParameter="{Binding}"
+                    Text="{x:Static resource:AppTexts.Edit}" />
+                <Button
+                    Grid.Row="2"
+                    Grid.RowSpan="3"
+                    Grid.Column="13"
+                    BackgroundColor="{x:Static ui:AppColors.Red}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=DeleteProductCommand}"
+                    CommandParameter="{Binding}"
+                    Text="{x:Static resource:AppTexts.Delete}" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="UpSertProductPopup">
+        <Grid
+            Padding="10,10,0,10"
+            ColumnDefinitions="300,300"
+            RowDefinitions="30,50,30,50,10,auto">
+
+            <Label Grid.Row="0" Text="{x:Static resource:AppTexts.ProductName}" />
+            <Entry
+                Grid.Row="1"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedProduct.Name, Mode=TwoWay}"
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="{x:Static resource:AppTexts.MainIngredients}" />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                Text="{Binding SelectedProduct.Ingredients, Mode=TwoWay}"
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+
+            <Label Grid.Row="2" Text="{x:Static resource:AppTexts.Quantity}" />
+            <Entry
+                Grid.Row="3"
+                HorizontalOptions="Start"
+                Keyboard="Numeric"
+                Text="{Binding SelectedProduct.Quantity, Mode=TwoWay}"
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="{x:Static resource:AppTexts.Price}" />
+            <Entry
+                Grid.Row="3"
+                Grid.Column="1"
+                HorizontalOptions="Start"
+                Keyboard="Numeric"
+                Text="{Binding SelectedProduct.Price, Mode=TwoWay}"
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+
+            <Button
+                Grid.Row="5"
+                BackgroundColor="{x:Static ui:AppColors.Red}"
+                Command="{Binding ClosePopupCommand}"
+                HorizontalOptions="Center"
+                Text="{x:Static resource:AppTexts.Exit}"
+                TextColor="{x:Static ui:AppColors.Black}" />
+
+            <Button
+                Grid.Row="5"
+                Grid.Column="1"
+                Command="{Binding SaveProductCommand}"
+                HorizontalOptions="Center"
+                Text="{x:Static resource:AppTexts.Save}" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="BatchIngredientItem">
+        <Border StrokeShape="RoundRectangle 10" StrokeThickness="{x:Static ui:AppDimens.Stroke1}">
+            <Grid ColumnDefinitions="auto, 140, auto, 10, auto" RowDefinitions="*,*">
+                <CheckBox
+                    x:Name="IngredientCheckBox"
+                    Grid.RowSpan="2"
+                    IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="{Binding IngredientName}" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding StoredQuantity}" />
+                <Label
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    Text="Sử dụng"
+                    VerticalOptions="Center" />
+                <Entry
+                    Grid.RowSpan="2"
+                    Grid.Column="4"
+                    Text="{Binding UsedQuantity}"
+                    WidthRequest="40">
+                    <Entry.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference IngredientCheckBox}, Path=IsChecked}"
+                            TargetType="Entry"
+                            Value="False">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="Text" Value="" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="IngredientItemDataTemplate">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid
+                BackgroundColor="{x:Static ui:AppColors.White}"
+                ColumnDefinitions="15, 60, 0.2*, 360, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
+                RowDefinitions="15, 7, 21, 4, 21, 7, 15">
+                <Border
+                    Grid.Row="1"
+                    Grid.RowSpan="5"
+                    Grid.Column="1"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+                    <Image Source="{Binding ImageUrl}" />
+                </Border>
+
+                <!--  row 2  -->
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding Name}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="5"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Quantity}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="7"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.PurchasePrice}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="9"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.TotalValue}" />
+
+                <!--  row 4  -->
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Unit}" />
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="5"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Quantity}" />
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="7"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Price}" />
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="9"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding TotalValue}" />
+
+                <Button
+                    Grid.Row="2"
+                    Grid.RowSpan="3"
+                    Grid.Column="11"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=EditProductCommand}"
+                    CommandParameter="{Binding}"
+                    Text="{x:Static resource:AppTexts.Edit}" />
+                <Button
+                    Grid.Row="2"
+                    Grid.RowSpan="3"
+                    Grid.Column="13"
+                    BackgroundColor="{x:Static ui:AppColors.Red}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=DeleteProductCommand}"
+                    CommandParameter="{Binding}"
+                    Text="{x:Static resource:AppTexts.Delete}" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="BatchDatatemplate">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid
+                BackgroundColor="{x:Static ui:AppColors.White}"
+                ColumnDefinitions="0.5*,160,*,100,0.2*,100,5*"
+                HeightRequest="60"
+                RowDefinitions="1, 7, auto  , 8">
+                <Border Grid.ColumnSpan="7" BackgroundColor="{x:Static ui:AppColors.SecondaryColor}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding Name}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding StartDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="5"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding EstimateEndDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                    VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Row="2" Grid.Column="6">
+                    <Button
+                        Margin="10,0,0,0"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BatchViewModel}}, Path=EditBatchCommand}"
+                        CommandParameter="{Binding}"
+                        Text="{x:Static resource:AppTexts.Edit_Cook}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        BackgroundColor="{x:Static ui:AppColors.Red}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BatchViewModel}}, Path=DeleteBatchCommand}"
+                        CommandParameter="{Binding}"
+                        Text="{x:Static resource:AppTexts.Delete}" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PurchaseItemDataTemplate">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid
+                Padding="10,5,10,5"
+                ColumnDefinitions="50, *,auto,*, auto"
+                HeightRequest="60">
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+                    <Image Source="{Binding ImageUrl}" />
+                </Border>
+                <Label Grid.Column="2" Text="{Binding Name}" />
+                <HorizontalStackLayout Grid.Column="4">
+                    <Button Text="{x:Static resource:AppTexts.Purchase}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        BackgroundColor="{x:Static ui:AppColors.Red}"
+                        Text="{x:Static resource:AppTexts.Delete}" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="SellItemDataTemplate">
+        <Border
+            Padding="10,5,10,5"
+            StrokeShape="RoundRectangle 20"
+            StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid ColumnDefinitions="150,*,100,*,110,*, 60" RowDefinitions="23, 5,23">
+                <Label Style="{StaticResource Size16ColorBlack}" Text="{x:Static resource:AppTexts.Name}" />
+                <Label
+                    Grid.Row="2"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Name}" />
+
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Quantity}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Quantity}" />
+                <Label
+                    Grid.Column="4"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Price}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="4"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Price}" />
+                <Button
+                    Grid.RowSpan="3"
+                    Grid.Column="6"
+                    BackgroundColor="{x:Static ui:AppColors.BrightAqua}"
+                    HeightRequest="40"
+                    Text="{x:Static resource:AppTexts.Sell}" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="TransactionItemDataTemplate" />
+    <DataTemplate x:Key="CustomerItemDataTemplate" />
+</ResourceDictionary>
