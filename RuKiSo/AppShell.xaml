@@ -19,7 +19,7 @@
                 <Image
                     Aspect="Fill"
                     HeightRequest="{x:Static ui:AppDimens.Height60}"
-                    Source="rukisoicon.png"
+                    Source="{x:Static ui:StaticImage.AppLogo}"
                     WidthRequest="{x:Static ui:AppDimens.Height60}" />
                 <Label
                     Grid.Column="2"
@@ -35,45 +35,56 @@
     <FlyoutItem Title="{x:Static resource:AppTexts.DashBoard}">
         <FlyoutItem.Icon>
             <FontImageSource
-                FontFamily="FaSolid"
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
                 Glyph="{x:Static resource:AwesomeIcon.House}"
                 Size="{x:Static ui:AppDimens.FontSize24}"
                 Color="{x:Static ui:AppColors.Black}" />
         </FlyoutItem.Icon>
-        <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}" Route="DashboardPage" />
+        <ShellContent ContentTemplate="{DataTemplate pages:DashboardPage}" Route="{x:Static resource:AppTexts.DashboardPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="{x:Static resource:AppTexts.Transaction}">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
+                Glyph="{x:Static resource:AwesomeIcon.House}"
+                Size="{x:Static ui:AppDimens.FontSize24}"
+                Color="{x:Static ui:AppColors.Black}" />
+        </FlyoutItem.Icon>
+        <ShellContent ContentTemplate="{DataTemplate pages:TransactionPage}" Route="{x:Static resource:AppTexts.TransactionPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="{x:Static resource:AppTexts.Products}">
         <FlyoutItem.Icon>
             <FontImageSource
-                FontFamily="FaSolid"
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
                 Glyph="{x:Static resource:AwesomeIcon.WineBottle}"
                 Size="{x:Static ui:AppDimens.FontSize24}"
                 Color="{x:Static ui:AppColors.Black}" />
         </FlyoutItem.Icon>
-        <ShellContent ContentTemplate="{DataTemplate pages:ProductPage}" Route="ProductPage" />
+        <ShellContent ContentTemplate="{DataTemplate pages:ProductPage}" Route="{x:Static resource:AppTexts.ProductPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="{x:Static resource:AppTexts.Batches}">
         <FlyoutItem.Icon>
             <FontImageSource
-                FontFamily="FaSolid"
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
                 Glyph="{x:Static resource:AwesomeIcon.Industry}"
                 Size="{x:Static ui:AppDimens.FontSize24}"
                 Color="{x:Static ui:AppColors.Black}" />
         </FlyoutItem.Icon>
-        <ShellContent ContentTemplate="{DataTemplate pages:BatchPage}" Route="BatchPage" />
+        <ShellContent ContentTemplate="{DataTemplate pages:BatchPage}" Route="{x:Static resource:AppTexts.BatchPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="{x:Static resource:AppTexts.Ingredient}">
         <FlyoutItem.Icon>
             <FontImageSource
-                FontFamily="FaSolid"
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
                 Glyph="{x:Static resource:AwesomeIcon.BowlRice}"
                 Size="{x:Static ui:AppDimens.FontSize24}"
                 Color="{x:Static ui:AppColors.Black}" />
         </FlyoutItem.Icon>
-        <ShellContent ContentTemplate="{DataTemplate pages:IngredientPage}" Route="IngredientPage" />
+        <ShellContent ContentTemplate="{DataTemplate pages:IngredientPage}" Route="{x:Static resource:AppTexts.IngredientPage}" />
     </FlyoutItem>
 
 </Shell>

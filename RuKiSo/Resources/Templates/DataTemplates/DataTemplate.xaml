@@ -46,7 +46,7 @@
                     Grid.Column="1"
                     StrokeShape="RoundRectangle 20"
                     StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
-                    <Image Source="{Binding ImageUrl}" />
+                    <Image Source="{x:Static ui:StaticImage.Product}" />
                 </Border>
 
                 <!--  row 2  -->
@@ -316,8 +316,11 @@
                     Text="{Binding EstimateEndDate, StringFormat='{}{0:dd/MM/yyyy}'}"
                     VerticalOptions="Center" />
                 <HorizontalStackLayout Grid.Row="2" Grid.Column="6">
-                    <Button BackgroundColor="{x:Static ui:AppColors.BrightAqua}" Text="{x:Static resource:AppTexts.Cook}" />
-                    <Button Margin="10,0,0,0" Text="{x:Static resource:AppTexts.Edit}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BatchViewModel}}, Path=EditBatchCommand}"
+                        CommandParameter="{Binding}"
+                        Text="{x:Static resource:AppTexts.Edit_Cook}" />
                     <Button
                         Margin="10,0,0,0"
                         BackgroundColor="{x:Static ui:AppColors.Red}"
@@ -328,4 +331,66 @@
             </Grid>
         </Border>
     </DataTemplate>
+
+    <DataTemplate x:Key="PurchaseItemDataTemplate">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid
+                Padding="10,5,10,5"
+                ColumnDefinitions="50, *,auto,*, auto"
+                HeightRequest="60">
+                <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+                    <Image Source="{Binding ImageUrl}" />
+                </Border>
+                <Label Grid.Column="2" Text="{Binding Name}" />
+                <HorizontalStackLayout Grid.Column="4">
+                    <Button Text="{x:Static resource:AppTexts.Purchase}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        BackgroundColor="{x:Static ui:AppColors.Red}"
+                        Text="{x:Static resource:AppTexts.Delete}" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="SellItemDataTemplate">
+        <Border
+            Padding="10,5,10,5"
+            StrokeShape="RoundRectangle 20"
+            StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid ColumnDefinitions="150,*,100,*,110,*, 60" RowDefinitions="23, 5,23">
+                <Label Style="{StaticResource Size16ColorBlack}" Text="{x:Static resource:AppTexts.Name}" />
+                <Label
+                    Grid.Row="2"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Name}" />
+
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Quantity}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Quantity}" />
+                <Label
+                    Grid.Column="4"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Price}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="4"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Price}" />
+                <Button
+                    Grid.RowSpan="3"
+                    Grid.Column="6"
+                    BackgroundColor="{x:Static ui:AppColors.BrightAqua}"
+                    HeightRequest="40"
+                    Text="{x:Static resource:AppTexts.Sell}" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="TransactionItemDataTemplate" />
+    <DataTemplate x:Key="CustomerItemDataTemplate" />
 </ResourceDictionary>

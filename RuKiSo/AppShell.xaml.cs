@@ -12,6 +12,7 @@ namespace RuKiSo
             Routing.RegisterRoute(nameof(ProductPage), typeof(ProductPage));
             Routing.RegisterRoute(nameof(BatchPage), typeof(BatchPage));
             Routing.RegisterRoute(nameof(IngredientPage), typeof(IngredientPage));
+            Routing.RegisterRoute(nameof(TransactionPage), typeof(TransactionPage));
         }
     }
 }

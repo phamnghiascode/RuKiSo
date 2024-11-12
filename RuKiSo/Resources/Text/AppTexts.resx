@@ -234,4 +234,31 @@
   <data name="Cook" xml:space="preserve">
     <value>Nấu</value>
   </data>
+  <data name="Transaction" xml:space="preserve">
+    <value>Nhập xuất</value>
+  </data>
+  <data name="IngredientPage" xml:space="preserve">
+    <value>IngredientPage</value>
+  </data>
+  <data name="BatchPage" xml:space="preserve">
+    <value>BatchPage</value>
+  </data>
+  <data name="ProductPage" xml:space="preserve">
+    <value>ProductPage</value>
+  </data>
+  <data name="TransactionPage" xml:space="preserve">
+    <value>TransactionPage</value>
+  </data>
+  <data name="DashboardPage" xml:space="preserve">
+    <value>DashboardPage</value>
+  </data>
+  <data name="Transactions" xml:space="preserve">
+    <value>Các giao dịch</value>
+  </data>
+  <data name="Customers_Supplier" xml:space="preserve">
+    <value>Khách hàng/nhà cung cấp</value>
+  </data>
+  <data name="Edit_Cook" xml:space="preserve">
+    <value>Sửa/Nấu</value>
+  </data>
 </root>

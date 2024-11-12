@@ -70,11 +70,11 @@ namespace RuKiSo.ViewModels
             Ingredients = new ObservableCollection<IngredientDTO>()
             {
                 new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
-                new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
-                new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
-                new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
-                new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
-                new() {Id = 1, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
+                new() {Id = 2, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
+                new() {Id = 3, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
+                new() {Id = 4, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
+                new() {Id = 5, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
+                new() {Id = 6, Name = "Men thuốc bắc", ImageUrl = "estimatedprofit.png", Price = 100, Unit = "Kg", Quantity = 10},
             };
             UpdateCardsInfo();
         }

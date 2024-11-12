@@ -115,6 +115,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BatchPage.
+        /// </summary>
+        internal static string BatchPage {
+            get {
+                return ResourceManager.GetString("BatchPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nấu.
         /// </summary>
         internal static string Cook {
@@ -124,11 +133,29 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Khách hàng/nhà cung cấp.
+        /// </summary>
+        internal static string Customers_Supplier {
+            get {
+                return ResourceManager.GetString("Customers_Supplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tổng quan.
         /// </summary>
         internal static string DashBoard {
             get {
                 return ResourceManager.GetString("DashBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DashboardPage.
+        /// </summary>
+        internal static string DashboardPage {
+            get {
+                return ResourceManager.GetString("DashboardPage", resourceCulture);
             }
         }
         
@@ -147,6 +174,15 @@ namespace RuKiSo.Resources {
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sửa/Nấu.
+        /// </summary>
+        internal static string Edit_Cook {
+            get {
+                return ResourceManager.GetString("Edit_Cook", resourceCulture);
             }
         }
         
@@ -201,6 +237,15 @@ namespace RuKiSo.Resources {
         internal static string Ingredient {
             get {
                 return ResourceManager.GetString("Ingredient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IngredientPage.
+        /// </summary>
+        internal static string IngredientPage {
+            get {
+                return ResourceManager.GetString("IngredientPage", resourceCulture);
             }
         }
         
@@ -282,6 +327,15 @@ namespace RuKiSo.Resources {
         internal static string ProductName {
             get {
                 return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ProductPage.
+        /// </summary>
+        internal static string ProductPage {
+            get {
+                return ResourceManager.GetString("ProductPage", resourceCulture);
             }
         }
         
@@ -399,6 +453,33 @@ namespace RuKiSo.Resources {
         internal static string TotalValue {
             get {
                 return ResourceManager.GetString("TotalValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhập xuất.
+        /// </summary>
+        internal static string Transaction {
+            get {
+                return ResourceManager.GetString("Transaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TransactionPage.
+        /// </summary>
+        internal static string TransactionPage {
+            get {
+                return ResourceManager.GetString("TransactionPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Các giao dịch.
+        /// </summary>
+        internal static string Transactions {
+            get {
+                return ResourceManager.GetString("Transactions", resourceCulture);
             }
         }
         

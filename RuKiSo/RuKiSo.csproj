@@ -108,6 +108,7 @@
 	  <Folder Include="Features\Batches\Services\" />
 	  <Folder Include="Features\Ingredients\Services\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
+	  <Folder Include="Features\Transactions\Models\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -146,6 +147,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\Products\Views\ProductPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\Transactions\Views\TransactionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Templates\DataTemplates\DataTemplate.xaml">
