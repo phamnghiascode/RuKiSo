@@ -115,12 +115,12 @@
                     </Grid>
                 </Border>
                 <popup:SfPopup
-                    x:Name="EditBatchPopup"
-                    ContentTemplate="{StaticResource UpSertProductPopup}"
-                    HeaderTitle="Sửa/Nấu rượu"
+                    x:Name="EditCookPopup"
+                    ContentTemplate="{StaticResource UpdateBatchPopup}"
+                    HeaderTitle="{x:Static resource:AppTexts.Edit_Cook}"
                     HeightRequest="{x:Static ui:AppDimens.Height300}"
                     HorizontalOptions="Center"
-                    IsOpen="{Binding IsEditPopupOpen}"
+                    IsOpen="{Binding IsEditCookPopupOpen}"
                     WidthRequest="{x:Static ui:AppDimens.Height610}" />
             </Grid>
         </Grid>

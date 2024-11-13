@@ -10,8 +10,7 @@ namespace RuKiSo.ViewModels
     public partial class BatchViewModel : BaseViewModel
     {
         private BatchDTO selectedBatch;
-        private bool isCookPopupOpen;
-        private bool isEditPopupOpen;
+        private bool isEditCookPopupOpen;
         private int totalBatch;
         private double totalValue;
         private double projectedYield;
@@ -19,8 +18,7 @@ namespace RuKiSo.ViewModels
         private DateTime startDate;
         private DateTime estimateEndDate;
         public ICommand AddBatchCommand { get; }
-        public ICommand EditBatchCommand { get; }
-        public ICommand CookBatchCommand { get; }
+        public ICommand EditCookBatchCommand { get; }
         public ICommand DeleteBatchCommand { get; }
 
         public BatchDTO SelectedBatch
@@ -60,23 +58,14 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(EstimateEndDate));
             }
         }
-        public bool IsCookPopupOpen
-        {
-            get { return isCookPopupOpen; }
-            set
-            {
-                isCookPopupOpen = value;
-                OnPropertyChanged(nameof(IsCookPopupOpen));
-            }
-        }
 
-        public bool IsEditPopupOpen
+        public bool IsEditCookPopupOpen
         {
-            get { return isEditPopupOpen; }
+            get { return isEditCookPopupOpen; }
             set
             {
-                isEditPopupOpen = value;
-                OnPropertyChanged(nameof(IsEditPopupOpen));
+                isEditCookPopupOpen = value;
+                OnPropertyChanged(nameof(IsEditCookPopupOpen));
             }
         }
         public int TotalBatch
@@ -113,21 +102,16 @@ namespace RuKiSo.ViewModels
        
         public BatchViewModel()
         {
-            EditBatchCommand = new RelayCommand<BatchDTO>(EditBatch);
-            CookBatchCommand = new RelayCommand<BatchDTO>(CookBatch);
+            EditCookBatchCommand = new RelayCommand<BatchDTO>(EditCookBatch);
             DeleteBatchCommand = new RelayCommand<BatchDTO>(DeleteBatch);
             AddBatchCommand = new RelayCommand(AddBatch);
             InitData();
         }
 
-        private void CookBatch(BatchDTO batch)
+        private void EditCookBatch(BatchDTO batch)
         {
-            IsEditPopupOpen = true;
-        }
-
-        private void EditBatch(BatchDTO batch)
-        {
-            IsEditPopupOpen = true;
+            SelectedBatch = batch;  
+            IsEditCookPopupOpen = true;
         }
 
         private void DeleteBatch(BatchDTO batch)

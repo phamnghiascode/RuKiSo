@@ -421,6 +421,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trạng thái.
+        /// </summary>
+        internal static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bán chạy nhất.
         /// </summary>
         internal static string TopSellerChart {

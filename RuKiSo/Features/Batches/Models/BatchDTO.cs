@@ -10,6 +10,7 @@ namespace RuKiSo.Features.Batches.Models
         public List<BatchIngredientDTO> Ingredients { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EstimateEndDate { get; set; }
+        public bool Status { get; set; }
         public double Value => Ingredients?.Sum(i => i.Price) ?? 0;
     }
 }

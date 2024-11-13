@@ -261,4 +261,7 @@
   <data name="Edit_Cook" xml:space="preserve">
     <value>Sửa/Nấu</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
 </root>
