@@ -301,7 +301,7 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     Style="{StaticResource Size16ColorBlack}"
-                    Text="{Binding Name}"
+                    Text="{Binding Product.Name}"
                     VerticalOptions="Center" />
                 <Label
                     Grid.Row="2"
@@ -394,62 +394,39 @@
     <DataTemplate x:Key="TransactionItemDataTemplate" />
     <DataTemplate x:Key="CustomerItemDataTemplate" />
 
-    <DataTemplate x:Key="UpdateBatchPopup">
-        <Grid
-            Padding="10,10,0,10"
-            ColumnDefinitions="300,300"
-            RowDefinitions="30,50,30,50,10,auto">
-
-            <Label Grid.Row="0" Text="{x:Static resource:AppTexts.Name}" />
+    <DataTemplate x:Key="UpdateCookBatchPopup">
+        <VerticalStackLayout HorizontalOptions="Center">
+            <Label Text="{x:Static resource:AppTexts.Name}" />
             <Entry
-                Grid.Row="1"
                 HorizontalOptions="Start"
-                Text="{Binding SelectedBatch.Name, Mode=TwoWay}"
+                Text="{Binding SelectedBatch.Product.Name, Mode=TwoWay}"
                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
-            <Label
-                Grid.Row="0"
-                Grid.Column="1"
-                Text="{x:Static resource:AppTexts.StartDate}" />
+            <Label Text="{x:Static resource:AppTexts.StartDate}" />
             <DatePicker
-                Grid.Row="1"
-                Grid.Column="1"
                 Date="{Binding SelectedBatch.StartDate, Mode=TwoWay}"
                 HorizontalOptions="Start"
                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
-            <Label Grid.Row="2" Text="{x:Static resource:AppTexts.EstimateEndDate}" />
+            <Label Text="{x:Static resource:AppTexts.EstimateEndDate}" />
             <DatePicker
-                Grid.Row="3"
                 Date="{Binding SelectedBatch.EstimateEndDate, Mode=TwoWay}"
                 HorizontalOptions="Start"
                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
-            <Label
-                Grid.Row="2"
-                Grid.Column="1"
-                Text="{x:Static resource:AppTexts.Status}" />
-            <Picker
-                Grid.Row="3"
-                Grid.Column="1"
+            <Label Text="{x:Static resource:AppTexts.Yield}" />
+            <Entry
                 HorizontalOptions="Start"
-                SelectedItem="{Binding SelectedBatch.Status}"
+                Text="{Binding SelectedBatch.Yield, Mode=TwoWay}"
                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
-            <Button
-                Grid.Row="5"
-                BackgroundColor="{x:Static ui:AppColors.Red}"
-                Command="{Binding ClosePopupCommand}"
-                HorizontalOptions="Center"
-                Text="{x:Static resource:AppTexts.Exit}"
-                TextColor="{x:Static ui:AppColors.Black}" />
-
-            <Button
-                Grid.Row="5"
-                Grid.Column="1"
-                Command="{Binding SaveProductCommand}"
-                HorizontalOptions="Center"
-                Text="{x:Static resource:AppTexts.Save}" />
-        </Grid>
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <Button
+                    Margin="10,0,0,0"
+                    Command="{Binding SaveBatchCommand}"
+                    HorizontalOptions="Center"
+                    Text="{x:Static resource:AppTexts.Save}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
     </DataTemplate>
 </ResourceDictionary>

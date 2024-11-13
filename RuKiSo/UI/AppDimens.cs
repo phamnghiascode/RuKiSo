@@ -45,6 +45,7 @@
         public const double Height280 = 280.0;
         public const double Height300 = 300.0;
         public const double Height325 = 325.0;
+        public const double Height390 = 390.0;
         public const double Height394 = 394.0;
         public const double Height610 = 610.0;
 

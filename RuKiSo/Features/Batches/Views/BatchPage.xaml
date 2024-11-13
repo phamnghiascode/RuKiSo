@@ -43,7 +43,7 @@
                 Margin="0,10,0,0"
                 ColumnDefinitions="320,*, 650"
                 RowDefinitions="30,*">
-                <Label Style="{StaticResource PrimaryLabelStyle}" Text="Tạo mẻ rượu mới" />
+                <Label Style="{StaticResource PrimaryLabelStyle}" Text="{x:Static resource:AppTexts.AddNewBatch}" />
                 <Label
                     Grid.Column="2"
                     Style="{StaticResource PrimaryLabelStyle}"
@@ -54,7 +54,11 @@
                     Style="{StaticResource Border25BackGroundWhite}"
                     VerticalOptions="Start">
                     <Grid RowDefinitions="auto,auto,auto, *,auto">
-                        <Entry Placeholder="{x:Static resource:AppTexts.Name}" Text="{Binding BatchName}" />
+                        <Picker
+                            Title="{x:Static resource:AppTexts.SelectProduct}"
+                            ItemDisplayBinding="{Binding Name}"
+                            ItemsSource="{Binding Products}"
+                            SelectedItem="{Binding SelectedProduct}" />
                         <Label
                             Grid.Row="1"
                             Text="{x:Static resource:AppTexts.StartDate}"
@@ -116,12 +120,12 @@
                 </Border>
                 <popup:SfPopup
                     x:Name="EditCookPopup"
-                    ContentTemplate="{StaticResource UpdateBatchPopup}"
+                    ContentTemplate="{StaticResource UpdateCookBatchPopup}"
                     HeaderTitle="{x:Static resource:AppTexts.Edit_Cook}"
-                    HeightRequest="{x:Static ui:AppDimens.Height300}"
+                    HeightRequest="{x:Static ui:AppDimens.Height390}"
                     HorizontalOptions="Center"
                     IsOpen="{Binding IsEditCookPopupOpen}"
-                    WidthRequest="{x:Static ui:AppDimens.Height610}" />
+                    WidthRequest="{x:Static ui:AppDimens.Height300}" />
             </Grid>
         </Grid>
     </Grid>
