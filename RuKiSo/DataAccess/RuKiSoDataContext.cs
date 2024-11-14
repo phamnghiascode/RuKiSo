@@ -8,9 +8,9 @@ namespace RuKiSo.DataAccess
     {
         private readonly IConfiguration _configuration;
 
-        public DbSet<Batches> Batches { get; set; }
-        public DbSet<Ingredients> Ingredients { get; set; }
-        public DbSet<Products> Products { get; set; }
+        public DbSet<Batch> Batches { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         public RuKiSoDataContext(
             IConfiguration configuration)
@@ -26,15 +26,15 @@ namespace RuKiSo.DataAccess
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Ingredients>()
-                .HasOne<Batches>()
+            modelBuilder.Entity<Ingredient>()
+                .HasOne(i => i.Batch)
                 .WithMany(b => b.Ingredients)
                 .HasForeignKey(i => i.BatchId);
 
-            modelBuilder.Entity<Batches>()
+            modelBuilder.Entity<Batch>()
                 .HasOne(b => b.Product)
-                .WithOne(p => p.Batch)
-                .HasForeignKey<Products>(p => p.BatchId);
+                .WithMany(p => p.Batches)
+                .HasForeignKey(b => b.ProductId);
         }
     }
 }
