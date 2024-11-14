@@ -72,6 +72,7 @@
 	  <None Remove="Resources\Images\bell.png" />
 	  <None Remove="Resources\Images\defautavatar.jpg" />
 	  <None Remove="Resources\Images\estimatedprofit.png" />
+	  <None Remove="Resources\Images\estimate_output.png" />
 	  <None Remove="Resources\Images\liviabator.png" />
 	  <None Remove="Resources\Images\nextbutton.png" />
 	  <None Remove="Resources\Images\plus.png" />

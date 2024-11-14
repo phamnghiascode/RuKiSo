@@ -10,6 +10,7 @@
         public const double FontSize14 = 14.0;
         public const double FontSize15 = 15.0;
         public const double FontSize16 = 16.0;
+        public const double FontSize17 = 17.0;
         public const double FontSize18 = 18.0;
         public const double FontSize20 = 20.0;
         public const double FontSize22 = 22.0;
@@ -42,6 +43,7 @@
         public const double Height150 = 150.0;
         public const double Height160 = 160.0;
         public const double Height180 = 180.0;
+        public const double Height220 = 220.0;
         public const double Height280 = 280.0;
         public const double Height300 = 300.0;
         public const double Height325 = 325.0;

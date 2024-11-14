@@ -273,4 +273,10 @@
   <data name="SelectProduct" xml:space="preserve">
     <value>Chọn sản phẩm</value>
   </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Đơn vị</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>Sử dụng</value>
+  </data>
 </root>

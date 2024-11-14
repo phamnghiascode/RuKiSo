@@ -7,6 +7,7 @@
         public static readonly string Product = "winebottle.png";
         public static readonly string TotalValue = "totalvalue.png";
         public static readonly string EstimatedProfit = "estimatedprofit.png";
+        public static readonly string EstimatedOutput = "estimate_output.png";
         public static readonly string Plus = "plus.png";
     }
 }

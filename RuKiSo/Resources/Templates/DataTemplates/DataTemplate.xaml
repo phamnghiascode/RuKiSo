@@ -8,13 +8,10 @@
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels">
     <DataTemplate x:Key="MostPurchaseCustomers">
-        <Grid HeightRequest="{x:Static ui:AppDimens.Height127}" WidthRequest="{x:Static ui:AppDimens.Height85}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70" />
-                <RowDefinition Height="11" />
-                <RowDefinition Height="21" />
-                <RowDefinition Height="20" />
-            </Grid.RowDefinitions>
+        <Grid
+            HeightRequest="{x:Static ui:AppDimens.Height127}"
+            RowDefinitions="70, 11, 21, 20"
+            WidthRequest="{x:Static ui:AppDimens.Height85}">
             <Border
                 HeightRequest="{x:Static ui:AppDimens.Height70}"
                 StrokeShape="RoundRectangle 35"
@@ -111,6 +108,7 @@
             </Grid>
         </Border>
     </DataTemplate>
+
     <DataTemplate x:Key="UpSertProductPopup">
         <Grid
             Padding="10,10,0,10"
@@ -190,13 +188,13 @@
                 <Label
                     Grid.RowSpan="2"
                     Grid.Column="2"
-                    Text="Sử dụng"
+                    Text="{x:Static resource:AppTexts.Use}"
                     VerticalOptions="Center" />
                 <Entry
                     Grid.RowSpan="2"
                     Grid.Column="4"
                     Text="{Binding UsedQuantity}"
-                    WidthRequest="40">
+                    WidthRequest="{x:Static ui:AppDimens.Height40}">
                     <Entry.Triggers>
                         <DataTrigger
                             Binding="{Binding Source={x:Reference IngredientCheckBox}, Path=IsChecked}"
@@ -215,17 +213,25 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{x:Static ui:AppColors.White}"
-                ColumnDefinitions="15, 60, 0.2*, 360, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
+                ColumnDefinitions="15, 60, 0.2*, 170, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
                 RowDefinitions="15, 7, 21, 4, 21, 7, 15">
                 <Border
                     Grid.Row="1"
                     Grid.RowSpan="5"
                     Grid.Column="1"
                     StrokeShape="RoundRectangle 20"
-                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
-                    <Image Source="{Binding ImageUrl}" />
+                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
+                    WidthRequest="35">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource
+                                FontFamily="{x:Static ui:FontNames.FaSolid}"
+                                Glyph="{x:Static resource:AwesomeIcon.BowlRice}"
+                                Size="{x:Static ui:AppDimens.FontSize16}"
+                                Color="{x:Static ui:AppColors.Black}" />
+                        </Image.Source>
+                    </Image>
                 </Border>
-
                 <!--  row 2  -->
                 <Label
                     Grid.Row="2"
@@ -263,7 +269,7 @@
                     Grid.Row="4"
                     Grid.Column="7"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Price}" />
+                    Text="{Binding PurchasePrice}" />
                 <Label
                     Grid.Row="4"
                     Grid.Column="9"
@@ -273,16 +279,9 @@
                 <Button
                     Grid.Row="2"
                     Grid.RowSpan="3"
-                    Grid.Column="11"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=EditProductCommand}"
-                    CommandParameter="{Binding}"
-                    Text="{x:Static resource:AppTexts.Edit}" />
-                <Button
-                    Grid.Row="2"
-                    Grid.RowSpan="3"
                     Grid.Column="13"
                     BackgroundColor="{x:Static ui:AppColors.Red}"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProductViewModel}}, Path=DeleteProductCommand}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:IngredientViewModel}}, Path=DeleteIngredientCommand}"
                     CommandParameter="{Binding}"
                     Text="{x:Static resource:AppTexts.Delete}" />
             </Grid>
@@ -352,6 +351,7 @@
             </Grid>
         </Border>
     </DataTemplate>
+
     <DataTemplate x:Key="SellItemDataTemplate">
         <Border
             Padding="10,5,10,5"
@@ -391,8 +391,6 @@
             </Grid>
         </Border>
     </DataTemplate>
-    <DataTemplate x:Key="TransactionItemDataTemplate" />
-    <DataTemplate x:Key="CustomerItemDataTemplate" />
 
     <DataTemplate x:Key="UpdateCookBatchPopup">
         <VerticalStackLayout HorizontalOptions="Center">

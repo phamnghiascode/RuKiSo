@@ -36,7 +36,7 @@
                     Grid.Column="4"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
                     DesciptionText="{Binding ProjectedYield}"
-                    ImageSource="{x:Static ui:StaticImage.EstimatedProfit}" />
+                    ImageSource="{x:Static ui:StaticImage.EstimatedOutput}" />
             </Grid>
             <Grid
                 Grid.Row="1"
@@ -56,15 +56,18 @@
                     <Grid RowDefinitions="auto,auto,auto, *,auto">
                         <Picker
                             Title="{x:Static resource:AppTexts.SelectProduct}"
+                            Margin="0,0,0,10"
                             ItemDisplayBinding="{Binding Name}"
                             ItemsSource="{Binding Products}"
                             SelectedItem="{Binding SelectedProduct}" />
                         <Label
                             Grid.Row="1"
+                            Margin="0,0,0,10"
                             Text="{x:Static resource:AppTexts.StartDate}"
                             VerticalOptions="Center" />
                         <DatePicker
                             Grid.Row="1"
+                            Margin="0,0,0,10"
                             Date="{Binding StartDate}"
                             HorizontalOptions="End" />
                         <Label
@@ -118,15 +121,15 @@
                             ItemsSource="{Binding Batches}" />
                     </Grid>
                 </Border>
-                <popup:SfPopup
-                    x:Name="EditCookPopup"
-                    ContentTemplate="{StaticResource UpdateCookBatchPopup}"
-                    HeaderTitle="{x:Static resource:AppTexts.Edit_Cook}"
-                    HeightRequest="{x:Static ui:AppDimens.Height390}"
-                    HorizontalOptions="Center"
-                    IsOpen="{Binding IsEditCookPopupOpen}"
-                    WidthRequest="{x:Static ui:AppDimens.Height300}" />
             </Grid>
+            <popup:SfPopup
+                x:Name="EditCookPopup"
+                ContentTemplate="{StaticResource UpdateCookBatchPopup}"
+                HeaderTitle="{x:Static resource:AppTexts.Edit_Cook}"
+                HeightRequest="{x:Static ui:AppDimens.Height390}"
+                HorizontalOptions="Center"
+                IsOpen="{Binding IsEditCookPopupOpen}"
+                WidthRequest="{x:Static ui:AppDimens.Height300}" />
         </Grid>
     </Grid>
 </ContentPage>
