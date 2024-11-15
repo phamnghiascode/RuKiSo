@@ -144,8 +144,8 @@
   <data name="TopSellerChart" xml:space="preserve">
     <value>Bán chạy nhất</value>
   </data>
-  <data name="MostPurchaseCustomers" xml:space="preserve">
-    <value>Khách mua nhiều nhất</value>
+  <data name="MostUsedIngredients" xml:space="preserve">
+    <value>Nguyên liệu dùng nhiều nhất</value>
   </data>
   <data name="MonthlyProfitChart" xml:space="preserve">
     <value>Lợi nhuận</value>
@@ -260,5 +260,26 @@
   </data>
   <data name="Edit_Cook" xml:space="preserve">
     <value>Sửa/Nấu</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Yield" xml:space="preserve">
+    <value>Sản lượng</value>
+  </data>
+  <data name="AddNewBatch" xml:space="preserve">
+    <value>Tạo mẻ rượu mới</value>
+  </data>
+  <data name="SelectProduct" xml:space="preserve">
+    <value>Chọn sản phẩm</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Đơn vị</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>Sử dụng</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
   </data>
 </root>

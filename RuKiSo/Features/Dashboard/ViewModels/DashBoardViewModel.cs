@@ -8,7 +8,7 @@ namespace RuKiSo.ViewModels
     {
         public ObservableCollection<WeeklyHistoryDTO> WeeklyHistories { get; set; }
         public ObservableCollection<TopSellerDTO> TopSellers { get; set; }
-        public ObservableCollection<CustomerDTO> MostPurchaseCustomers { get; set; }
+        public ObservableCollection<MostUsedIngredient> MostUsedIngredients { get; set; }
         public ObservableCollection<ProfitDTO> MonthlyProfit { get; set; }
         public DashBoardViewModel()
         {
@@ -33,14 +33,14 @@ namespace RuKiSo.ViewModels
                 new() { Name = "Thường", Quantity = 200 },
                 new() { Name = "Khác", Quantity = 100 }
             };
-            MostPurchaseCustomers = new ObservableCollection<CustomerDTO>
+            MostUsedIngredients = new ObservableCollection<MostUsedIngredient>
             {
-                new(){ Name = "Nghia Pham", Quantity = 100, Img="workman.png"},
-                new(){ Name = "A Nguyen", Quantity = 80, Img="randypress.png"},
-                new(){ Name = "B Tran", Quantity = 80},
-                new(){ Name = "Thang Pham", Quantity = 100, Img="workman.png"},
-                new(){ Name = "Hoang Pham", Quantity = 80, Img="randypress.png"},
-                new(){ Name = "Long Pham", Quantity = 80},
+                new(){ Name = "Nếp đen", Quantity = 100},
+                new(){ Name = "Nếp cái hoa vàng", Quantity = 80},
+                new(){ Name = "Nếp thường", Quantity = 80},
+                new(){ Name = "Đòng đòng", Quantity = 80},
+                new(){ Name = "Men thuốc bắc", Quantity = 100},
+                new(){ Name = "Men lá", Quantity = 80},
             };
             MonthlyProfit = new ObservableCollection<ProfitDTO>
                 {

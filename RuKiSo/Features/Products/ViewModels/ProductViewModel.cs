@@ -10,39 +10,121 @@ namespace RuKiSo.ViewModels
     {
         public ProductViewModel()
         {
-            EditProductCommand = new RelayCommand<ProductDTO>(OpenEditProductPopup);
+            ResetCommand = new RelayCommand(Reset);
+            UpSertProductCommand = new RelayCommand(UpSertProduct);
+            EditProductCommand = new RelayCommand<ProductDTO>(EditProduct);
             DeleteProductCommand = new RelayCommand<ProductDTO>(DeleteProduct);
             QuantityFilterCommand = new RelayCommand(OnQuantityFilter);
             PriceFilterCommand = new RelayCommand(OnPriceFilter);
-            AddProductCommand = new RelayCommand(OpenAddProductPopup);
-            SaveProductCommand = new RelayCommand(SaveProduct);
-            ClosePopupCommand = new RelayCommand(() => IsPopupOpen = false);
 
             InitData();
         }
 
-        private ProductDTO selectedProduct;
-        private bool isPopupOpen;
+        private void UpSertProduct()
+        {
+            if (SelectedProduct != null) 
+            {
+                SelectedProduct.Name = Name;
+                SelectedProduct.Ingredients = Ingredients;
+                SelectedProduct.Price = Price;
+                SelectedProduct.Quantity = Quantity;
+                
+                var index = Products.IndexOf(SelectedProduct);
+                if (index >= 0) { Products[index] = SelectedProduct; }
+                SelectedProduct = null;
+            }
+            else
+            {
+                ProductDTO product = new()
+                {
+                    Name = Name,
+                    Ingredients = Ingredients,
+                    Price = Price,
+                    Quantity = Quantity,
+                };
+                Products.Add(product);
+                UpdateCardsInfo();
+                Reset();
+            }
+        }
+
+        private void Reset()
+        {
+            SelectedProduct = null;
+            Name = string.Empty;
+            Ingredients = string.Empty;
+            Quantity = 0;
+            Price = 0;
+        }
+
+        private void EditProduct(ProductDTO? product)
+        {
+            if (product != null)
+            {
+                SelectedProduct = product;
+                Name = product.Name;
+                Ingredients = product.Ingredients;
+                Quantity = product.Quantity;
+                Price = product.Price;
+            }
+            else return;
+        }
+
+        private ProductDTO? selectedProduct;
         private int totalProduct;
         private double totalValue;
         private double estimatedProfit;
+        private string name;
+        private string ingredients;
+        private int quantity;
+        private double price;
 
-        public ProductDTO SelectedProduct 
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+
+        public string Ingredients
+        {
+            get { return ingredients; }
+            set
+            {
+                ingredients = value;
+                OnPropertyChanged(nameof(Ingredients));
+            }
+        } 
+        public int Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                quantity = value;
+                OnPropertyChanged(nameof(Quantity));
+            }
+        }
+
+        public double Price
+        {
+            get { return price; }
+            set
+            {
+                price = value;
+                OnPropertyChanged(nameof(Price));
+            }
+        }
+
+        public ProductDTO? SelectedProduct 
         { 
             get { return selectedProduct; }
             set {
                 selectedProduct = value;
                 OnPropertyChanged(nameof(SelectedProduct)); 
                 }
-        }
-        public bool IsPopupOpen
-        {
-            get { return isPopupOpen; }
-            set
-            {
-                isPopupOpen = value;
-                OnPropertyChanged(nameof(IsPopupOpen));
-            }
         }
         public int TotalProduct
         {
@@ -79,13 +161,12 @@ namespace RuKiSo.ViewModels
 
         public ObservableCollection<ProductDTO> Products { get; private set; } = new();
 
+        public ICommand ResetCommand { get; }
         public ICommand EditProductCommand { get; }
         public ICommand DeleteProductCommand { get; }
         public ICommand QuantityFilterCommand { get; }
         public ICommand PriceFilterCommand { get; }
-        public ICommand AddProductCommand { get; }
-        public ICommand SaveProductCommand { get; }
-        public ICommand ClosePopupCommand { get; }
+        public ICommand UpSertProductCommand { get; }
 
         private void InitData()
         {
@@ -107,18 +188,6 @@ namespace RuKiSo.ViewModels
             EstimatedProfit = Math.Floor(TotalValue * percentProfit);
         }
 
-        private void OpenEditProductPopup(ProductDTO product)
-        {
-            SelectedProduct = product;
-            IsPopupOpen = true;
-        }
-
-        private void OpenAddProductPopup()
-        {
-            SelectedProduct = new ProductDTO();
-            IsPopupOpen = true;
-        }
-
         private void SaveProduct()
         {
             if (SelectedProduct != null)
@@ -137,11 +206,10 @@ namespace RuKiSo.ViewModels
                     }
                 }
                 UpdateCardsInfo();
-                IsPopupOpen = false;
             }
         }
 
-        private void DeleteProduct(ProductDTO product)
+        private void DeleteProduct(ProductDTO? product)
         {
             if (product != null && Products.Contains(product))
             {

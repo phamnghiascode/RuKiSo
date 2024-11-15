@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Maui;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using RuKiSo.DataAccess;
 using Syncfusion.Maui.Core.Hosting;
 
 namespace RuKiSo
@@ -21,6 +24,9 @@ namespace RuKiSo
                     fonts.AddFont("fa-regular-400.ttf", "FaRegu");
                     fonts.AddFont("fa-solid-900.ttf", "FaSolid");
                 });
+
+            builder.Services.AddDbContext<RuKiSoDataContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MyDb")));
 
 #if DEBUG
             builder.Logging.AddDebug();

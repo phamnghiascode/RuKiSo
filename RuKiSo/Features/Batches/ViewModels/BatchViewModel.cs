@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using RuKiSo.Features.Batches.Models;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
@@ -10,18 +9,17 @@ namespace RuKiSo.ViewModels
     public partial class BatchViewModel : BaseViewModel
     {
         private BatchDTO selectedBatch;
-        private bool isCookPopupOpen;
-        private bool isEditPopupOpen;
+        private ProductDTO selectedProduct;
+        private bool isEditCookPopupOpen;
         private int totalBatch;
         private double totalValue;
         private double projectedYield;
-        private string batchName;
         private DateTime startDate;
         private DateTime estimateEndDate;
         public ICommand AddBatchCommand { get; }
-        public ICommand EditBatchCommand { get; }
-        public ICommand CookBatchCommand { get; }
+        public ICommand EditCookBatchCommand { get; }
         public ICommand DeleteBatchCommand { get; }
+        public ICommand SaveBatchCommand { get; }
 
         public BatchDTO SelectedBatch
         {
@@ -32,16 +30,16 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(SelectedBatch));
             }
         }
-
-        public string BatchName
+        public ProductDTO SelectedProduct
         {
-            get { return batchName; }
+            get { return selectedProduct; }
             set
             {
-                batchName = value;
-                OnPropertyChanged(nameof(BatchName));
+                selectedProduct = value;
+                OnPropertyChanged(nameof(SelectedProduct));
             }
         }
+
         public DateTime StartDate
         {
             get { return startDate; }
@@ -60,23 +58,14 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(EstimateEndDate));
             }
         }
-        public bool IsCookPopupOpen
-        {
-            get { return isCookPopupOpen; }
-            set
-            {
-                isCookPopupOpen = value;
-                OnPropertyChanged(nameof(IsCookPopupOpen));
-            }
-        }
 
-        public bool IsEditPopupOpen
+        public bool IsEditCookPopupOpen
         {
-            get { return isEditPopupOpen; }
+            get { return isEditCookPopupOpen; }
             set
             {
-                isEditPopupOpen = value;
-                OnPropertyChanged(nameof(IsEditPopupOpen));
+                isEditCookPopupOpen = value;
+                OnPropertyChanged(nameof(IsEditCookPopupOpen));
             }
         }
         public int TotalBatch
@@ -109,25 +98,38 @@ namespace RuKiSo.ViewModels
             }
         }
         public ObservableCollection<BatchIngredientDTO> Ingredients { get; set; }
-        public ObservableCollection<BatchDTO> Batches { get; set; }
+        public ObservableCollection<BatchDTO> Batches { get; set; } = new ObservableCollection<BatchDTO>();
+        public ObservableCollection<BatchDTO> AllBatches { get; set; }
+        public ObservableCollection<ProductDTO> Products { get; set; }
        
         public BatchViewModel()
         {
-            EditBatchCommand = new RelayCommand<BatchDTO>(EditBatch);
-            CookBatchCommand = new RelayCommand<BatchDTO>(CookBatch);
+            EditCookBatchCommand = new RelayCommand<BatchDTO>(EditCookBatch);
+            SaveBatchCommand = new RelayCommand(SaveBatch);
             DeleteBatchCommand = new RelayCommand<BatchDTO>(DeleteBatch);
             AddBatchCommand = new RelayCommand(AddBatch);
             InitData();
         }
 
-        private void CookBatch(BatchDTO batch)
+        private void SaveBatch()
         {
-            IsEditPopupOpen = true;
+            var updateBatch = Batches.FirstOrDefault(p => p.Id == SelectedBatch.Id);
+            if (updateBatch != null) 
+            {
+                updateBatch.Product = SelectedBatch.Product;
+                updateBatch.StartDate = SelectedBatch.StartDate;
+                updateBatch.EstimateEndDate = SelectedBatch.EstimateEndDate;
+                updateBatch.Ingredients = SelectedBatch.Ingredients;
+                updateBatch.Yield = SelectedBatch.Yield;
+                UpdateBatches();
+                IsEditCookPopupOpen = false;
+            }
         }
 
-        private void EditBatch(BatchDTO batch)
+        private void EditCookBatch(BatchDTO batch)
         {
-            IsEditPopupOpen = true;
+            SelectedBatch = batch;  
+            IsEditCookPopupOpen = true;
         }
 
         private void DeleteBatch(BatchDTO batch)
@@ -150,7 +152,7 @@ namespace RuKiSo.ViewModels
 
             var newBatch = new BatchDTO
             {
-                Name = BatchName,
+                Product = SelectedProduct,
                 StartDate = StartDate,
                 EstimateEndDate = EstimateEndDate,
                 Ingredients = selectedIngredients
@@ -162,7 +164,7 @@ namespace RuKiSo.ViewModels
 
         private void InitData()
         {
-            Ingredients = new()
+            Ingredients = new ObservableCollection<BatchIngredientDTO>
             {
                 new() {Id = 1, IngredientName = "Men lá", StoredQuantity = 10, PricePerUnit = 200},
                 new() {Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, PricePerUnit = 150},
@@ -170,93 +172,110 @@ namespace RuKiSo.ViewModels
                 new() {Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, PricePerUnit = 18},
                 new() {Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, PricePerUnit = 50},
             };
-            Batches = new()
+            Products = new ObservableCollection<ProductDTO>
+            {
+                new() {Id = 1, Name = "Rượu trắng thượng hạng", Ingredients = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
+                new() {Id = 2, Name = "Rượu trắng", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
+                new() {Id = 3, Name = "Rượu trắng nhẹ", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 100, Price = 40000},
+                new() {Id = 4, Name = "Rượu đòng đòng", Ingredients = "Nếp cái hoa vàng, bông lúa non, men thuốc bắc", Quantity = 500, Price = 75000},
+                new() {Id = 5, Name = "Rượu bách nhật", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 5, Price = 40000},
+            };
+            AllBatches = new()
             {
                 new BatchDTO
                 {
                     Id = 1,
-                    Name = "Rượu trắng 45",
+                    Product = Products[0],
                     StartDate = DateTime.Now,
                     EstimateEndDate = DateTime.Now.AddMonths(3),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 2, PricePerUnit = 200 },
-                        new BatchIngredientDTO { Id = 3, IngredientName = "Nếp cái hoa vàng", StoredQuantity = 500, UsedQuantity = 100, PricePerUnit = 20 },
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 2, PricePerUnit = 200, IsSelected = true },
+                        new BatchIngredientDTO { Id = 3, IngredientName = "Nếp cái hoa vàng", StoredQuantity = 500, UsedQuantity = 100, PricePerUnit = 20, IsSelected = true },
                     }
                     },
                 new BatchDTO
                 {
                     Id = 2,
-                    Name = "Rượu thuốc Bắc",
+                    Product = Products[1],
                     StartDate = DateTime.Now,
                     EstimateEndDate = DateTime.Now.AddMonths(4),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, UsedQuantity = 3, PricePerUnit = 150 },
-                        new BatchIngredientDTO { Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, UsedQuantity = 150, PricePerUnit = 18 },
+                        new BatchIngredientDTO { Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, UsedQuantity = 3, PricePerUnit = 150 , IsSelected = true},
+                        new BatchIngredientDTO { Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, UsedQuantity = 150, PricePerUnit = 18, IsSelected = true },
                     }
                 },
                 new BatchDTO
                 {
                     Id = 3,
-                    Name = "Rượu trắng 40",
+                    Product = Products[2],
                     StartDate = DateTime.Now,
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50, IsSelected = true },
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
                     }
                 },
                 new BatchDTO
                 {
                     Id = 4,
-                    Name = "Rượu đòng đòng 45",
+                    Product = Products[3],
                     StartDate = DateTime.Now,
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50, IsSelected = true },
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
                     }
                 },
                 new BatchDTO
                 {
                     Id = 5,
-                    Name = "Rượu đòng đòng 40",
+                    Product = Products[4],
                     StartDate = DateTime.Now,
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                     }
                 },
                 new BatchDTO
                 {
                     Id = 6,
-                    Name = "Rượu đòng đòng 40",
+                    Product = Products[0],
                     StartDate = DateTime.Now,
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                     }
                 },
                  new BatchDTO
                  {
                      Id = 7,
-                     Name = "Rượu đòng đòng 40",
+                     Product = Products[1],
                      StartDate = DateTime.Now,
                      EstimateEndDate = DateTime.Now.AddMonths(5),
                      Ingredients = new List<BatchIngredientDTO>
                      {
-                         new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                         new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
+                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                      }
                  }
             };
+            UpdateBatches();
+        }
+        private void UpdateBatches()
+        {
+            Batches.Clear();
+            foreach (var batch in AllBatches.Where(b => b.Yield == 0))
+            {
+                Batches.Add(batch);
+            }
             UpdateCardsData();
         }
 

@@ -47,7 +47,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -69,23 +68,24 @@
 	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
+	  <None Remove="Resources\Images\arrow_down.png" />
+	  <None Remove="Resources\Images\arrow_up.png" />
 	  <None Remove="Resources\Images\bell.png" />
-	  <None Remove="Resources\Images\defautavatar.jpg" />
 	  <None Remove="Resources\Images\estimatedprofit.png" />
-	  <None Remove="Resources\Images\liviabator.png" />
+	  <None Remove="Resources\Images\estimate_output.png" />
+	  <None Remove="Resources\Images\ingredients.png" />
 	  <None Remove="Resources\Images\nextbutton.png" />
 	  <None Remove="Resources\Images\plus.png" />
-	  <None Remove="Resources\Images\randypress.png" />
 	  <None Remove="Resources\Images\rukiso.png" />
 	  <None Remove="Resources\Images\rukisoicon.png" />
 	  <None Remove="Resources\Images\totalproduct.png" />
 	  <None Remove="Resources\Images\totalvalue.png" />
 	  <None Remove="Resources\Images\winebottle.png" />
-	  <None Remove="Resources\Images\workman.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -105,10 +105,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="DataAccess\Interfaces\" />
+	  <Folder Include="DataAccess\Services\" />
 	  <Folder Include="Features\Batches\Services\" />
 	  <Folder Include="Features\Ingredients\Services\" />
 	  <Folder Include="Features\Products\Services\Imps\" />
-	  <Folder Include="Features\Transactions\Models\" />
 	</ItemGroup>
 
 	<ItemGroup>

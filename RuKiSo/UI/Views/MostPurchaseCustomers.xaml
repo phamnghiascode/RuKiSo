@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView
-    x:Class="RuKiSo.UI.Views.MostPurchaseCustomers"
+    x:Class="RuKiSo.UI.Views.CustomHorizontalCollectionView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
@@ -10,10 +10,10 @@
         HeightRequest="{x:Static ui:AppDimens.Height127}"
         WidthRequest="{x:Static ui:AppDimens.Height394}">
         <CollectionView
-            x:Name="QuickTransferCollectionView"
+            x:Name="MostUsedIngredientCollectionView"
             HorizontalScrollBarVisibility="Never"
-            ItemTemplate="{StaticResource MostPurchaseCustomers}"
-            ItemsSource="{Binding MostPurchaseCustomers}"
+            ItemTemplate="{StaticResource MostUsedIngredient}"
+            ItemsSource="{Binding MostUsedIngredients}"
             WidthRequest="{x:Static ui:AppDimens.Height325}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Height14}" Orientation="Horizontal" />

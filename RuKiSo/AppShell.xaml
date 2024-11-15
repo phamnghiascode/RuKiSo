@@ -47,7 +47,7 @@
         <FlyoutItem.Icon>
             <FontImageSource
                 FontFamily="{x:Static ui:FontNames.FaSolid}"
-                Glyph="{x:Static resource:AwesomeIcon.House}"
+                Glyph="{x:Static resource:AwesomeIcon.ArrowTrendUp}"
                 Size="{x:Static ui:AppDimens.FontSize24}"
                 Color="{x:Static ui:AppColors.Black}" />
         </FlyoutItem.Icon>

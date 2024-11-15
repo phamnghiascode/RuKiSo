@@ -13,5 +13,6 @@
         public static readonly Color BrightAqua = Color.FromArgb("#16DBCC");
         public static readonly Color LightSteelBlue = Color.FromArgb("#718EBF");
         public static readonly Color Charcoal = Color.FromArgb("#232323");
+        public static readonly Color Yellow = Color.FromArgb("#FFF44F");
     }
 }

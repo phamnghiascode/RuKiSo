@@ -21,14 +21,60 @@
             Padding="20,8,20,8"
             ColumnDefinitions="*, 20,*"
             RowDefinitions="*,*">
-            <Grid RowDefinitions="30, *">
+            <Grid Grid.ColumnSpan="3" RowDefinitions="40, *">
+                <Label
+                    Style="{StaticResource PrimaryLabelStyle}"
+                    Text="{x:Static resource:AppTexts.Transactions}"
+                    VerticalOptions="Center" />
+                <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
+                    <Grid ColumnDefinitions="*,30,0.5*,200, *,90, *,100, *,60, *,120,*, 126,*" RowDefinitions="21, *">
+                        <Label
+                            Grid.Column="3"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="{x:Static resource:AppTexts.Name}" />
+                        <Label
+                            Grid.Column="5"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="Loại giao dịch" />
+                        <Label
+                            Grid.Column="7"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="Ngày giao dịch" />
+                        <Label
+                            Grid.Column="9"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="{x:Static resource:AppTexts.Quantity}" />
+                        <Label
+                            Grid.Column="11"
+                            Style="{StaticResource Size16ColorBlue}"
+                            Text="{x:Static resource:AppTexts.TotalValue}" />
+                        <CollectionView
+                            Grid.Row="1"
+                            Grid.ColumnSpan="15"
+                            ItemTemplate="{StaticResource TransactionItem}"
+                            ItemsSource="{Binding Transactions}" />
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1" RowDefinitions="30, *">
                 <Label
                     Style="{StaticResource PrimaryLabelStyle}"
                     Text="{x:Static resource:AppTexts.Purchase}"
                     VerticalOptions="Center" />
-                <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}" />
+                <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
+                    <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
+                        <CollectionView ItemTemplate="{StaticResource PurchaseItemDataTemplate}" ItemsSource="{Binding Ingredients}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                        </CollectionView>
+                    </Border>
+                </Border>
             </Grid>
-            <Grid Grid.Column="2" RowDefinitions="30, *">
+            <Grid
+                Grid.Row="1"
+                Grid.Column="2"
+                RowDefinitions="30, *">
                 <Label
                     Style="{StaticResource PrimaryLabelStyle}"
                     Text="{x:Static resource:AppTexts.Sell}"
@@ -41,35 +87,11 @@
                     </CollectionView>
                 </Border>
             </Grid>
-
-            <Grid Grid.Row="1" RowDefinitions="40, *">
-                <Label
-                    Style="{StaticResource PrimaryLabelStyle}"
-                    Text="{x:Static resource:AppTexts.Transactions}"
-                    VerticalOptions="Center" />
-                <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}" />
-            </Grid>
-            <Grid
-                Grid.Row="1"
-                Grid.Column="2"
-                RowDefinitions="40, *">
-                <Label
-                    Style="{StaticResource PrimaryLabelStyle}"
-                    Text="{x:Static resource:AppTexts.Customers_Supplier}"
-                    VerticalOptions="Center" />
-                <buttons:SfButton
-                    Background="Transparent"
-                    FontSize="{x:Static ui:AppDimens.FontSize15}"
-                    HorizontalOptions="End"
-                    ImageSource="{x:Static ui:StaticImage.Plus}"
-                    ShowIcon="True"
-                    Stroke="{x:Static ui:AppColors.SecondaryColor}"
-                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
-                    Text="{x:Static resource:AppTexts.Add}"
-                    TextColor="{x:Static ui:AppColors.SecondaryColor}"
-                    WidthRequest="{x:Static ui:AppDimens.Height110}" />
-                <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}" />
-            </Grid>
+            <popup:SfPopup
+                ContentTemplate="{StaticResource UpdateCookBatchPopup}"
+                HeightRequest="{x:Static ui:AppDimens.Height390}"
+                HorizontalOptions="Center"
+                WidthRequest="{x:Static ui:AppDimens.Height300}" />
         </Grid>
     </Grid>
 </ContentPage>

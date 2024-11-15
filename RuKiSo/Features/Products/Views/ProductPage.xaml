@@ -3,9 +3,7 @@
     x:Class="RuKiSo.Views.ProductPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
-    xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
@@ -42,60 +40,95 @@
             <Grid
                 Grid.Row="1"
                 Margin="0,10,0,0"
-                RowDefinitions="40,*">
-                <Label
-                    Style="{StaticResource PrimaryLabelStyle}"
-                    Text="{x:Static resource:AppTexts.ProductList}"
-                    VerticalOptions="Center" />
-                <HorizontalStackLayout HorizontalOptions="End">
-                    <Label Text="{x:Static resource:AppTexts.Quantity}" VerticalOptions="Center" />
-                    <Button
-                        BackgroundColor="Transparent"
-                        Command="{Binding QuantityFilterCommand}"
-                        FontFamily="{x:Static ui:FontNames.FaSolid}"
-                        FontSize="{x:Static ui:AppDimens.FontSize15}"
-                        Text="{x:Static resource:AwesomeIcon.Filter}"
-                        TextColor="{x:Static ui:AppColors.Black}" />
+                ColumnDefinitions="300,*,670">
+                <Grid RowDefinitions="40,*">
                     <Label
-                        Margin="18,0,0,0"
-                        Text="{x:Static resource:AppTexts.Price}"
+                        Style="{StaticResource PrimaryLabelStyle}"
+                        Text="{Binding SelectedProduct, Converter={StaticResource UpSertProductConverter}}"
                         VerticalOptions="Center" />
-                    <Button
-                        Margin="0,0,100,0"
-                        BackgroundColor="Transparent"
-                        Command="{Binding PriceFilterCommand}"
-                        FontFamily="{x:Static ui:FontNames.FaSolid}"
-                        FontSize="{x:Static ui:AppDimens.FontSize15}"
-                        Text="{x:Static resource:AwesomeIcon.Filter}"
-                        TextColor="{x:Static ui:AppColors.Black}" />
-                    <buttons:SfButton
-                        Background="Transparent"
-                        Command="{Binding AddProductCommand}"
-                        FontSize="{x:Static ui:AppDimens.FontSize15}"
-                        ImageSource="{x:Static ui:StaticImage.Plus}"
-                        ShowIcon="True"
-                        Stroke="{x:Static ui:AppColors.SecondaryColor}"
-                        StrokeThickness="{x:Static ui:AppDimens.Stroke1}"
-                        Text="{x:Static resource:AppTexts.AddProduct}"
-                        TextColor="{x:Static ui:AppColors.SecondaryColor}"
-                        WidthRequest="{x:Static ui:AppDimens.Height180}" />
-                </HorizontalStackLayout>
-                <CollectionView
-                    Grid.Row="1"
-                    ItemTemplate="{StaticResource ProductItemDataTemplate}"
-                    ItemsSource="{Binding Products}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
-                    </CollectionView.ItemsLayout>
-                </CollectionView>
-                <popup:SfPopup
-                    x:Name="UpSertProductPopup"
-                    ContentTemplate="{StaticResource UpSertProductPopup}"
-                    HeaderTitle="{Binding SelectedProduct.Name, Converter={StaticResource AddEditButtonConverter}}"
-                    HeightRequest="{x:Static ui:AppDimens.Height300}"
-                    HorizontalOptions="Center"
-                    IsOpen="{Binding IsPopupOpen}"
-                    WidthRequest="{x:Static ui:AppDimens.Height610}" />
+                    <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
+                        <VerticalStackLayout Padding="10,10,10,10" Spacing="{x:Static ui:AppDimens.Space7}">
+                            <Label FontSize="{x:Static ui:AppDimens.FontSize16}" Text="{x:Static resource:AppTexts.ProductName}" />
+                            <Entry
+                                HorizontalOptions="Start"
+                                Text="{Binding Name}"
+                                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+                            <Label FontSize="{x:Static ui:AppDimens.FontSize16}" Text="{x:Static resource:AppTexts.MainIngredients}" />
+                            <Entry
+                                HorizontalOptions="Start"
+                                Text="{Binding Ingredients}"
+                                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+                            <Label
+                                Margin="0,0,10,0"
+                                FontSize="{x:Static ui:AppDimens.FontSize16}"
+                                Text="{x:Static resource:AppTexts.Quantity}" />
+                            <Entry
+                                HorizontalOptions="Start"
+                                Text="{Binding Quantity}"
+                                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+                            <Label
+                                Margin="0,0,10,0"
+                                FontSize="{x:Static ui:AppDimens.FontSize16}"
+                                Text="{x:Static resource:AppTexts.Price}" />
+                            <Entry
+                                HorizontalOptions="Start"
+                                Text="{Binding Price}"
+                                WidthRequest="{x:Static ui:AppDimens.Height280}" />
+                            <HorizontalStackLayout>
+                                <Button
+                                    BackgroundColor="{x:Static ui:AppColors.Yellow}"
+                                    Command="{Binding ResetCommand}"
+                                    HorizontalOptions="Center"
+                                    Text="{x:Static resource:AppTexts.Reset}"
+                                    TextColor="{x:Static ui:AppColors.Black}"
+                                    WidthRequest="{x:Static ui:AppDimens.Height127}" />
+                                <Button
+                                    Margin="24,0,0,0"
+                                    Command="{Binding UpSertProductCommand}"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding SelectedProduct, Converter={StaticResource UpSertButtonConverter}}"
+                                    TextColor="{x:Static ui:AppColors.Black}"
+                                    WidthRequest="{x:Static ui:AppDimens.Height127}" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="2" RowDefinitions="40,*">
+                    <Label
+                        Style="{StaticResource PrimaryLabelStyle}"
+                        Text="{x:Static resource:AppTexts.ProductList}"
+                        VerticalOptions="Center" />
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Label Text="{x:Static resource:AppTexts.Quantity}" VerticalOptions="Center" />
+                        <Button
+                            BackgroundColor="Transparent"
+                            Command="{Binding QuantityFilterCommand}"
+                            FontFamily="{x:Static ui:FontNames.FaSolid}"
+                            FontSize="{x:Static ui:AppDimens.FontSize15}"
+                            Text="{x:Static resource:AwesomeIcon.Filter}"
+                            TextColor="{x:Static ui:AppColors.Black}" />
+                        <Label
+                            Margin="18,0,0,0"
+                            Text="{x:Static resource:AppTexts.Price}"
+                            VerticalOptions="Center" />
+                        <Button
+                            Margin="0,0,170,0"
+                            BackgroundColor="Transparent"
+                            Command="{Binding PriceFilterCommand}"
+                            FontFamily="{x:Static ui:FontNames.FaSolid}"
+                            FontSize="{x:Static ui:AppDimens.FontSize15}"
+                            Text="{x:Static resource:AwesomeIcon.Filter}"
+                            TextColor="{x:Static ui:AppColors.Black}" />
+                    </HorizontalStackLayout>
+                    <CollectionView
+                        Grid.Row="1"
+                        ItemTemplate="{StaticResource ProductItemDataTemplate}"
+                        ItemsSource="{Binding Products}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
