@@ -1,24 +1,75 @@
-﻿using RuKiSo.Features.Models;
+﻿using CommunityToolkit.Mvvm.Input;
+using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Windows.Foundation.Metadata;
+using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
-{
+{  
     public class TransactionViewModel : BaseViewModel
     {
-        public ObservableCollection<ProductDTO> Products { get; set; }
-        public ObservableCollection<IngredientDTO> Ingredients { get; set; }
+        public ICommand DeleteTransactionCommand { get; set; }
+        public ICommand AddPurchaseTransactionCommand { get; set; }
+        public ICommand AddSellTransactionCommand { get; set; }
+        public ObservableCollection<TransactionProductDTO> Products { get; set; }
+        public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<TransactionDTO> Transactions { get; set; }
         public TransactionViewModel()
         {
+            AddPurchaseTransactionCommand = new RelayCommand<TransactionIngredientDTO>(AddPurchaseTransaction);
+            AddSellTransactionCommand = new RelayCommand<TransactionProductDTO>(AddSellTransaction);
+            DeleteTransactionCommand = new RelayCommand<TransactionDTO>(DeleteTransaction);
             InitData();    
+        }
+
+        private void AddSellTransaction(TransactionProductDTO? product)
+        {
+            if (product != null)
+            {
+                var newTransaction = new TransactionDTO
+                {
+                    Name = product.Name,
+                    TranType = true,
+                    TranDate = DateTime.Now,
+                    Quantity = product.UsedQuantity,
+                    Value = product.UsedQuantity * product.Price
+                };
+
+                Transactions.Add(newTransaction);
+            }
+            else return;
+        }
+
+        private void AddPurchaseTransaction(TransactionIngredientDTO? ingredient)
+        {
+            if (ingredient != null && ingredient.UsedQuantity > 0)
+            {
+                var newTransaction = new TransactionDTO
+                {
+                    Name = ingredient.Name,
+                    TranType = false,
+                    TranDate = DateTime.Now,
+                    Quantity = ingredient.UsedQuantity,
+                    Value = ingredient.UsedQuantity * ingredient.PurchasePrice
+                };
+
+                Transactions.Add(newTransaction);
+                ingredient.UsedQuantity = 0; 
+            }
+            else return;
+        }
+
+        private void DeleteTransaction(TransactionDTO? transaction)
+        {
+           if(transaction != null && Transactions.Contains(transaction))
+            {
+                Transactions.Remove(transaction);
+            }
         }
 
         private void InitData()
         {
-            Products = new ObservableCollection<ProductDTO>
+            Products = new ObservableCollection<TransactionProductDTO>
             {
                 new() {Id = 1, Name = "Rượu trắng 45", Ingredients = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
                 new() {Id = 2, Name = "Rượu trắng", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
@@ -27,7 +78,7 @@ namespace RuKiSo.ViewModels
                 new() {Id = 4, Name = "Rượu đòng đòng 45", Ingredients = "Nếp cái hoa vàng, bông lúa non, men thuốc bắc", Quantity = 500, Price = 75000},
                 new() {Id = 5, Name = "Rượu bách nhật", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 5, Price = 40000},
             };
-            Ingredients = new ObservableCollection<IngredientDTO>()
+            Ingredients = new ObservableCollection<TransactionIngredientDTO>()
             {
                 new() {Id = 1, Name = "Men thuốc bắc", PurchasePrice = 100, Unit = "Kg", Quantity = 10},
                 new() {Id = 2, Name = "Men lá", PurchasePrice = 200, Unit = "Kg", Quantity = 100},

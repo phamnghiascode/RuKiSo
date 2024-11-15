@@ -310,11 +310,14 @@
                 <Entry
                     Grid.RowSpan="3"
                     Grid.Column="6"
-                    HeightRequest="{x:Static ui:AppDimens.Height44}" />
+                    HeightRequest="{x:Static ui:AppDimens.Height44}"
+                    Text="{Binding UsedQuantity}" />
                 <Button
                     Grid.RowSpan="3"
                     Grid.Column="8"
                     BackgroundColor="{x:Static ui:AppColors.BrightAqua}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=AddSellTransactionCommand}"
+                    CommandParameter="{Binding}"
                     HeightRequest="{x:Static ui:AppDimens.Height44}"
                     Text="{x:Static resource:AppTexts.Sell}"
                     TextColor="{x:Static ui:AppColors.Black}" />
@@ -355,11 +358,14 @@
                 <Entry
                     Grid.RowSpan="3"
                     Grid.Column="6"
-                    HeightRequest="{x:Static ui:AppDimens.Height44}" />
+                    HeightRequest="{x:Static ui:AppDimens.Height44}"
+                    Text="{Binding UsedQuantity}" />
                 <Button
                     Grid.RowSpan="3"
                     Grid.Column="8"
                     BackgroundColor="{x:Static ui:AppColors.Yellow}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=AddPurchaseTransactionCommand}"
+                    CommandParameter="{Binding}"
                     HeightRequest="{x:Static ui:AppDimens.Height44}"
                     Text="{x:Static resource:AppTexts.Purchase}"
                     TextColor="{x:Static ui:AppColors.Black}" />
@@ -438,8 +444,22 @@
                     Grid.Row="2"
                     Grid.Column="5"
                     Style="{StaticResource Size16ColorBlack}"
-                    Text="{Binding TranType}"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="true">
+                            <Setter Property="Text" Value="{x:Static resource:AppTexts.Sell}" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="false">
+                            <Setter Property="Text" Value="{x:Static resource:AppTexts.Purchase}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="7"
@@ -481,6 +501,8 @@
                     <Button
                         Margin="10,0,0,0"
                         BackgroundColor="{x:Static ui:AppColors.Red}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=DeleteTransactionCommand}"
+                        CommandParameter="{Binding}"
                         Text="{x:Static resource:AppTexts.Delete}" />
                 </HorizontalStackLayout>
             </Grid>

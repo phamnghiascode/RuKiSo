@@ -22,9 +22,9 @@ namespace RuKiSo.ViewModels
         public ICommand OpenClosePopupCommand { get; set; }
         public ICommand DeleteIngredientCommand { get; set; }
         public ICommand EditIngredientCommand { get; set; }
-        public ICommand QuantityFilterCommand { get; }
-        public ICommand PurchasePriceFilterCommand { get; }
-        public ICommand ResetCommand { get; }
+        public ICommand QuantityFilterCommand { get; set; }
+        public ICommand PurchasePriceFilterCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
 
         public bool IsQuantityEnabled
         {
