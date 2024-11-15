@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
-using Syncfusion.Maui.Graphics.Internals;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -9,8 +8,7 @@ namespace RuKiSo.ViewModels
 {
     public class IngredientViewModel : BaseViewModel
     {
-        private IngredientDTO selectedIngredient;
-        private bool isPopupOpen;
+        private IngredientDTO? selectedIngredient;
         private int totalIngredient;
         private double totalValue;
         private double estimateOutput;
@@ -18,13 +16,15 @@ namespace RuKiSo.ViewModels
         private string unit;
         private int quantity;
         private double purchasePrice;
-        public ICommand AddIngredientCommand { get; set; }
+        public ICommand UpSertIngredientCommand { get; set; }
         public ICommand OpenClosePopupCommand { get; set; }
         public ICommand DeleteIngredientCommand { get; set; }
+        public ICommand EditIngredientCommand { get; set; }
         public ICommand QuantityFilterCommand { get; }
         public ICommand PurchasePriceFilterCommand { get; }
+        public ICommand ResetCommand { get; }
 
-        public IngredientDTO SelectedIngredient
+        public IngredientDTO? SelectedIngredient
         {
             get { return selectedIngredient; }
             set
@@ -72,15 +72,6 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(Quantity));
             }
         }
-        public bool IsPopupOpen
-        {
-            get { return isPopupOpen; }
-            set
-            {
-                isPopupOpen = value;
-                OnPropertyChanged(nameof(IsPopupOpen));
-            }
-        }
         public int TotalIngredient
         {
             get { return totalIngredient; }
@@ -113,13 +104,28 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<IngredientDTO> Ingredients { get; set; }
         public IngredientViewModel()
         {
+            ResetCommand = new RelayCommand(Reset);
+            EditIngredientCommand = new RelayCommand<IngredientDTO>(EditIngredient);
             PurchasePriceFilterCommand = new RelayCommand(FilterByPurchasePrice);
             QuantityFilterCommand = new RelayCommand(FilterByquantity);
             DeleteIngredientCommand = new RelayCommand<IngredientDTO>(DeleteIngredient);
-            AddIngredientCommand = new RelayCommand(AddIngredient);
-            OpenClosePopupCommand = new RelayCommand(OpenClosePopup);
+            UpSertIngredientCommand = new RelayCommand(UpSertIngredient);
             InitData();
         }
+
+        private void EditIngredient(IngredientDTO? ingredient)
+        {
+            if (ingredient != null)
+            {
+                SelectedIngredient = ingredient;
+                Name = SelectedIngredient.Name;
+                Unit = SelectedIngredient.Unit;
+                PurchasePrice = SelectedIngredient.PurchasePrice;
+                Quantity = SelectedIngredient.Quantity;
+            }
+            else return;
+        }
+
         private void UpdateIngredients(IEnumerable<IngredientDTO> filteredIngredients)
         {
             Ingredients.Clear();
@@ -149,22 +155,40 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        private void OpenClosePopup()
+        private void UpSertIngredient()
         {
-            IsPopupOpen = !IsPopupOpen;
-        }
-
-        private void AddIngredient()
-        {
-            IngredientDTO ingredient = new()
+            if (SelectedIngredient != null)
             {
-                Name = Name,
-                Unit = Unit,
-                Quantity = Quantity,
-                PurchasePrice = PurchasePrice
-            };
-            Ingredients.Add(ingredient);
+                // Update trường hợp này
+                SelectedIngredient.Name = Name;
+                SelectedIngredient.Unit = Unit;
+                SelectedIngredient.Quantity = Quantity;
+                SelectedIngredient.PurchasePrice = PurchasePrice;
+
+                // Cập nhật lại danh sách Ingredients
+                var index = Ingredients.IndexOf(SelectedIngredient);
+                if (index >= 0)
+                {
+                    Ingredients[index] = SelectedIngredient;
+                }
+
+                // Đặt lại SelectedIngredient về null sau khi cập nhật xong
+                SelectedIngredient = null;
+            }
+            else
+            {
+                // Thêm mới
+                IngredientDTO ingredient = new()
+                {
+                    Name = Name,
+                    Unit = Unit,
+                    Quantity = Quantity,
+                    PurchasePrice = PurchasePrice
+                };
+                Ingredients.Add(ingredient);
+            }
             UpdateCardsInfo();
+            Reset();
         }
 
         private void InitData()
@@ -185,6 +209,15 @@ namespace RuKiSo.ViewModels
             TotalIngredient = Ingredients.Count;
             TotalValue = Ingredients.Sum(i => i.TotalValue);
             EstimatedOutput = Math.Floor(TotalValue);
+        }
+
+        private void Reset()
+        {
+            SelectedIngredient = null;
+            Name = string.Empty;
+            Unit = string.Empty;
+            Quantity = 0;
+            PurchasePrice = 0;
         }
     }
 }

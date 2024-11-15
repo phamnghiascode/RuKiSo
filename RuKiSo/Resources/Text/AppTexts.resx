@@ -279,4 +279,7 @@
   <data name="Use" xml:space="preserve">
     <value>Sử dụng</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
 </root>

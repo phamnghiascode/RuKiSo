@@ -165,7 +165,7 @@ namespace RuKiSo.ViewModels
 
         private void InitData()
         {
-            Ingredients = new()
+            Ingredients = new ObservableCollection<BatchIngredientDTO>
             {
                 new() {Id = 1, IngredientName = "Men lá", StoredQuantity = 10, PricePerUnit = 200},
                 new() {Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, PricePerUnit = 150},
@@ -191,8 +191,8 @@ namespace RuKiSo.ViewModels
                     EstimateEndDate = DateTime.Now.AddMonths(3),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 2, PricePerUnit = 200 },
-                        new BatchIngredientDTO { Id = 3, IngredientName = "Nếp cái hoa vàng", StoredQuantity = 500, UsedQuantity = 100, PricePerUnit = 20 },
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 2, PricePerUnit = 200, IsSelected = true },
+                        new BatchIngredientDTO { Id = 3, IngredientName = "Nếp cái hoa vàng", StoredQuantity = 500, UsedQuantity = 100, PricePerUnit = 20, IsSelected = true },
                     }
                     },
                 new BatchDTO
@@ -203,8 +203,8 @@ namespace RuKiSo.ViewModels
                     EstimateEndDate = DateTime.Now.AddMonths(4),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, UsedQuantity = 3, PricePerUnit = 150 },
-                        new BatchIngredientDTO { Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, UsedQuantity = 150, PricePerUnit = 18 },
+                        new BatchIngredientDTO { Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, UsedQuantity = 3, PricePerUnit = 150 , IsSelected = true},
+                        new BatchIngredientDTO { Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, UsedQuantity = 150, PricePerUnit = 18, IsSelected = true },
                     }
                 },
                 new BatchDTO
@@ -215,8 +215,8 @@ namespace RuKiSo.ViewModels
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50, IsSelected = true },
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
                     }
                 },
                 new BatchDTO
@@ -227,8 +227,8 @@ namespace RuKiSo.ViewModels
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50, IsSelected = true },
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
                     }
                 },
                 new BatchDTO
@@ -239,8 +239,8 @@ namespace RuKiSo.ViewModels
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                     }
                 },
                 new BatchDTO
@@ -251,8 +251,8 @@ namespace RuKiSo.ViewModels
                     EstimateEndDate = DateTime.Now.AddMonths(5),
                     Ingredients = new List<BatchIngredientDTO>
                     {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
+                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                     }
                 },
                  new BatchDTO
@@ -263,8 +263,8 @@ namespace RuKiSo.ViewModels
                      EstimateEndDate = DateTime.Now.AddMonths(5),
                      Ingredients = new List<BatchIngredientDTO>
                      {
-                         new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 },
-                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 },
+                         new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
+                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                      }
                  }
             };

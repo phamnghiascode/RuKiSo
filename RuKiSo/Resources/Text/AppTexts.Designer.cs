@@ -394,6 +394,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        internal static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lưu.
         /// </summary>
         internal static string Save {

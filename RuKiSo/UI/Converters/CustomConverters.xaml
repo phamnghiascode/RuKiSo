@@ -5,4 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:RuKiSo.UI.Converters">
     <local:AddEditButtonConverter x:Key="AddEditButtonConverter" />
+    <local:UpSertIngredientConverter x:Key="UpSertIngredientConverter" />
+    <local:UpSertButtonConverter x:Key="UpSertButtonConverter" />
+    <local:UpSertProductConverter x:Key="UpSertProductConverter" />
 </ResourceDictionary>

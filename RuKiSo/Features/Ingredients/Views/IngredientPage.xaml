@@ -3,9 +3,7 @@
     x:Class="RuKiSo.Views.IngredientPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
-    xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
@@ -42,24 +40,24 @@
             <Grid
                 Grid.Row="1"
                 Margin="0,10,0,0"
-                ColumnDefinitions="320,*, 650"
+                ColumnDefinitions="300,*, 670"
                 RowDefinitions="40,*">
                 <Label
                     Style="{StaticResource PrimaryLabelStyle}"
-                    Text="{x:Static resource:AppTexts.AddIngredient}"
+                    Text="{Binding SelectedIngredient, Converter={StaticResource UpSertIngredientConverter}}"
                     VerticalOptions="Center" />
                 <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
-                    <VerticalStackLayout Padding="10,10,10,10" Spacing="7">
+                    <VerticalStackLayout Padding="10,10,10,10" Spacing="{x:Static ui:AppDimens.Space7}">
                         <Label FontSize="{x:Static ui:AppDimens.FontSize16}" Text="{x:Static resource:AppTexts.Name}" />
                         <Entry
                             HorizontalOptions="Start"
                             Text="{Binding Name}"
-                            WidthRequest="{x:Static ui:AppDimens.Height300}" />
+                            WidthRequest="{x:Static ui:AppDimens.Height280}" />
                         <Label FontSize="{x:Static ui:AppDimens.FontSize16}" Text="{x:Static resource:AppTexts.Unit}" />
                         <Entry
                             HorizontalOptions="Start"
                             Text="{Binding Unit}"
-                            WidthRequest="{x:Static ui:AppDimens.Height300}" />
+                            WidthRequest="{x:Static ui:AppDimens.Height280}" />
                         <Label
                             Margin="0,0,10,0"
                             FontSize="{x:Static ui:AppDimens.FontSize16}"
@@ -67,7 +65,7 @@
                         <Entry
                             HorizontalOptions="Start"
                             Text="{Binding PurchasePrice}"
-                            WidthRequest="{x:Static ui:AppDimens.Height300}" />
+                            WidthRequest="{x:Static ui:AppDimens.Height280}" />
                         <Label
                             Margin="0,0,10,0"
                             FontSize="{x:Static ui:AppDimens.FontSize16}"
@@ -75,12 +73,23 @@
                         <Entry
                             HorizontalOptions="Start"
                             Text="{Binding Quantity}"
-                            WidthRequest="{x:Static ui:AppDimens.Height300}" />
-                        <Button
-                            Command="{Binding AddIngredientCommand}"
-                            HorizontalOptions="Center"
-                            Text="{x:Static resource:AppTexts.Add}"
-                            WidthRequest="{x:Static ui:AppDimens.Height300}" />
+                            WidthRequest="{x:Static ui:AppDimens.Height280}" />
+                        <HorizontalStackLayout>
+                            <Button
+                                BackgroundColor="{x:Static ui:AppColors.Yellow}"
+                                Command="{Binding ResetCommand}"
+                                HorizontalOptions="Center"
+                                Text="{x:Static resource:AppTexts.Reset}"
+                                TextColor="{x:Static ui:AppColors.Black}"
+                                WidthRequest="{x:Static ui:AppDimens.Height127}" />
+                            <Button
+                                Margin="24,0,0,0"
+                                Command="{Binding UpSertIngredientCommand}"
+                                HorizontalOptions="Center"
+                                Text="{Binding SelectedIngredient, Converter={StaticResource UpSertButtonConverter}}"
+                                TextColor="{x:Static ui:AppColors.Black}"
+                                WidthRequest="{x:Static ui:AppDimens.Height127}" />
+                        </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Border>
                 <Label
@@ -90,7 +99,7 @@
                     VerticalOptions="Center" />
                 <HorizontalStackLayout
                     Grid.Column="2"
-                    Margin="0,0,200,0"
+                    Margin="0,0,210,0"
                     HorizontalOptions="End">
                     <Label Text="{x:Static resource:AppTexts.Quantity}" VerticalOptions="Center" />
                     <Button
