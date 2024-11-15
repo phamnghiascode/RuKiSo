@@ -35,7 +35,7 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{StaticResource White}"
-                ColumnDefinitions="15, 40, 0.2*, 250, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
+                ColumnDefinitions="8, 40, 0.2*, 250, *, 66, *, 66, *, 110, *, auto, 0.2*, auto, 8"
                 RowDefinitions="15, 7, 21, 4, 21, 7, 15">
                 <Border
                     Grid.Row="1"
@@ -83,12 +83,12 @@
                     Grid.Row="4"
                     Grid.Column="7"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Price}" />
+                    Text="{Binding Price, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Label
                     Grid.Row="4"
                     Grid.Column="9"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding TotalValue}" />
+                    Text="{Binding TotalValue, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
 
                 <Button
                     Grid.Row="2"
@@ -152,7 +152,7 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{x:Static ui:AppColors.White}"
-                ColumnDefinitions="15, 60, 0.2*, 170, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
+                ColumnDefinitions="8, 60, 0.2*, 170, *, 66, *, 100, *, 110, *, auto, 0.2*, auto, 8"
                 RowDefinitions="15, 7, 21, 4, 21, 7, 15">
                 <Border
                     Grid.Row="1"
@@ -208,12 +208,12 @@
                     Grid.Row="4"
                     Grid.Column="7"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding PurchasePrice}" />
+                    Text="{Binding PurchasePrice, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Label
                     Grid.Row="4"
                     Grid.Column="9"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding TotalValue}" />
+                    Text="{Binding TotalValue, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <HorizontalStackLayout
                     Grid.Row="2"
                     Grid.RowSpan="3"
@@ -306,7 +306,7 @@
                     Grid.Row="2"
                     Grid.Column="4"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Price}" />
+                    Text="{Binding Price, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Entry
                     Grid.RowSpan="3"
                     Grid.Column="6"
@@ -351,7 +351,7 @@
                     Grid.Row="2"
                     Grid.Column="4"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding PurchasePrice}" />
+                    Text="{Binding PurchasePrice, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Entry
                     Grid.RowSpan="3"
                     Grid.Column="6"
@@ -418,13 +418,13 @@
                             Binding="{Binding TranType}"
                             TargetType="Image"
                             Value="true">
-                            <Setter Property="Source" Value="arrow_up.png" />
+                            <Setter Property="Source" Value="{x:Static ui:StaticImage.ArrowUp}" />
                         </DataTrigger>
                         <DataTrigger
                             Binding="{Binding TranType}"
                             TargetType="Image"
                             Value="false">
-                            <Setter Property="Source" Value="arrow_down.png" />
+                            <Setter Property="Source" Value="{x:Static ui:StaticImage.ArrowUp}" />
                         </DataTrigger>
                     </Image.Triggers>
                 </Image>
@@ -444,7 +444,7 @@
                     Grid.Row="2"
                     Grid.Column="7"
                     Style="{StaticResource Size16ColorBlack}"
-                    Text="{Binding TranDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                    Text="{Binding TranDate, StringFormat='{0:dd/MM/yyyy}'}"
                     VerticalOptions="Center" />
                 <Label
                     Grid.Row="2"
@@ -455,9 +455,27 @@
                 <Label
                     Grid.Row="2"
                     Grid.Column="11"
-                    Style="{StaticResource Size16ColorBlack}"
+                    FontSize="{x:Static ui:AppDimens.FontSize16}"
                     Text="{Binding Value}"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="true">
+                            <Setter Property="Text" Value="{Binding Value, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
+                            <Setter Property="TextColor" Value="{x:Static ui:AppColors.Green}" />
+                        </DataTrigger>
+
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="false">
+                            <Setter Property="Text" Value="{Binding Value, StringFormat={x:Static resource:AppTexts.MinusMoneyFormat}}" />
+                            <Setter Property="TextColor" Value="{x:Static ui:AppColors.ShineRed}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <HorizontalStackLayout Grid.Row="2" Grid.Column="13">
                     <Button Margin="10,0,0,0" Text="{x:Static resource:AppTexts.Edit}" />
                     <Button

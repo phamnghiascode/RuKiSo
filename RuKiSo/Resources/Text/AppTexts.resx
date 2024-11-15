@@ -282,4 +282,10 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="MoneyFormat" xml:space="preserve">
+    <value>${0:N0}</value>
+  </data>
+  <data name="MinusMoneyFormat" xml:space="preserve">
+    <value>-${0:N0}</value>
+  </data>
 </root>

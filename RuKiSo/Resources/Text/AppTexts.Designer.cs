@@ -277,6 +277,24 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -${0:N0}.
+        /// </summary>
+        internal static string MinusMoneyFormat {
+            get {
+                return ResourceManager.GetString("MinusMoneyFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ${0:N0}.
+        /// </summary>
+        internal static string MoneyFormat {
+            get {
+                return ResourceManager.GetString("MoneyFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lợi nhuận.
         /// </summary>
         internal static string MonthlyProfitChart {
