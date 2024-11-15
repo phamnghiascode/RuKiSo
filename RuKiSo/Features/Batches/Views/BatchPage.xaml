@@ -97,7 +97,7 @@
                     Grid.Column="2"
                     Padding="10,10,10,10"
                     Style="{StaticResource Border25BackGroundWhite}">
-                    <Grid ColumnDefinitions="0.5*,160,*,100,0.2*,100,5*" RowDefinitions="21, *">
+                    <Grid ColumnDefinitions="0.5*,160,*,100,0.2*,100,3*" RowDefinitions="21, *">
                         <Label
                             Grid.Column="1"
                             Style="{StaticResource Size16ColorBlue}"

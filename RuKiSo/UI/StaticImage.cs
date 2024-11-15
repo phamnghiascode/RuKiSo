@@ -9,5 +9,6 @@
         public static readonly string EstimatedProfit = "estimatedprofit.png";
         public static readonly string EstimatedOutput = "estimate_output.png";
         public static readonly string Plus = "plus.png";
+        public static readonly string Ingredients = "ingredients.png";
     }
 }

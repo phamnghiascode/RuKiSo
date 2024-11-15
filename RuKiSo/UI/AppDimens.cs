@@ -30,6 +30,7 @@
         public const double Height25 = 25.0;
         public const double Height30 = 30.0;
         public const double Height40 = 40.0;
+        public const double Height44 = 44.0;
         public const double Height50 = 50.0;
         public const double Height60 = 60.0;
         public const double Height70 = 70.0;

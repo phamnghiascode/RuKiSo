@@ -2,10 +2,9 @@
 
 namespace RuKiSo.Features.Models
 {
-    public class CustomerDTO : BaseModel
+    public class MostUsedIngredient : BaseModel
     {
         public string Name { get; set; }
-        public string Img { get; set; } = "defautavatar.jpg";
         public int Quantity { get; set; }
     }
 }

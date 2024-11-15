@@ -3,16 +3,16 @@ using RuKiSo.Features.Models;
 
 namespace RuKiSo.UI.Views;
 
-public partial class MostPurchaseCustomers : ContentView
+public partial class CustomHorizontalCollectionView : ContentView
 {
     private int _currentIndex = 0;
-    public MostPurchaseCustomers()
+    public CustomHorizontalCollectionView()
 	{
 		InitializeComponent();
 	}
     private void Button_Clicked(object sender, EventArgs e)
     {
-        IList<CustomerDTO> items = QuickTransferCollectionView.ItemsSource as IList<CustomerDTO>;
+        IList<MostUsedIngredient> items = MostUsedIngredientCollectionView.ItemsSource as IList<MostUsedIngredient>;
         if (items == null || items.Count == 0)
             return;
 
@@ -22,6 +22,6 @@ public partial class MostPurchaseCustomers : ContentView
             _currentIndex = 0;
         }
 
-        QuickTransferCollectionView.ScrollTo(_currentIndex, position: ScrollToPosition.Center, animate: true);
+        MostUsedIngredientCollectionView.ScrollTo(_currentIndex, position: ScrollToPosition.Center, animate: true);
     }
 }

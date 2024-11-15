@@ -144,8 +144,8 @@
   <data name="TopSellerChart" xml:space="preserve">
     <value>Bán chạy nhất</value>
   </data>
-  <data name="MostPurchaseCustomers" xml:space="preserve">
-    <value>Khách mua nhiều nhất</value>
+  <data name="MostUsedIngredients" xml:space="preserve">
+    <value>Nguyên liệu dùng nhiều nhất</value>
   </data>
   <data name="MonthlyProfitChart" xml:space="preserve">
     <value>Lợi nhuận</value>

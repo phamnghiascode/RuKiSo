@@ -72,6 +72,7 @@
                             Text="{x:Static resource:AppTexts.Quantity}" />
                         <Entry
                             HorizontalOptions="Start"
+                            IsEnabled="{Binding IsQuantityEnabled}"
                             Text="{Binding Quantity}"
                             WidthRequest="{x:Static ui:AppDimens.Height280}" />
                         <HorizontalStackLayout>

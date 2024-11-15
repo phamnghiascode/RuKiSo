@@ -7,16 +7,16 @@
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels">
-    <DataTemplate x:Key="MostPurchaseCustomers">
+    <DataTemplate x:Key="MostUsedIngredient">
         <Grid
             HeightRequest="{x:Static ui:AppDimens.Height127}"
             RowDefinitions="70, 11, 21, 20"
-            WidthRequest="{x:Static ui:AppDimens.Height85}">
+            WidthRequest="{x:Static ui:AppDimens.Height120}">
             <Border
                 HeightRequest="{x:Static ui:AppDimens.Height70}"
                 StrokeShape="RoundRectangle 35"
                 WidthRequest="{x:Static ui:AppDimens.Height70}">
-                <Image Aspect="AspectFill" Source="{Binding Img}" />
+                <Image Aspect="AspectFill" Source="{x:Static ui:StaticImage.Ingredients}" />
             </Border>
             <Label
                 Grid.Row="2"
@@ -238,7 +238,7 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{x:Static ui:AppColors.White}"
-                ColumnDefinitions="0.5*,160,*,100,0.2*,100,5*"
+                ColumnDefinitions="0.5*,160,*,100,0.2*,100,3*"
                 HeightRequest="60"
                 RowDefinitions="1, 7, auto  , 8">
                 <Border Grid.ColumnSpan="7" BackgroundColor="{x:Static ui:AppColors.SecondaryColor}" />
@@ -277,33 +277,12 @@
         </Border>
     </DataTemplate>
 
-    <DataTemplate x:Key="PurchaseItemDataTemplate">
-        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
-            <Grid
-                Padding="10,5,10,5"
-                ColumnDefinitions="50, *,auto,*, auto"
-                HeightRequest="60">
-                <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
-                    <Image Source="{Binding ImageUrl}" />
-                </Border>
-                <Label Grid.Column="2" Text="{Binding Name}" />
-                <HorizontalStackLayout Grid.Column="4">
-                    <Button Text="{x:Static resource:AppTexts.Purchase}" />
-                    <Button
-                        Margin="10,0,0,0"
-                        BackgroundColor="{x:Static ui:AppColors.Red}"
-                        Text="{x:Static resource:AppTexts.Delete}" />
-                </HorizontalStackLayout>
-            </Grid>
-        </Border>
-    </DataTemplate>
-
     <DataTemplate x:Key="SellItemDataTemplate">
         <Border
             Padding="10,5,10,5"
             StrokeShape="RoundRectangle 20"
             StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
-            <Grid ColumnDefinitions="150,*,100,*,110,*, 60" RowDefinitions="23, 5,23">
+            <Grid ColumnDefinitions="150,*,80,*,90,*,60,*, 63" RowDefinitions="23, 5,23">
                 <Label Style="{StaticResource Size16ColorBlack}" Text="{x:Static resource:AppTexts.Name}" />
                 <Label
                     Grid.Row="2"
@@ -328,12 +307,62 @@
                     Grid.Column="4"
                     Style="{StaticResource Size15ColorBlue}"
                     Text="{Binding Price}" />
-                <Button
+                <Entry
                     Grid.RowSpan="3"
                     Grid.Column="6"
+                    HeightRequest="{x:Static ui:AppDimens.Height44}" />
+                <Button
+                    Grid.RowSpan="3"
+                    Grid.Column="8"
                     BackgroundColor="{x:Static ui:AppColors.BrightAqua}"
-                    HeightRequest="40"
-                    Text="{x:Static resource:AppTexts.Sell}" />
+                    HeightRequest="{x:Static ui:AppDimens.Height44}"
+                    Text="{x:Static resource:AppTexts.Sell}"
+                    TextColor="{x:Static ui:AppColors.Black}" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PurchaseItemDataTemplate">
+        <Border
+            Padding="10,5,10,5"
+            StrokeShape="RoundRectangle 20"
+            StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid ColumnDefinitions="150,*,80,*,90,*,60,*, 63" RowDefinitions="23, 5,23">
+                <Label Style="{StaticResource Size16ColorBlack}" Text="{x:Static resource:AppTexts.Name}" />
+                <Label
+                    Grid.Row="2"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Name}" />
+
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.Quantity}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding Quantity}" />
+                <Label
+                    Grid.Column="4"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{x:Static resource:AppTexts.PurchasePrice}" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="4"
+                    Style="{StaticResource Size15ColorBlue}"
+                    Text="{Binding PurchasePrice}" />
+                <Entry
+                    Grid.RowSpan="3"
+                    Grid.Column="6"
+                    HeightRequest="{x:Static ui:AppDimens.Height44}" />
+                <Button
+                    Grid.RowSpan="3"
+                    Grid.Column="8"
+                    BackgroundColor="{x:Static ui:AppColors.Yellow}"
+                    HeightRequest="{x:Static ui:AppDimens.Height44}"
+                    Text="{x:Static resource:AppTexts.Purchase}"
+                    TextColor="{x:Static ui:AppColors.Black}" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -343,6 +372,7 @@
             <Label Text="{x:Static resource:AppTexts.Name}" />
             <Entry
                 HorizontalOptions="Start"
+                IsEnabled="False"
                 Text="{Binding SelectedBatch.Product.Name, Mode=TwoWay}"
                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
@@ -372,5 +402,70 @@
                     Text="{x:Static resource:AppTexts.Save}" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TransactionItem">
+        <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
+            <Grid
+                BackgroundColor="{x:Static ui:AppColors.White}"
+                ColumnDefinitions="*,30,0.5*,200, *,90, *,100, *,60, *,120,*, 126,*"
+                HeightRequest="60"
+                RowDefinitions="1, 7, auto  , 8">
+                <Border Grid.ColumnSpan="15" BackgroundColor="{x:Static ui:AppColors.SecondaryColor}" />
+                <Image Grid.Row="2" Grid.Column="1">
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Image"
+                            Value="true">
+                            <Setter Property="Source" Value="arrow_up.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Image"
+                            Value="false">
+                            <Setter Property="Source" Value="arrow_down.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding Name}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="5"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding TranType}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="7"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding TranDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="9"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding Quantity}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="11"
+                    Style="{StaticResource Size16ColorBlack}"
+                    Text="{Binding Value}"
+                    VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Row="2" Grid.Column="13">
+                    <Button Margin="10,0,0,0" Text="{x:Static resource:AppTexts.Edit}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        BackgroundColor="{x:Static ui:AppColors.Red}"
+                        Text="{x:Static resource:AppTexts.Delete}" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
     </DataTemplate>
 </ResourceDictionary>

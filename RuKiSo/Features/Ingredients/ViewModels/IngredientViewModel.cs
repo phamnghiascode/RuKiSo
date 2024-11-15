@@ -16,6 +16,8 @@ namespace RuKiSo.ViewModels
         private string unit;
         private int quantity;
         private double purchasePrice;
+        private bool isQuantityEnabled;
+    
         public ICommand UpSertIngredientCommand { get; set; }
         public ICommand OpenClosePopupCommand { get; set; }
         public ICommand DeleteIngredientCommand { get; set; }
@@ -24,6 +26,15 @@ namespace RuKiSo.ViewModels
         public ICommand PurchasePriceFilterCommand { get; }
         public ICommand ResetCommand { get; }
 
+        public bool IsQuantityEnabled
+        {
+            get { return isQuantityEnabled; }
+            set
+            {
+                isQuantityEnabled = value;
+                OnPropertyChanged(nameof(IsQuantityEnabled));
+            }
+        }
         public IngredientDTO? SelectedIngredient
         {
             get { return selectedIngredient; }
@@ -117,6 +128,7 @@ namespace RuKiSo.ViewModels
         {
             if (ingredient != null)
             {
+                IsQuantityEnabled = true;
                 SelectedIngredient = ingredient;
                 Name = SelectedIngredient.Name;
                 Unit = SelectedIngredient.Unit;
@@ -213,6 +225,7 @@ namespace RuKiSo.ViewModels
 
         private void Reset()
         {
+            IsQuantityEnabled = false;
             SelectedIngredient = null;
             Name = string.Empty;
             Unit = string.Empty;

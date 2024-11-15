@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using RuKiSo.Features.Batches.Models;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;

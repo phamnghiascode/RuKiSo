@@ -1,7 +1,6 @@
-﻿using RuKiSo.Features.Models;
-using RuKiSo.Utils.MVVM;
+﻿using RuKiSo.Utils.MVVM;
 
-namespace RuKiSo.Features.Batches.Models
+namespace RuKiSo.Features.Models
 {
     public class BatchDTO : BaseModel
     {

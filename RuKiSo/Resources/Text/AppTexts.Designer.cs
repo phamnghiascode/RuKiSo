@@ -295,11 +295,11 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Khách mua nhiều nhất.
+        ///   Looks up a localized string similar to Nguyên liệu dùng nhiều nhất.
         /// </summary>
-        internal static string MostPurchaseCustomers {
+        internal static string MostUsedIngredients {
             get {
-                return ResourceManager.GetString("MostPurchaseCustomers", resourceCulture);
+                return ResourceManager.GetString("MostUsedIngredients", resourceCulture);
             }
         }
         
