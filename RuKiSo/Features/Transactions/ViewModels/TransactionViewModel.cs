@@ -5,21 +5,78 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
-{  
+{
     public class TransactionViewModel : BaseViewModel
     {
+        private TransactionDTO selectedTransaction;
+
+        public TransactionDTO SelectedTransaction
+        {
+            get { return selectedTransaction; }
+            set 
+            { 
+                selectedTransaction = value; 
+                OnPropertyChanged(nameof(SelectedTransaction)); 
+            }
+        }
+
+        private bool isPopupOpen;
+
+        public bool IsPopupOpen
+        {
+            get { return isPopupOpen; }
+            set 
+            { 
+                isPopupOpen = value;
+                OnPropertyChanged(nameof(IsPopupOpen));
+            }
+        }
+
         public ICommand DeleteTransactionCommand { get; set; }
         public ICommand AddPurchaseTransactionCommand { get; set; }
         public ICommand AddSellTransactionCommand { get; set; }
+        public ICommand OpenEditTransactionPopupCommand { get; set; }
+        public ICommand EditTransactionCommand { get; set; }
         public ObservableCollection<TransactionProductDTO> Products { get; set; }
         public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<TransactionDTO> Transactions { get; set; }
         public TransactionViewModel()
         {
+            EditTransactionCommand = new RelayCommand(EditTransaction);
+            OpenEditTransactionPopupCommand = new RelayCommand<TransactionDTO>(OpenEditTransaction);
             AddPurchaseTransactionCommand = new RelayCommand<TransactionIngredientDTO>(AddPurchaseTransaction);
             AddSellTransactionCommand = new RelayCommand<TransactionProductDTO>(AddSellTransaction);
             DeleteTransactionCommand = new RelayCommand<TransactionDTO>(DeleteTransaction);
             InitData();    
+        }
+
+        private void EditTransaction()
+        {
+            if (SelectedTransaction != null)
+            {
+                TransactionDTO transaction = new()
+                {
+                    Name = SelectedTransaction.Name,
+                    TranDate = SelectedTransaction.TranDate,
+                    TranType = SelectedTransaction.TranType,
+                    Value = SelectedTransaction.Value,
+                    Quantity = SelectedTransaction.Quantity
+                };
+                var index = Transactions.IndexOf(SelectedTransaction);
+                Transactions[index] = transaction;
+                IsPopupOpen = false;
+            }
+            else return;
+        }
+
+        private void OpenEditTransaction(TransactionDTO? transaction)
+        {
+            if (transaction != null)
+            {
+                SelectedTransaction = transaction;
+                IsPopupOpen = true;
+            }
+            else return;
         }
 
         private void AddSellTransaction(TransactionProductDTO? product)

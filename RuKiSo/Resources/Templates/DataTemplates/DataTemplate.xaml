@@ -111,7 +111,7 @@
 
     <DataTemplate x:Key="BatchIngredientItem">
         <Border StrokeShape="RoundRectangle 10" StrokeThickness="{x:Static ui:AppDimens.Stroke1}">
-            <Grid ColumnDefinitions="auto, 140, auto, 10, auto" RowDefinitions="*,*">
+            <Grid ColumnDefinitions="auto, 120, auto, 10, auto" RowDefinitions="*,*">
                 <CheckBox
                     x:Name="IngredientCheckBox"
                     Grid.RowSpan="2"
@@ -374,7 +374,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="UpdateCookBatchPopup">
-        <VerticalStackLayout HorizontalOptions="Center">
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="{x:Static ui:AppDimens.Space7}">
             <Label Text="{x:Static resource:AppTexts.Name}" />
             <Entry
                 HorizontalOptions="Start"
@@ -400,13 +400,11 @@
                 Text="{Binding SelectedBatch.Yield, Mode=TwoWay}"
                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
-            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
-                <Button
-                    Margin="10,0,0,0"
-                    Command="{Binding SaveBatchCommand}"
-                    HorizontalOptions="Center"
-                    Text="{x:Static resource:AppTexts.Save}" />
-            </HorizontalStackLayout>
+            <Button
+                Command="{Binding SaveBatchCommand}"
+                HorizontalOptions="Center"
+                Text="{x:Static resource:AppTexts.Save}"
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
         </VerticalStackLayout>
     </DataTemplate>
 
@@ -414,7 +412,7 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{x:Static ui:AppColors.White}"
-                ColumnDefinitions="*,30,0.5*,200, *,90, *,100, *,60, *,120,*, 126,*"
+                ColumnDefinitions="*,30,0.5*,200, *,110, *,110, *,70, *,120,*, 126,*"
                 HeightRequest="60"
                 RowDefinitions="1, 7, auto  , 8">
                 <Border Grid.ColumnSpan="15" BackgroundColor="{x:Static ui:AppColors.SecondaryColor}" />
@@ -497,7 +495,11 @@
                     </Label.Triggers>
                 </Label>
                 <HorizontalStackLayout Grid.Row="2" Grid.Column="13">
-                    <Button Margin="10,0,0,0" Text="{x:Static resource:AppTexts.Edit}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=OpenEditTransactionPopupCommand}"
+                        CommandParameter="{Binding}"
+                        Text="{x:Static resource:AppTexts.Edit}" />
                     <Button
                         Margin="10,0,0,0"
                         BackgroundColor="{x:Static ui:AppColors.Red}"
@@ -507,5 +509,23 @@
                 </HorizontalStackLayout>
             </Grid>
         </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EditTransactionPopup">
+        <VerticalStackLayout Padding="10,10,10,10" Spacing="{x:Static ui:AppDimens.Space7}">
+            <Label Text="{x:Static resource:AppTexts.TransactionName}" />
+            <Entry Text="{Binding SelectedTransaction.Name}" />
+
+            <Label Text="{x:Static resource:AppTexts.TransactionDate}" />
+            <DatePicker Date="{Binding SelectedTransaction.TranDate}" />
+
+            <Label Text="{x:Static resource:AppTexts.Quantity}" />
+            <Entry Text="{Binding SelectedTransaction.Quantity}" />
+
+            <Label Text="{x:Static resource:AppTexts.TotalValue}" />
+            <Entry Text="{Binding SelectedTransaction.Value}" />
+
+            <Button Command="{Binding EditTransactionCommand}" Text="{x:Static resource:AppTexts.Edit}" />
+        </VerticalStackLayout>
     </DataTemplate>
 </ResourceDictionary>

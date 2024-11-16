@@ -9,7 +9,7 @@ namespace RuKiSo.ViewModels
     public partial class BatchViewModel : BaseViewModel
     {
         private BatchDTO selectedBatch;
-        private ProductDTO selectedProduct;
+        private ProductDTO? selectedProduct;
         private bool isEditCookPopupOpen;
         private int totalBatch;
         private double totalValue;
@@ -20,6 +20,7 @@ namespace RuKiSo.ViewModels
         public ICommand EditCookBatchCommand { get; }
         public ICommand DeleteBatchCommand { get; }
         public ICommand SaveBatchCommand { get; }
+        public ICommand ResetCommand { get; }
 
         public BatchDTO SelectedBatch
         {
@@ -30,7 +31,7 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(SelectedBatch));
             }
         }
-        public ProductDTO SelectedProduct
+        public ProductDTO? SelectedProduct
         {
             get { return selectedProduct; }
             set
@@ -104,11 +105,24 @@ namespace RuKiSo.ViewModels
        
         public BatchViewModel()
         {
+            ResetCommand = new RelayCommand(Reset);
             EditCookBatchCommand = new RelayCommand<BatchDTO>(EditCookBatch);
             SaveBatchCommand = new RelayCommand(SaveBatch);
             DeleteBatchCommand = new RelayCommand<BatchDTO>(DeleteBatch);
             AddBatchCommand = new RelayCommand(AddBatch);
             InitData();
+        }
+
+        private void Reset()
+        {
+            SelectedProduct = null;
+            StartDate = DateTime.Now;
+            EstimateEndDate = DateTime.Now;
+            foreach (var ingredient in Ingredients)
+            {
+                ingredient.IsSelected = false;
+            }
+            OnPropertyChanged(nameof(Ingredients));
         }
 
         private void SaveBatch()
@@ -272,7 +286,7 @@ namespace RuKiSo.ViewModels
         private void UpdateBatches()
         {
             Batches.Clear();
-            foreach (var batch in AllBatches.Where(b => b.Yield == 0))
+            foreach (BatchDTO batch in AllBatches.Where(b => b.Yield == 0))
             {
                 Batches.Add(batch);
             }

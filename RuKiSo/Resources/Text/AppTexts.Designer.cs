@@ -196,6 +196,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sửa giao dịch.
+        /// </summary>
+        internal static string EditTransaction {
+            get {
+                return ResourceManager.GetString("EditTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kết thúc.
         /// </summary>
         internal static string End {
@@ -520,6 +529,24 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngày giao dịch.
+        /// </summary>
+        internal static string TransactionDate {
+            get {
+                return ResourceManager.GetString("TransactionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tên giao dịch.
+        /// </summary>
+        internal static string TransactionName {
+            get {
+                return ResourceManager.GetString("TransactionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TransactionPage.
         /// </summary>
         internal static string TransactionPage {
@@ -534,6 +561,15 @@ namespace RuKiSo.Resources {
         internal static string Transactions {
             get {
                 return ResourceManager.GetString("Transactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loại giao dịch.
+        /// </summary>
+        internal static string TransactionType {
+            get {
+                return ResourceManager.GetString("TransactionType", resourceCulture);
             }
         }
         
