@@ -35,7 +35,7 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{StaticResource White}"
-                ColumnDefinitions="15, 40, 0.2*, 250, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
+                ColumnDefinitions="8, 40, 0.2*, 250, *, 66, *, 66, *, 110, *, auto, 0.2*, auto, 8"
                 RowDefinitions="15, 7, 21, 4, 21, 7, 15">
                 <Border
                     Grid.Row="1"
@@ -83,12 +83,12 @@
                     Grid.Row="4"
                     Grid.Column="7"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Price}" />
+                    Text="{Binding Price, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Label
                     Grid.Row="4"
                     Grid.Column="9"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding TotalValue}" />
+                    Text="{Binding TotalValue, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
 
                 <Button
                     Grid.Row="2"
@@ -111,7 +111,7 @@
 
     <DataTemplate x:Key="BatchIngredientItem">
         <Border StrokeShape="RoundRectangle 10" StrokeThickness="{x:Static ui:AppDimens.Stroke1}">
-            <Grid ColumnDefinitions="auto, 140, auto, 10, auto" RowDefinitions="*,*">
+            <Grid ColumnDefinitions="auto, 120, auto, 10, auto" RowDefinitions="*,*">
                 <CheckBox
                     x:Name="IngredientCheckBox"
                     Grid.RowSpan="2"
@@ -152,7 +152,7 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{x:Static ui:AppColors.White}"
-                ColumnDefinitions="15, 60, 0.2*, 170, *, auto, *, auto, *, auto, *, auto, 0.2*, auto, 15"
+                ColumnDefinitions="8, 60, 0.2*, 170, *, 66, *, 100, *, 110, *, auto, 0.2*, auto, 8"
                 RowDefinitions="15, 7, 21, 4, 21, 7, 15">
                 <Border
                     Grid.Row="1"
@@ -208,12 +208,12 @@
                     Grid.Row="4"
                     Grid.Column="7"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding PurchasePrice}" />
+                    Text="{Binding PurchasePrice, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Label
                     Grid.Row="4"
                     Grid.Column="9"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding TotalValue}" />
+                    Text="{Binding TotalValue, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <HorizontalStackLayout
                     Grid.Row="2"
                     Grid.RowSpan="3"
@@ -306,15 +306,18 @@
                     Grid.Row="2"
                     Grid.Column="4"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding Price}" />
+                    Text="{Binding Price, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Entry
                     Grid.RowSpan="3"
                     Grid.Column="6"
-                    HeightRequest="{x:Static ui:AppDimens.Height44}" />
+                    HeightRequest="{x:Static ui:AppDimens.Height44}"
+                    Text="{Binding UsedQuantity}" />
                 <Button
                     Grid.RowSpan="3"
                     Grid.Column="8"
                     BackgroundColor="{x:Static ui:AppColors.BrightAqua}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=AddSellTransactionCommand}"
+                    CommandParameter="{Binding}"
                     HeightRequest="{x:Static ui:AppDimens.Height44}"
                     Text="{x:Static resource:AppTexts.Sell}"
                     TextColor="{x:Static ui:AppColors.Black}" />
@@ -351,15 +354,18 @@
                     Grid.Row="2"
                     Grid.Column="4"
                     Style="{StaticResource Size15ColorBlue}"
-                    Text="{Binding PurchasePrice}" />
+                    Text="{Binding PurchasePrice, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
                 <Entry
                     Grid.RowSpan="3"
                     Grid.Column="6"
-                    HeightRequest="{x:Static ui:AppDimens.Height44}" />
+                    HeightRequest="{x:Static ui:AppDimens.Height44}"
+                    Text="{Binding UsedQuantity}" />
                 <Button
                     Grid.RowSpan="3"
                     Grid.Column="8"
                     BackgroundColor="{x:Static ui:AppColors.Yellow}"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=AddPurchaseTransactionCommand}"
+                    CommandParameter="{Binding}"
                     HeightRequest="{x:Static ui:AppDimens.Height44}"
                     Text="{x:Static resource:AppTexts.Purchase}"
                     TextColor="{x:Static ui:AppColors.Black}" />
@@ -368,7 +374,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="UpdateCookBatchPopup">
-        <VerticalStackLayout HorizontalOptions="Center">
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="{x:Static ui:AppDimens.Space7}">
             <Label Text="{x:Static resource:AppTexts.Name}" />
             <Entry
                 HorizontalOptions="Start"
@@ -394,13 +400,11 @@
                 Text="{Binding SelectedBatch.Yield, Mode=TwoWay}"
                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
 
-            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
-                <Button
-                    Margin="10,0,0,0"
-                    Command="{Binding SaveBatchCommand}"
-                    HorizontalOptions="Center"
-                    Text="{x:Static resource:AppTexts.Save}" />
-            </HorizontalStackLayout>
+            <Button
+                Command="{Binding SaveBatchCommand}"
+                HorizontalOptions="Center"
+                Text="{x:Static resource:AppTexts.Save}"
+                WidthRequest="{x:Static ui:AppDimens.Height280}" />
         </VerticalStackLayout>
     </DataTemplate>
 
@@ -408,7 +412,7 @@
         <Border StrokeShape="RoundRectangle 20" StrokeThickness="{x:Static ui:AppDimens.Stroke0}">
             <Grid
                 BackgroundColor="{x:Static ui:AppColors.White}"
-                ColumnDefinitions="*,30,0.5*,200, *,90, *,100, *,60, *,120,*, 126,*"
+                ColumnDefinitions="*,30,0.5*,200, *,110, *,110, *,70, *,120,*, 126,*"
                 HeightRequest="60"
                 RowDefinitions="1, 7, auto  , 8">
                 <Border Grid.ColumnSpan="15" BackgroundColor="{x:Static ui:AppColors.SecondaryColor}" />
@@ -418,13 +422,13 @@
                             Binding="{Binding TranType}"
                             TargetType="Image"
                             Value="true">
-                            <Setter Property="Source" Value="arrow_up.png" />
+                            <Setter Property="Source" Value="{x:Static ui:StaticImage.ArrowUp}" />
                         </DataTrigger>
                         <DataTrigger
                             Binding="{Binding TranType}"
                             TargetType="Image"
                             Value="false">
-                            <Setter Property="Source" Value="arrow_down.png" />
+                            <Setter Property="Source" Value="{x:Static ui:StaticImage.ArrowUp}" />
                         </DataTrigger>
                     </Image.Triggers>
                 </Image>
@@ -438,13 +442,27 @@
                     Grid.Row="2"
                     Grid.Column="5"
                     Style="{StaticResource Size16ColorBlack}"
-                    Text="{Binding TranType}"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="true">
+                            <Setter Property="Text" Value="{x:Static resource:AppTexts.Sell}" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="false">
+                            <Setter Property="Text" Value="{x:Static resource:AppTexts.Purchase}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <Label
                     Grid.Row="2"
                     Grid.Column="7"
                     Style="{StaticResource Size16ColorBlack}"
-                    Text="{Binding TranDate, StringFormat='{}{0:dd/MM/yyyy}'}"
+                    Text="{Binding TranDate, StringFormat='{0:dd/MM/yyyy}'}"
                     VerticalOptions="Center" />
                 <Label
                     Grid.Row="2"
@@ -455,17 +473,59 @@
                 <Label
                     Grid.Row="2"
                     Grid.Column="11"
-                    Style="{StaticResource Size16ColorBlack}"
+                    FontSize="{x:Static ui:AppDimens.FontSize16}"
                     Text="{Binding Value}"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="true">
+                            <Setter Property="Text" Value="{Binding Value, StringFormat={x:Static resource:AppTexts.MoneyFormat}}" />
+                            <Setter Property="TextColor" Value="{x:Static ui:AppColors.Green}" />
+                        </DataTrigger>
+
+                        <DataTrigger
+                            Binding="{Binding TranType}"
+                            TargetType="Label"
+                            Value="false">
+                            <Setter Property="Text" Value="{Binding Value, StringFormat={x:Static resource:AppTexts.MinusMoneyFormat}}" />
+                            <Setter Property="TextColor" Value="{x:Static ui:AppColors.ShineRed}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
                 <HorizontalStackLayout Grid.Row="2" Grid.Column="13">
-                    <Button Margin="10,0,0,0" Text="{x:Static resource:AppTexts.Edit}" />
+                    <Button
+                        Margin="10,0,0,0"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=OpenEditTransactionPopupCommand}"
+                        CommandParameter="{Binding}"
+                        Text="{x:Static resource:AppTexts.Edit}" />
                     <Button
                         Margin="10,0,0,0"
                         BackgroundColor="{x:Static ui:AppColors.Red}"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TransactionViewModel}}, Path=DeleteTransactionCommand}"
+                        CommandParameter="{Binding}"
                         Text="{x:Static resource:AppTexts.Delete}" />
                 </HorizontalStackLayout>
             </Grid>
         </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EditTransactionPopup">
+        <VerticalStackLayout Padding="10,10,10,10" Spacing="{x:Static ui:AppDimens.Space7}">
+            <Label Text="{x:Static resource:AppTexts.TransactionName}" />
+            <Entry Text="{Binding SelectedTransaction.Name}" />
+
+            <Label Text="{x:Static resource:AppTexts.TransactionDate}" />
+            <DatePicker Date="{Binding SelectedTransaction.TranDate}" />
+
+            <Label Text="{x:Static resource:AppTexts.Quantity}" />
+            <Entry Text="{Binding SelectedTransaction.Quantity}" />
+
+            <Label Text="{x:Static resource:AppTexts.TotalValue}" />
+            <Entry Text="{Binding SelectedTransaction.Value}" />
+
+            <Button Command="{Binding EditTransactionCommand}" Text="{x:Static resource:AppTexts.Edit}" />
+        </VerticalStackLayout>
     </DataTemplate>
 </ResourceDictionary>

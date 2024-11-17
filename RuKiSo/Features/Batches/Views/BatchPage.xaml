@@ -29,13 +29,13 @@
                     Title="{x:Static resource:AppTexts.TotalValue}"
                     Grid.Column="2"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="{Binding TotalValue}"
+                    DesciptionText="{Binding TotalValue, StringFormat={x:Static resource:AppTexts.MoneyFormat}}"
                     ImageSource="{x:Static ui:StaticImage.TotalValue}" />
                 <controls:OverViewCard
                     Title="{x:Static resource:AppTexts.ProjectedYield}"
                     Grid.Column="4"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="{Binding ProjectedYield}"
+                    DesciptionText="{Binding ProjectedYield, StringFormat={x:Static resource:AppTexts.MoneyFormat}}"
                     ImageSource="{x:Static ui:StaticImage.EstimatedOutput}" />
             </Grid>
             <Grid
@@ -86,10 +86,20 @@
                                 <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space10}" Orientation="Vertical" />
                             </CollectionView.ItemsLayout>
                         </CollectionView>
-                        <Button
-                            Grid.Row="4"
-                            Command="{Binding AddBatchCommand}"
-                            Text="{x:Static resource:AppTexts.Add}" />
+                        <HorizontalStackLayout Grid.Row="4">
+                            <Button
+                                BackgroundColor="{x:Static ui:AppColors.Yellow}"
+                                Command="{Binding ResetCommand}"
+                                Text="{x:Static resource:AppTexts.Reset}"
+                                TextColor="{x:Static ui:AppColors.Black}"
+                                WidthRequest="{x:Static ui:AppDimens.Height127}" />
+                            <Button
+                                Margin="24,0,0,0"
+                                Command="{Binding AddBatchCommand}"
+                                Text="{x:Static resource:AppTexts.Add}"
+                                TextColor="{x:Static ui:AppColors.Black}"
+                                WidthRequest="{x:Static ui:AppDimens.Height127}" />
+                        </HorizontalStackLayout>
                     </Grid>
                 </Border>
                 <Border
@@ -126,7 +136,7 @@
                 x:Name="EditCookPopup"
                 ContentTemplate="{StaticResource UpdateCookBatchPopup}"
                 HeaderTitle="{x:Static resource:AppTexts.Edit_Cook}"
-                HeightRequest="{x:Static ui:AppDimens.Height390}"
+                HeightRequest="{x:Static ui:AppDimens.Height450}"
                 HorizontalOptions="Center"
                 IsOpen="{Binding IsEditCookPopupOpen}"
                 WidthRequest="{x:Static ui:AppDimens.Height300}" />

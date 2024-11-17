@@ -11,13 +11,6 @@
         ColumnDefinitions="auto, *, auto, auto"
         HeightRequest="{x:Static ui:AppDimens.Height60}">
         <Label Style="{x:StaticResource PageTitleLabelStyle}" Text="{Binding Title}" />
-        <Picker
-            Grid.Column="2"
-            Margin="0,0,20,0"
-            HeightRequest="{x:Static ui:AppDimens.Height30}"
-            ItemsSource="{Binding ScaleValues}"
-            SelectedIndex="0"
-            WidthRequest="{x:Static ui:AppDimens.Height100}" />
         <controls:NotificationButton Grid.Column="3" />
     </Grid>
 </ContentView>

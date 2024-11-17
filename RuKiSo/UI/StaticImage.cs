@@ -10,5 +10,7 @@
         public static readonly string EstimatedOutput = "estimate_output.png";
         public static readonly string Plus = "plus.png";
         public static readonly string Ingredients = "ingredients.png";
+        public static readonly string ArrowUp = "arrow_up.png";
+        public static readonly string ArrowDown = "arrow_down.png";
     }
 }

@@ -282,4 +282,22 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="MoneyFormat" xml:space="preserve">
+    <value>${0:N0}</value>
+  </data>
+  <data name="MinusMoneyFormat" xml:space="preserve">
+    <value>-${0:N0}</value>
+  </data>
+  <data name="TransactionDate" xml:space="preserve">
+    <value>Ngày giao dịch</value>
+  </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>Loại giao dịch</value>
+  </data>
+  <data name="TransactionName" xml:space="preserve">
+    <value>Tên giao dịch</value>
+  </data>
+  <data name="EditTransaction" xml:space="preserve">
+    <value>Sửa giao dịch</value>
+  </data>
 </root>

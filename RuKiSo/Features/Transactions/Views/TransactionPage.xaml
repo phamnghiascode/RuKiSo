@@ -27,19 +27,19 @@
                     Text="{x:Static resource:AppTexts.Transactions}"
                     VerticalOptions="Center" />
                 <Border Grid.Row="1" Style="{StaticResource Border25BackGroundWhite}">
-                    <Grid ColumnDefinitions="*,30,0.5*,200, *,90, *,100, *,60, *,120,*, 126,*" RowDefinitions="21, *">
+                    <Grid ColumnDefinitions="*,30,0.5*,200, *,110, *,110, *,70, *,120,*, 126,*" RowDefinitions="21, *">
                         <Label
                             Grid.Column="3"
                             Style="{StaticResource Size16ColorBlue}"
-                            Text="{x:Static resource:AppTexts.Name}" />
+                            Text="{x:Static resource:AppTexts.TransactionName}" />
                         <Label
                             Grid.Column="5"
                             Style="{StaticResource Size16ColorBlue}"
-                            Text="Loại giao dịch" />
+                            Text="{x:Static resource:AppTexts.TransactionType}" />
                         <Label
                             Grid.Column="7"
                             Style="{StaticResource Size16ColorBlue}"
-                            Text="Ngày giao dịch" />
+                            Text="{x:Static resource:AppTexts.TransactionDate}" />
                         <Label
                             Grid.Column="9"
                             Style="{StaticResource Size16ColorBlue}"
@@ -88,9 +88,11 @@
                 </Border>
             </Grid>
             <popup:SfPopup
-                ContentTemplate="{StaticResource UpdateCookBatchPopup}"
-                HeightRequest="{x:Static ui:AppDimens.Height390}"
+                ContentTemplate="{StaticResource EditTransactionPopup}"
+                HeaderTitle="{x:Static resource:AppTexts.EditTransaction}"
+                HeightRequest="{x:Static ui:AppDimens.Height450}"
                 HorizontalOptions="Center"
+                IsOpen="{Binding IsPopupOpen}"
                 WidthRequest="{x:Static ui:AppDimens.Height300}" />
         </Grid>
     </Grid>

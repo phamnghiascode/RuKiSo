@@ -28,13 +28,13 @@
                     Title="{x:Static resource:AppTexts.TotalValue}"
                     Grid.Column="2"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="{Binding TotalValue}"
+                    DesciptionText="{Binding TotalValue, StringFormat={x:Static resource:AppTexts.MoneyFormat}}"
                     ImageSource="{x:Static ui:StaticImage.TotalValue}" />
                 <controls:OverViewCard
                     Title="{x:Static resource:AppTexts.EstimatedProfit}"
                     Grid.Column="4"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="{Binding EstimatedProfit}"
+                    DesciptionText="{Binding EstimatedProfit, StringFormat={x:Static resource:AppTexts.MoneyFormat}}"
                     ImageSource="{x:Static ui:StaticImage.EstimatedProfit}" />
             </Grid>
             <Grid
