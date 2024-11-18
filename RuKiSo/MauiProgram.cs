@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RuKiSo.DataAccess;
+using RuKiSo.ViewModels;
+using RuKiSo.Views;
 using Syncfusion.Maui.Core.Hosting;
 
 namespace RuKiSo
@@ -24,9 +26,21 @@ namespace RuKiSo
                     fonts.AddFont("fa-regular-400.ttf", "FaRegu");
                     fonts.AddFont("fa-solid-900.ttf", "FaSolid");
                 });
+            builder.Services.AddTransient<BatchViewModel>();
+            builder.Services.AddTransient<DashBoardViewModel>();
+            builder.Services.AddTransient<IngredientViewModel>();
+            builder.Services.AddTransient<ProductViewModel>();
+            builder.Services.AddTransient<TransactionViewModel>();
+
+            builder.Services.AddTransient<BatchPage>();
+            builder.Services.AddTransient<DashboardPage>();
+            builder.Services.AddTransient<IngredientPage>();
+            builder.Services.AddTransient<ProductPage>();
+            builder.Services.AddTransient<TransactionPage>();
 
             builder.Services.AddDbContext<RuKiSoDataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MyDb")));
+            //builder.Services.AddDbContext<RuKiSoDataContext>();
 
 #if DEBUG
             builder.Logging.AddDebug();

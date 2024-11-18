@@ -3,6 +3,7 @@
     x:Class="RuKiSo.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:RuKiSo.UI.Views"
     xmlns:local="clr-namespace:RuKiSo"
     xmlns:pages="clr-namespace:RuKiSo.Views"
     xmlns:resource="clr-namespace:RuKiSo.Resources"

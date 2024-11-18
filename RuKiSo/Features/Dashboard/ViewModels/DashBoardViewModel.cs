@@ -1,4 +1,5 @@
-﻿using RuKiSo.Features.Models;
+﻿using CommunityToolkit.Maui.Core;
+using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 
@@ -10,7 +11,7 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<TopSellerDTO> TopSellers { get; set; }
         public ObservableCollection<MostUsedIngredient> MostUsedIngredients { get; set; }
         public ObservableCollection<ProfitDTO> MonthlyProfit { get; set; }
-        public DashBoardViewModel()
+        public DashBoardViewModel(IPopupService popupService) : base(popupService)
         {
             InitChartData();
         }

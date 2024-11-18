@@ -171,6 +171,9 @@
 	  <MauiXaml Update="UI\Views\NotificationButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="UI\Views\NotiPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\OverViewCard.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

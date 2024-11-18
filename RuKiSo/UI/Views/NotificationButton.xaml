@@ -13,10 +13,13 @@
         StrokeShape="RoundRectangle 25"
         StrokeThickness="0"
         WidthRequest="{x:Static ui:AppDimens.Height50}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer />
+        </Border.GestureRecognizers>
         <AbsoluteLayout>
             <Label
                 AbsoluteLayout.LayoutBounds="11, 10, -1, -1"
-                FontFamily="FaSolid"
+                FontFamily="{x:Static ui:FontNames.FaSolid}"
                 FontSize="{x:Static ui:AppDimens.FontSize30}"
                 HorizontalOptions="Center"
                 Text="{x:Static resource:AwesomeIcon.Bell}"

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
@@ -40,7 +41,7 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<TransactionProductDTO> Products { get; set; }
         public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<TransactionDTO> Transactions { get; set; }
-        public TransactionViewModel()
+        public TransactionViewModel(IPopupService popupService) : base(popupService)
         {
             EditTransactionCommand = new RelayCommand(EditTransaction);
             OpenEditTransactionPopupCommand = new RelayCommand<TransactionDTO>(OpenEditTransaction);

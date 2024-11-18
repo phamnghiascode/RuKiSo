@@ -7,8 +7,7 @@
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
-    xmlns:vm="clr-namespace:RuKiSo.ViewModels"
-    BindingContext="{vm:DashBoardViewModel}">
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels">
     <Grid BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}" RowDefinitions="auto, *">
         <controls:Header Title="{x:Static resource:AppTexts.DashBoard}" HorizontalOptions="Fill" />
         <Grid
@@ -49,9 +48,6 @@
                             Grid.Row="3"
                             Grid.Column="1"
                             Grid.ColumnSpan="9">
-                            <chart:SfCartesianChart.BindingContext>
-                                <vm:DashBoardViewModel />
-                            </chart:SfCartesianChart.BindingContext>
                             <chart:ColumnSeries
                                 CornerRadius="{x:Static ui:AppDimens.CornerDouble10}"
                                 EnableAnimation="True"
@@ -99,9 +95,6 @@
                     Grid.Column="2"
                     Style="{StaticResource Border25BackGroundWhite}">
                     <chart:SfCircularChart>
-                        <chart:SfCircularChart.BindingContext>
-                            <vm:DashBoardViewModel />
-                        </chart:SfCircularChart.BindingContext>
                         <chart:SfCircularChart.Legend>
                             <chart:ChartLegend />
                         </chart:SfCircularChart.Legend>

@@ -1,9 +1,12 @@
+using RuKiSo.ViewModels;
+
 namespace RuKiSo.Views;
 
 public partial class IngredientPage : ContentPage
 {
-	public IngredientPage()
+	public IngredientPage(IngredientViewModel ingredientViewModel)
 	{
 		InitializeComponent();
+		BindingContext = ingredientViewModel;
 	}
 }

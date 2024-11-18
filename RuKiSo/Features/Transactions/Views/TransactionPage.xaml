@@ -9,8 +9,7 @@
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
-    x:DataType="vm:TransactionViewModel"
-    BindingContext="{vm:TransactionViewModel}">
+    x:DataType="vm:TransactionViewModel">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
@@ -103,7 +104,7 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<BatchDTO> AllBatches { get; set; }
         public ObservableCollection<ProductDTO> Products { get; set; }
        
-        public BatchViewModel()
+        public BatchViewModel(IPopupService popupService) : base(popupService)
         {
             ResetCommand = new RelayCommand(Reset);
             EditCookBatchCommand = new RelayCommand<BatchDTO>(EditCookBatch);

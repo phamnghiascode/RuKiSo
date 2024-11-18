@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ namespace RuKiSo.ViewModels
 {
     public partial class ProductViewModel : BaseViewModel
     {
-        public ProductViewModel()
+        public ProductViewModel(IPopupService popupService) : base(popupService)
         {
             ResetCommand = new RelayCommand(Reset);
             UpSertProductCommand = new RelayCommand(UpSertProduct);
