@@ -1,8 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using RuKiSo.DataAccess;
 using RuKiSo.ViewModels;
 using RuKiSo.Views;
 using Syncfusion.Maui.Core.Hosting;
@@ -38,8 +35,6 @@ namespace RuKiSo
             builder.Services.AddTransient<ProductPage>();
             builder.Services.AddTransient<TransactionPage>();
 
-            builder.Services.AddDbContext<RuKiSoDataContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("MyDb")));
             //builder.Services.AddDbContext<RuKiSoDataContext>();
 
 #if DEBUG

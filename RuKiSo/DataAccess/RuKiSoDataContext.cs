@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using RuKiSo.Entities;
 
 namespace RuKiSo.DataAccess
