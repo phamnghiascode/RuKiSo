@@ -28,6 +28,7 @@ namespace RuKiSoBackEnd.Data
                 new Products { Id = 8, Name = "Rượu táo mèo", Description = "Nếp đen, táo mèo", Quantity = 20, Price = 60000 }
                 );
             modelBuilder.Entity<Batches>().HasData(
+                new Batches { Id = 1, StartDate = new DateTime(2024,1,1), EstimateEndDate = new DateTime(2024,1,30)}
                 );
             modelBuilder.Entity<Transactions>().HasData();
         }

@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace RuKiSoBackEnd.Models.Domains
+﻿namespace RuKiSoBackEnd.Models.DTOs
 {
-    public class Transactions
+    public class TransactionRespone
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public bool TranType { get; set; }
@@ -12,9 +9,9 @@ namespace RuKiSoBackEnd.Models.Domains
         public double Value { get; set; }
         public DateTime TranDate { get; set; }
         public int? IngredientId { get; set; }
-        public Ingredients Ingredient { get; set; }
+        public IngredientsDTO Ingredient { get; set; }
 
         public int? ProductId { get; set; }
-        public Products Product { get; set; }
+        public ProductRespone Product { get; set; }
     }
 }

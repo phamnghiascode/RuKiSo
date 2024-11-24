@@ -111,6 +111,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\RuKiSoBackEnd\RuKiSoBackEnd.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Features\Batches\Views\BatchPage.xaml.cs">
 	    <DependentUpon>BatchPage.xaml</DependentUpon>
 	  </Compile>

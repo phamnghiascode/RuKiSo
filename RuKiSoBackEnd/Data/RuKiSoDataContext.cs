@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using RuKiSoBackEnd.Models.Domains;
 
 namespace RuKiSoBackEnd.Data
@@ -29,20 +30,10 @@ namespace RuKiSoBackEnd.Data
             modelBuilder.Entity<Products>(entity =>
             {
                 entity.HasKey(p => p.Id);
-
                 entity.HasMany(p => p.Batches)
                     .WithOne(b => b.Product)
                     .HasForeignKey(b => b.ProductId)
                     .OnDelete(DeleteBehavior.SetNull);
-            });
-
-            modelBuilder.Entity<Batches>(entity =>
-            {
-                entity.HasKey(b => b.Id);
-                entity.HasMany(b => b.Ingredients)
-                    .WithOne(i => i.Batch)
-                    .HasForeignKey(i => i.BatchId)
-                    .OnDelete(DeleteBehavior.SetNull); 
             });
 
             modelBuilder.Entity<Ingredients>(entity =>
@@ -54,7 +45,7 @@ namespace RuKiSoBackEnd.Data
                     .IsRequired(false)
                     .OnDelete(DeleteBehavior.SetNull);
             });
-            SeedData(modelBuilder);
+
         }
 
         public DbSet<Products> Products { get; set; }
