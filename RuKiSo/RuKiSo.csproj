@@ -94,8 +94,6 @@
 		<PackageReference Include="CommunityToolkit.Maui.Core" Version="8.0.0" />
 		<PackageReference Include="CommunityToolkit.Common" Version="8.0.0" />
 		<PackageReference Include="CommunityToolkit.Diagnostics" Version="8.0.0" />
-		<PackageReference Include="AutoMapper" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
 		<PackageReference Include="Syncfusion.Maui.Buttons" Version="27.1.58" />
