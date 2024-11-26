@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RuKiSoBackEnd.Data;
 using RuKiSoBackEnd.Models.Domains;
+using RuKiSoBackEnd.Models.DTOs;
+using RuKiSoBackEnd.Util;
 
 namespace RuKiSoBackEnd.Controllers
 {
@@ -23,12 +25,20 @@ namespace RuKiSoBackEnd.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult GetIngredientById([FromRoute]int id)
+        public IActionResult GetById([FromRoute]int id)
         {
             Ingredients? ingredient = dbContext.Ingredients.FirstOrDefault(x => x.Id == id);
             if (ingredient == null) 
                 return NotFound();
             return Ok(ingredient);
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] IngredientRequest ingredientRequest)
+        {
+            Ingredients ingredientDomain = ingredientRequest.ToDomain();
+            dbContext.Ingredients.Add(ingredientDomain);
+            return Ok(ingredientDomain.ToDTO());
         }
     }
 }

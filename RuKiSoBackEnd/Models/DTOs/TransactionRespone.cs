@@ -9,7 +9,7 @@
         public double Value { get; set; }
         public DateTime TranDate { get; set; }
         public int? IngredientId { get; set; }
-        public IngredientsDTO Ingredient { get; set; }
+        public IngredientRespone Ingredient { get; set; }
 
         public int? ProductId { get; set; }
         public ProductRespone Product { get; set; }

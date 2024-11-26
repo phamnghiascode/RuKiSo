@@ -49,7 +49,7 @@ namespace RuKiSoBackEnd.Controllers
         {
             Products domainProduct = productRequest.ToDomain();
 
-            dbContext.Products.AddAsync(domainProduct);
+            dbContext.Products.Add(domainProduct);
             dbContext.SaveChanges();
 
             ProductRespone productRespone = domainProduct.ToDTO();

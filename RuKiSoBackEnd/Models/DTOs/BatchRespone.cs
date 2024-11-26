@@ -8,6 +8,6 @@
         public int Yield { get; set; }
         public ProductRespone Product { get; set; }
         public int? ProductId { get; set; }
-        public ICollection<IngredientsDTO> Ingredients { get; set; }
+        public ICollection<IngredientRespone> Ingredients { get; set; }
     }
 }
