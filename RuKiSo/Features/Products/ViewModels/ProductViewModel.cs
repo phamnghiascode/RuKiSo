@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -8,12 +9,14 @@ namespace RuKiSo.ViewModels
 {
     public partial class ProductViewModel : BaseViewModel
     {
-        public ProductViewModel()
+        private readonly IProductService productService;
+        public ProductViewModel(IProductService productService)
         {
+            this.productService = productService;
             ResetCommand = new RelayCommand(Reset);
             UpSertProductCommand = new RelayCommand(UpSertProduct);
-            EditProductCommand = new RelayCommand<ProductDTO>(EditProduct);
-            DeleteProductCommand = new RelayCommand<ProductDTO>(DeleteProduct);
+            EditProductCommand = new RelayCommand<ProductRespone>(EditProduct);
+            DeleteProductCommand = new RelayCommand<ProductRespone>(DeleteProduct);
             QuantityFilterCommand = new RelayCommand(OnQuantityFilter);
             PriceFilterCommand = new RelayCommand(OnPriceFilter);
 
@@ -35,7 +38,7 @@ namespace RuKiSo.ViewModels
             }
             else
             {
-                ProductDTO product = new()
+                ProductRespone product = new()
                 {
                     Name = Name,
                     Ingredients = Ingredients,
@@ -57,7 +60,7 @@ namespace RuKiSo.ViewModels
             Price = 0;
         }
 
-        private void EditProduct(ProductDTO? product)
+        private void EditProduct(ProductRespone? product)
         {
             if (product != null)
             {
@@ -70,7 +73,7 @@ namespace RuKiSo.ViewModels
             else return;
         }
 
-        private ProductDTO? selectedProduct;
+        private ProductRespone? selectedProduct;
         private int totalProduct;
         private double totalValue;
         private double estimatedProfit;
@@ -118,7 +121,7 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        public ProductDTO? SelectedProduct 
+        public ProductRespone? SelectedProduct 
         { 
             get { return selectedProduct; }
             set {
@@ -159,7 +162,7 @@ namespace RuKiSo.ViewModels
 
         private readonly double percentProfit = 0.35;
 
-        public ObservableCollection<ProductDTO> Products { get; private set; } = new();
+        public ObservableCollection<ProductRespone> Products { get; private set; } = new();
 
         public ICommand ResetCommand { get; }
         public ICommand EditProductCommand { get; }
@@ -168,17 +171,32 @@ namespace RuKiSo.ViewModels
         public ICommand PriceFilterCommand { get; }
         public ICommand UpSertProductCommand { get; }
 
-        private void InitData()
+        private async void InitData()
         {
-            Products = new ObservableCollection<ProductDTO>
+            //Products = new ObservableCollection<ProductRespone>
+            //{
+            //    new() {Id = 1, Name = "Rượu trắng thượng hạng", Ingredients = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
+            //    new() {Id = 2, Name = "Rượu trắng", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
+            //    new() {Id = 3, Name = "Rượu trắng nhẹ", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 100, Price = 40000},
+            //    new() {Id = 4, Name = "Rượu đòng đòng", Ingredients = "Nếp cái hoa vàng, bông lúa non, men thuốc bắc", Quantity = 500, Price = 75000},
+            //    new() {Id = 5, Name = "Rượu bách nhật", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 5, Price = 40000},
+            //};
+            //UpdateCardsInfo();
+            try
             {
-                new() {Id = 1, Name = "Rượu trắng thượng hạng", Ingredients = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
-                new() {Id = 2, Name = "Rượu trắng", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
-                new() {Id = 3, Name = "Rượu trắng nhẹ", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 100, Price = 40000},
-                new() {Id = 4, Name = "Rượu đòng đòng", Ingredients = "Nếp cái hoa vàng, bông lúa non, men thuốc bắc", Quantity = 500, Price = 75000},
-                new() {Id = 5, Name = "Rượu bách nhật", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 5, Price = 40000},
-            };
-            UpdateCardsInfo();
+                var respone = await productService.GetAll();
+                Products.Clear();
+                foreach (var item in respone) 
+                {
+                    Products.Add(item);
+                }
+                UpdateCardsInfo();
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu cần
+                Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+            }
         }
 
         private void UpdateCardsInfo()
@@ -209,7 +227,7 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        private void DeleteProduct(ProductDTO? product)
+        private void DeleteProduct(ProductRespone? product)
         {
             if (product != null && Products.Contains(product))
             {
@@ -230,7 +248,7 @@ namespace RuKiSo.ViewModels
             UpdateProducts(filteredProducts);
         }
 
-        private void UpdateProducts(IEnumerable<ProductDTO> filteredProducts)
+        private void UpdateProducts(IEnumerable<ProductRespone> filteredProducts)
         {
             Products.Clear();
             foreach (var product in filteredProducts)

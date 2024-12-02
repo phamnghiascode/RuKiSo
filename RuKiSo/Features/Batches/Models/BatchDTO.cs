@@ -5,7 +5,7 @@ namespace RuKiSo.Features.Models
     public class BatchDTO : BaseModel
     {
         public int Id { get; set; }
-        public ProductDTO Product { get; set; }
+        public ProductRespone Product { get; set; }
         public List<BatchIngredientDTO> Ingredients { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EstimateEndDate { get; set; }

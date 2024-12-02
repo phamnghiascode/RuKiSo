@@ -9,7 +9,7 @@ namespace RuKiSo.ViewModels
     public partial class BatchViewModel : BaseViewModel
     {
         private BatchDTO selectedBatch;
-        private ProductDTO? selectedProduct;
+        private ProductRespone? selectedProduct;
         private bool isEditCookPopupOpen;
         private int totalBatch;
         private double totalValue;
@@ -31,7 +31,7 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(SelectedBatch));
             }
         }
-        public ProductDTO? SelectedProduct
+        public ProductRespone? SelectedProduct
         {
             get { return selectedProduct; }
             set
@@ -101,7 +101,7 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<BatchIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<BatchDTO> Batches { get; set; } = new ObservableCollection<BatchDTO>();
         public ObservableCollection<BatchDTO> AllBatches { get; set; }
-        public ObservableCollection<ProductDTO> Products { get; set; }
+        public ObservableCollection<ProductRespone> Products { get; set; }
        
         public BatchViewModel()
         {
@@ -186,7 +186,7 @@ namespace RuKiSo.ViewModels
                 new() {Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, PricePerUnit = 18},
                 new() {Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, PricePerUnit = 50},
             };
-            Products = new ObservableCollection<ProductDTO>
+            Products = new ObservableCollection<ProductRespone>
             {
                 new() {Id = 1, Name = "Rượu trắng thượng hạng", Ingredients = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
                 new() {Id = 2, Name = "Rượu trắng", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
