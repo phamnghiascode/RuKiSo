@@ -55,7 +55,7 @@
                             <Label FontSize="{x:Static ui:AppDimens.FontSize16}" Text="{x:Static resource:AppTexts.MainIngredients}" />
                             <Entry
                                 HorizontalOptions="Start"
-                                Text="{Binding Ingredients}"
+                                Text="{Binding Description}"
                                 WidthRequest="{x:Static ui:AppDimens.Height280}" />
                             <Label
                                 Margin="0,0,10,0"

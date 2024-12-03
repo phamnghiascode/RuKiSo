@@ -27,27 +27,67 @@ namespace RuKiSo.ViewModels
         {
             if (SelectedProduct != null) 
             {
-                SelectedProduct.Name = Name;
-                SelectedProduct.Ingredients = Ingredients;
-                SelectedProduct.Price = Price;
-                SelectedProduct.Quantity = Quantity;
-                
-                var index = Products.IndexOf(SelectedProduct);
-                if (index >= 0) { Products[index] = SelectedProduct; }
-                SelectedProduct = null;
+                UpdateProduct();
             }
             else
             {
-                ProductRespone product = new()
+                CreateProduct();
+            }
+        }
+        private async void UpdateProduct()
+        {
+            SelectedProduct.Name = Name;
+            SelectedProduct.Description = Description;
+            SelectedProduct.Price = Price;
+            SelectedProduct.Quantity = Quantity;
+
+            ProductRequest updateProduct = new ProductRequest
+            {
+                Name = Name,
+                Description = Description,
+                Price = Price,
+                Quantity = Quantity
+            };
+
+            try
+            {
+                ProductRespone? respone = await productService.Update(selectedProduct.Id, updateProduct);
+                if (respone != null)
                 {
-                    Name = Name,
-                    Ingredients = Ingredients,
-                    Price = Price,
-                    Quantity = Quantity,
-                };
-                Products.Add(product);
-                UpdateCardsInfo();
-                Reset();
+                    var index = Products.IndexOf(SelectedProduct);
+                    if (index >= 0) { Products[index] = SelectedProduct; }
+                    UpdateCardsInfo();
+                    SelectedProduct = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Xảy ra lỗi trong quá trình cập nhật sản phẩm {ex.Message}");
+            }
+        }
+
+        private async void CreateProduct()
+        {
+            ProductRequest product = new()
+            {
+                Name = Name,
+                Description = Description,
+                Price = Price,
+                Quantity = Quantity,
+            };
+            try
+            {
+                ProductRespone? respone = await productService.Create(product);
+                if (respone != null)
+                {
+                    Products.Add(respone);
+                    UpdateCardsInfo();
+                    Reset();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi tạo mới dữ liệu: {ex.Message}");
             }
         }
 
@@ -55,7 +95,7 @@ namespace RuKiSo.ViewModels
         {
             SelectedProduct = null;
             Name = string.Empty;
-            Ingredients = string.Empty;
+            Description = string.Empty;
             Quantity = 0;
             Price = 0;
         }
@@ -66,7 +106,7 @@ namespace RuKiSo.ViewModels
             {
                 SelectedProduct = product;
                 Name = product.Name;
-                Ingredients = product.Ingredients;
+                Description = product.Description;
                 Quantity = product.Quantity;
                 Price = product.Price;
             }
@@ -78,7 +118,7 @@ namespace RuKiSo.ViewModels
         private double totalValue;
         private double estimatedProfit;
         private string name;
-        private string ingredients;
+        private string description;
         private int quantity;
         private double price;
 
@@ -92,13 +132,13 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        public string Ingredients
+        public string Description
         {
-            get { return ingredients; }
+            get { return description; }
             set
             {
-                ingredients = value;
-                OnPropertyChanged(nameof(Ingredients));
+                description = value;
+                OnPropertyChanged(nameof(Description));
             }
         } 
         public int Quantity
@@ -173,28 +213,21 @@ namespace RuKiSo.ViewModels
 
         private async void InitData()
         {
-            //Products = new ObservableCollection<ProductRespone>
-            //{
-            //    new() {Id = 1, Name = "Rượu trắng thượng hạng", Ingredients = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
-            //    new() {Id = 2, Name = "Rượu trắng", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
-            //    new() {Id = 3, Name = "Rượu trắng nhẹ", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 100, Price = 40000},
-            //    new() {Id = 4, Name = "Rượu đòng đòng", Ingredients = "Nếp cái hoa vàng, bông lúa non, men thuốc bắc", Quantity = 500, Price = 75000},
-            //    new() {Id = 5, Name = "Rượu bách nhật", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 5, Price = 40000},
-            //};
-            //UpdateCardsInfo();
             try
             {
                 var respone = await productService.GetAll();
-                Products.Clear();
-                foreach (var item in respone) 
+                if (respone != null)
                 {
-                    Products.Add(item);
+                    Products.Clear();
+                    foreach (var item in respone)
+                    {
+                        Products.Add(item);
+                    }
+                    UpdateCardsInfo();
                 }
-                UpdateCardsInfo();
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi nếu cần
                 Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
             }
         }
@@ -206,33 +239,25 @@ namespace RuKiSo.ViewModels
             EstimatedProfit = Math.Floor(TotalValue * percentProfit);
         }
 
-        private void SaveProduct()
-        {
-            if (SelectedProduct != null)
-            {
-                if (!Products.Contains(SelectedProduct))
-                {
-                    Products.Add(SelectedProduct);
-                }
-                else
-                {
-                    var updateProduct = Products.FirstOrDefault(p => p.Id == SelectedProduct.Id);
-                    {
-                        updateProduct.Name = SelectedProduct.Name;
-                        updateProduct.Quantity = SelectedProduct.Quantity;
-                        updateProduct.Price = SelectedProduct.Price;
-                    }
-                }
-                UpdateCardsInfo();
-            }
-        }
-
-        private void DeleteProduct(ProductRespone? product)
+        private async void DeleteProduct(ProductRespone? product)
         {
             if (product != null && Products.Contains(product))
             {
-                Products.Remove(product);
-                UpdateCardsInfo();
+                try
+                {
+                    bool isDeleted = await productService.Delete(product.Id);
+                    if (isDeleted)
+                    {
+                        Products.Remove(product);
+                        UpdateCardsInfo();
+                    }
+                    else return;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+                }
+                
             }
         }
 

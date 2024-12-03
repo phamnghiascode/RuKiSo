@@ -25,6 +25,7 @@ namespace RuKiSoBackEnd.Util
                 Id = products.Id,
                 Name = products.Name,
                 Description = products.Description,
+                Quantity = products.Quantity,
                 Price = products.Price,
             };
         }
