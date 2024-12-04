@@ -1,4 +1,5 @@
 using RuKiSo.Features.Models;
+using RuKiSo.Utils.MVVM;
 using RuKiSo.ViewModels;
 
 namespace RuKiSo.Views;

@@ -9,8 +9,8 @@ namespace RuKiSo.ViewModels
 {
     public partial class ProductViewModel : BaseViewModel
     {
-        private readonly IProductService productService;
-        public ProductViewModel(IProductService productService)
+        private readonly IGenericService<ProductRespone, ProductRequest> productService;
+        public ProductViewModel(IGenericService<ProductRespone, ProductRequest> productService)
         {
             this.productService = productService;
             ResetCommand = new RelayCommand(Reset);
@@ -51,7 +51,7 @@ namespace RuKiSo.ViewModels
 
             try
             {
-                ProductRespone? respone = await productService.Update(selectedProduct.Id, updateProduct);
+                ProductRespone? respone = await productService.UpdateAsync(selectedProduct.Id, updateProduct);
                 if (respone != null)
                 {
                     var index = Products.IndexOf(SelectedProduct);
@@ -77,7 +77,7 @@ namespace RuKiSo.ViewModels
             };
             try
             {
-                ProductRespone? respone = await productService.Create(product);
+                ProductRespone? respone = await productService.CreateAsync(product);
                 if (respone != null)
                 {
                     Products.Add(respone);
@@ -215,7 +215,7 @@ namespace RuKiSo.ViewModels
         {
             try
             {
-                var respone = await productService.GetAll();
+                var respone = await productService.GetAllAsync();
                 if (respone != null)
                 {
                     Products.Clear();
@@ -245,7 +245,7 @@ namespace RuKiSo.ViewModels
             {
                 try
                 {
-                    bool isDeleted = await productService.Delete(product.Id);
+                    bool isDeleted = await productService.DeleteAsync(product.Id);
                     if (isDeleted)
                     {
                         Products.Remove(product);

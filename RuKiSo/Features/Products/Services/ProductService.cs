@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 
 namespace RuKiSo.Features.Services
 {
-    public class ProductService : IProductService
+    public class ProductService : IGenericService<ProductRespone, ProductRequest>
     {
         private readonly HttpClient httpClient;
 
@@ -16,17 +16,17 @@ namespace RuKiSo.Features.Services
             };
         }
 
-        public async Task<IEnumerable<ProductRespone>?> GetAll()
+        public async Task<IEnumerable<ProductRespone>?> GetAllAsync()
         {
             return await httpClient.GetFromJsonAsync<IEnumerable<ProductRespone>>("/api/Product");
         }
 
-        public async Task<ProductRespone?> GetById(int id)
+        public async Task<ProductRespone?> GetByIdAsync(int id)
         {
             return await httpClient.GetFromJsonAsync<ProductRespone>($"/api/Product/{id}");
         }
 
-        public async Task<ProductRespone?> Create(ProductRequest productRequest)
+        public async Task<ProductRespone?> CreateAsync(ProductRequest productRequest)
         {
             var response = await httpClient.PostAsJsonAsync("/api/Product", productRequest);
 
@@ -37,7 +37,7 @@ namespace RuKiSo.Features.Services
             return null;
         }
 
-        public async Task<ProductRespone?> Update(int id, ProductRequest productRequest)
+        public async Task<ProductRespone?> UpdateAsync(int id, ProductRequest productRequest)
         {
             var response = await httpClient.PutAsJsonAsync($"/api/Product/{id}", productRequest);
 
@@ -49,7 +49,7 @@ namespace RuKiSo.Features.Services
             return null;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var response = await httpClient.DeleteAsync($"/api/Product/{id}");
 

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
 using RuKiSo.Utils.MVVM;
+using RuKiSoBackEnd.Models.Domains;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -8,7 +10,7 @@ namespace RuKiSo.ViewModels
 {
     public class IngredientViewModel : BaseViewModel
     {
-        private IngredientDTO? selectedIngredient;
+        private IngredientRespone? selectedIngredient;
         private int totalIngredient;
         private double totalValue;
         private double estimateOutput;
@@ -17,7 +19,8 @@ namespace RuKiSo.ViewModels
         private int quantity;
         private double purchasePrice;
         private bool isQuantityEnabled;
-    
+        private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
+
         public ICommand UpSertIngredientCommand { get; set; }
         public ICommand OpenClosePopupCommand { get; set; }
         public ICommand DeleteIngredientCommand { get; set; }
@@ -35,7 +38,7 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(IsQuantityEnabled));
             }
         }
-        public IngredientDTO? SelectedIngredient
+        public IngredientRespone? SelectedIngredient
         {
             get { return selectedIngredient; }
             set
@@ -112,19 +115,20 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(EstimatedOutput));
             }
         }
-        public ObservableCollection<IngredientDTO> Ingredients { get; set; }
-        public IngredientViewModel()
+        public ObservableCollection<IngredientRespone> Ingredients { get; set; } = new();
+        public IngredientViewModel(IGenericService<IngredientRespone, IngredientRequest> ingredientService)
         {
+            this.ingredientService = ingredientService;
             ResetCommand = new RelayCommand(Reset);
-            EditIngredientCommand = new RelayCommand<IngredientDTO>(EditIngredient);
+            EditIngredientCommand = new RelayCommand<IngredientRespone>(EditIngredient);
             PurchasePriceFilterCommand = new RelayCommand(FilterByPurchasePrice);
             QuantityFilterCommand = new RelayCommand(FilterByquantity);
-            DeleteIngredientCommand = new RelayCommand<IngredientDTO>(DeleteIngredient);
+            DeleteIngredientCommand = new RelayCommand<IngredientRespone>(DeleteIngredient);
             UpSertIngredientCommand = new RelayCommand(UpSertIngredient);
             InitData();
         }
 
-        private void EditIngredient(IngredientDTO? ingredient)
+        private void EditIngredient(IngredientRespone? ingredient)
         {
             if (ingredient != null)
             {
@@ -138,7 +142,7 @@ namespace RuKiSo.ViewModels
             else return;
         }
 
-        private void UpdateIngredients(IEnumerable<IngredientDTO> filteredIngredients)
+        private void UpdateIngredients(IEnumerable<IngredientRespone> filteredIngredients)
         {
             Ingredients.Clear();
             foreach (var item in filteredIngredients)
@@ -158,7 +162,7 @@ namespace RuKiSo.ViewModels
             UpdateIngredients(filteredIngredients);
         }
 
-        private void DeleteIngredient(IngredientDTO? ingredient)
+        private void DeleteIngredient(IngredientRespone? ingredient)
         {
             if (ingredient != null && Ingredients.Contains(ingredient))
             {
@@ -190,7 +194,7 @@ namespace RuKiSo.ViewModels
             else
             {
                 // Thêm mới
-                IngredientDTO ingredient = new()
+                IngredientRespone ingredient = new()
                 {
                     Name = Name,
                     Unit = Unit,
@@ -203,18 +207,25 @@ namespace RuKiSo.ViewModels
             Reset();
         }
 
-        private void InitData()
+        private async void InitData()
         {
-            Ingredients = new ObservableCollection<IngredientDTO>()
+            try
             {
-                new() {Id = 1, Name = "Men thuốc bắc", PurchasePrice = 100, Unit = "Kg", Quantity = 10},
-                new() {Id = 2, Name = "Men lá", PurchasePrice = 200, Unit = "Kg", Quantity = 100},
-                new() {Id = 3, Name = "Gạo nếp đen", PurchasePrice = 400, Unit = "Kg", Quantity = 20},
-                new() {Id = 4, Name = "Nếp cái hoa vàng", PurchasePrice = 100, Unit = "Kg", Quantity = 99},
-                new() {Id = 5, Name = "Đòng đòng", PurchasePrice = 10, Unit = "Kg", Quantity = 1},
-                new() {Id = 6, Name = "Gạo nếp", PurchasePrice = 990, Unit = "Kg", Quantity = 3},
-            };
-            UpdateCardsInfo();
+                var respone = await ingredientService.GetAllAsync();
+                if (respone != null)
+                {
+                    Ingredients.Clear();
+                    foreach (var item in respone)
+                    {
+                        Ingredients.Add(item);
+                    }
+                    UpdateCardsInfo();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+            }
         }
         private void UpdateCardsInfo()
         {

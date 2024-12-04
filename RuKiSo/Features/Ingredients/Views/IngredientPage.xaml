@@ -7,8 +7,7 @@
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
-    x:DataType="{x:Type vm:IngredientViewModel}"
-    BindingContext="{vm:IngredientViewModel}">
+    x:DataType="{x:Type vm:IngredientViewModel}">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"

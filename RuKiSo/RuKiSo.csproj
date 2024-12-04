@@ -58,10 +58,15 @@
 	<ItemGroup>
 	  <AndroidResource Remove="Features\Auth\**" />
 	  <Compile Remove="Features\Auth\**" />
+	  <Compile Remove="Features\Products\Services\Imps\**" />
 	  <EmbeddedResource Remove="Features\Auth\**" />
+	  <EmbeddedResource Remove="Features\Products\Services\Imps\**" />
 	  <MauiCss Remove="Features\Auth\**" />
+	  <MauiCss Remove="Features\Products\Services\Imps\**" />
 	  <MauiXaml Remove="Features\Auth\**" />
+	  <MauiXaml Remove="Features\Products\Services\Imps\**" />
 	  <None Remove="Features\Auth\**" />
+	  <None Remove="Features\Products\Services\Imps\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -108,8 +113,6 @@
 	  <Folder Include="DataAccess\Interfaces\" />
 	  <Folder Include="DataAccess\Services\" />
 	  <Folder Include="Features\Batches\Services\" />
-	  <Folder Include="Features\Ingredients\Services\" />
-	  <Folder Include="Features\Products\Services\Imps\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -178,6 +181,10 @@
 	  <MauiXaml Update="UI\Views\OverViewCard.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PRIResource Remove="Features\Products\Services\Imps\**" />
 	</ItemGroup>
 
 </Project>

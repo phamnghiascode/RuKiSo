@@ -6,6 +6,7 @@ using Syncfusion.Maui.Core.Hosting;
 using RuKiSo.Utils.MVVM;
 using RuKiSo.ViewModels;
 using RuKiSo.Views;
+using RuKiSo.Features.Models;
 
 namespace RuKiSo
 {
@@ -35,9 +36,15 @@ namespace RuKiSo
             {
                 ApiBaseAddress = "https://localhost:7184"
             });
-            builder.Services.AddSingleton<IProductService, ProductService>();
+
+            builder.Services.AddSingleton<IGenericService<IngredientRespone, IngredientRequest>, IngredientService>();
+            builder.Services.AddSingleton<IGenericService<ProductRespone, ProductRequest>, ProductService>();
+
             builder.Services.AddTransient<ProductViewModel>();
+            builder.Services.AddTransient<IngredientViewModel>();
+
             builder.Services.AddTransient<ProductPage>();
+            builder.Services.AddTransient<IngredientPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

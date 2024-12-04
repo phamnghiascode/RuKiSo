@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RuKiSoBackEnd.Data;
 using RuKiSoBackEnd.Models.Domains;
 using RuKiSoBackEnd.Models.DTOs;
@@ -16,51 +17,47 @@ namespace RuKiSoBackEnd.Controllers
         {
             this.dbContext = dbContext;
         }
+
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            IEnumerable<Products> domainProducts = dbContext.Products.ToList();
+            var domainProducts = await dbContext.Products.ToListAsync();
 
-            List<ProductRespone> Products = new List<ProductRespone>();
+            var products = domainProducts.Select(product => product.ToDTO()).ToList();
 
-            foreach (var product in domainProducts)
-            {
-                Products.Add(product.ToDTO());
-            }
-            return Ok(Products);
+            return Ok(products);
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        public IActionResult GetById([FromRoute]int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            Products? domainProduct = dbContext.Products.FirstOrDefault(p => p.Id == id);
+            var domainProduct = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (domainProduct == null)
                 return NotFound();
-            else
-            {
-                ProductRespone product = domainProduct.ToDTO(); 
-                return Ok(product);
-            }
+
+            var product = domainProduct.ToDTO();
+            return Ok(product);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]ProductRequest productRequest)
+        public async Task<IActionResult> Create([FromBody] ProductRequest productRequest)
         {
-            Products domainProduct = productRequest.ToDomain();
+            var domainProduct = productRequest.ToDomain();
 
-            dbContext.Products.Add(domainProduct);
-            dbContext.SaveChanges();
+            await dbContext.Products.AddAsync(domainProduct);
+            await dbContext.SaveChangesAsync();
 
-            ProductRespone productRespone = domainProduct.ToDTO();
+            var productResponse = domainProduct.ToDTO();
 
-            return CreatedAtAction(nameof(Create), new {id = productRespone.Id}, productRespone);
+            return CreatedAtAction(nameof(GetById), new { id = productResponse.Id }, productResponse);
         }
+
         [HttpPut]
         [Route("{id:int}")]
-        public IActionResult Update([FromRoute]int id,[FromBody] ProductRequest productRequest)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductRequest productRequest)
         {
-            var domainProduct = dbContext.Products.FirstOrDefault(p => p.Id == id);
+            var domainProduct = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (domainProduct == null)
                 return NotFound();
 
@@ -69,19 +66,20 @@ namespace RuKiSoBackEnd.Controllers
             domainProduct.Price = productRequest.Price;
             domainProduct.Quantity = productRequest.Quantity;
 
-            dbContext.SaveChanges();
-            return Ok(domainProduct.ToDTO()) ;  
+            await dbContext.SaveChangesAsync();
+            return Ok(domainProduct.ToDTO());
         }
 
         [HttpDelete]
         [Route("{id:int}")]
-        public IActionResult Delete([FromRoute]int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var domainProduct = dbContext.Products.FirstOrDefault(p =>p.Id == id);
+            var domainProduct = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (domainProduct == null)
                 return NotFound();
+
             dbContext.Products.Remove(domainProduct);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             return Ok();
         }
