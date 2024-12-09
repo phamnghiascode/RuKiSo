@@ -50,7 +50,8 @@ namespace RuKiSoBackEnd.Util
                 Id = ingredients.Id,
                 Name = ingredients.Name,
                 Unit = ingredients.Unit,
-                Quantity = ingredients.Quantity
+                Quantity = ingredients.Quantity,
+                PurchasePrice = ingredients.PurchasePrice
             };
         }
 

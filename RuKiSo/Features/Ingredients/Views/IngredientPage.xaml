@@ -63,6 +63,7 @@
                             Text="{x:Static resource:AppTexts.PurchasePrice}" />
                         <Entry
                             HorizontalOptions="Start"
+                            IsEnabled="{Binding IsPurchasePriceEnabled}"
                             Text="{Binding PurchasePrice}"
                             WidthRequest="{x:Static ui:AppDimens.Height280}" />
                         <Label

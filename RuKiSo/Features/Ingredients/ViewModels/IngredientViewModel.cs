@@ -1,8 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Maui.Converters;
+using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
-using RuKiSo.Features.Services;
 using RuKiSo.Utils.MVVM;
-using RuKiSoBackEnd.Models.Domains;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -19,6 +18,7 @@ namespace RuKiSo.ViewModels
         private int quantity;
         private double purchasePrice;
         private bool isQuantityEnabled;
+        private bool isPurchasePriceEnabled;
         private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
 
         public ICommand UpSertIngredientCommand { get; set; }
@@ -36,6 +36,16 @@ namespace RuKiSo.ViewModels
             {
                 isQuantityEnabled = value;
                 OnPropertyChanged(nameof(IsQuantityEnabled));
+            }
+        }
+
+        public bool IsPurchasePriceEnabled
+        {
+            get { return isPurchasePriceEnabled; }
+            set
+            {
+                isPurchasePriceEnabled = value;
+                OnPropertyChanged(nameof(IsPurchasePriceEnabled));
             }
         }
         public IngredientRespone? SelectedIngredient
@@ -132,6 +142,7 @@ namespace RuKiSo.ViewModels
         {
             if (ingredient != null)
             {
+                IsPurchasePriceEnabled = true;
                 IsQuantityEnabled = true;
                 SelectedIngredient = ingredient;
                 Name = SelectedIngredient.Name;
@@ -142,7 +153,7 @@ namespace RuKiSo.ViewModels
             else return;
         }
 
-        private void UpdateIngredients(IEnumerable<IngredientRespone> filteredIngredients)
+        private void UpdateFilteredIngredients(IEnumerable<IngredientRespone> filteredIngredients)
         {
             Ingredients.Clear();
             foreach (var item in filteredIngredients)
@@ -153,21 +164,33 @@ namespace RuKiSo.ViewModels
         private void FilterByquantity()
         {
             var filteredIngredients = Ingredients.OrderByDescending(p => p.Quantity).ToList();
-            UpdateIngredients(filteredIngredients);
+            UpdateFilteredIngredients(filteredIngredients);
         }
 
         private void FilterByPurchasePrice()
         {
             var filteredIngredients = Ingredients.OrderByDescending(p => p.PurchasePrice).ToList();
-            UpdateIngredients(filteredIngredients);
+            UpdateFilteredIngredients(filteredIngredients);
         }
 
-        private void DeleteIngredient(IngredientRespone? ingredient)
+        private async void DeleteIngredient(IngredientRespone? ingredient)
         {
             if (ingredient != null && Ingredients.Contains(ingredient))
             {
-                Ingredients.Remove(ingredient);
-                UpdateCardsInfo();
+                try
+                {
+                    bool isDeleted = await ingredientService.DeleteAsync(ingredient.Id);
+                    if (isDeleted)
+                    {
+                        Ingredients.Remove(ingredient);
+                        UpdateCardsInfo();
+                    }
+                    else return;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+                }
             }
         }
 
@@ -175,36 +198,70 @@ namespace RuKiSo.ViewModels
         {
             if (SelectedIngredient != null)
             {
-                // Update trường hợp này
-                SelectedIngredient.Name = Name;
-                SelectedIngredient.Unit = Unit;
-                SelectedIngredient.Quantity = Quantity;
-                SelectedIngredient.PurchasePrice = PurchasePrice;
-
-                // Cập nhật lại danh sách Ingredients
-                var index = Ingredients.IndexOf(SelectedIngredient);
-                if (index >= 0)
-                {
-                    Ingredients[index] = SelectedIngredient;
-                }
-
-                // Đặt lại SelectedIngredient về null sau khi cập nhật xong
-                SelectedIngredient = null;
+                UpdateIngredient();
             }
             else
             {
-                // Thêm mới
-                IngredientRespone ingredient = new()
-                {
-                    Name = Name,
-                    Unit = Unit,
-                    Quantity = Quantity,
-                    PurchasePrice = PurchasePrice
-                };
-                Ingredients.Add(ingredient);
+                CreateIngredient();
             }
-            UpdateCardsInfo();
-            Reset();
+        }
+
+        private async void CreateIngredient()
+        {
+            IngredientRequest ingredient = new()
+            {
+                Name = Name,
+                Unit = Unit,
+                PurchasePrice = PurchasePrice,
+                Quantity = Quantity,
+            };
+            try
+            {
+                IngredientRespone? respone = await ingredientService.CreateAsync(ingredient);
+                if (respone != null)
+                {
+                    Ingredients.Add(respone);
+                    UpdateCardsInfo();
+                    Reset();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi tạo mới dữ liệu: {ex.Message}");
+            }
+        }
+
+        private async void UpdateIngredient()
+        {
+            SelectedIngredient.Name = Name;
+            SelectedIngredient.Unit = Unit;
+            SelectedIngredient.PurchasePrice = PurchasePrice;
+            SelectedIngredient.Quantity = Quantity;
+
+            IngredientRequest updateIngredient = new IngredientRequest
+            {
+                Name = Name,
+                Unit = Unit,
+                PurchasePrice = PurchasePrice,
+                Quantity = Quantity
+            };
+
+            try
+            {
+                IngredientRespone? respone = await ingredientService.UpdateAsync(SelectedIngredient.Id, updateIngredient);
+                if (respone != null)
+                {
+                    var index = Ingredients.IndexOf(SelectedIngredient);
+                    if (index >= 0) { Ingredients[index] = SelectedIngredient; }
+                    UpdateCardsInfo();
+                    SelectedIngredient = null;
+                    Reset();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Xảy ra lỗi trong quá trình cập nhật sản phẩm {ex.Message}");
+            }
         }
 
         private async void InitData()
@@ -236,6 +293,7 @@ namespace RuKiSo.ViewModels
 
         private void Reset()
         {
+            IsPurchasePriceEnabled = false;
             IsQuantityEnabled = false;
             SelectedIngredient = null;
             Name = string.Empty;

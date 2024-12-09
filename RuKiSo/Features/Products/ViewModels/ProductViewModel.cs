@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
-using RuKiSo.Features.Services;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -58,6 +57,7 @@ namespace RuKiSo.ViewModels
                     if (index >= 0) { Products[index] = SelectedProduct; }
                     UpdateCardsInfo();
                     SelectedProduct = null;
+                    Reset();
                 }
             }
             catch (Exception ex)

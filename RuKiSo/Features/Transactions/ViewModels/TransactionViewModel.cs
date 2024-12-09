@@ -8,9 +8,9 @@ namespace RuKiSo.ViewModels
 {
     public class TransactionViewModel : BaseViewModel
     {
-        private TransactionDTO selectedTransaction;
+        private TransactionRequest selectedTransaction;
 
-        public TransactionDTO SelectedTransaction
+        public TransactionRequest SelectedTransaction
         {
             get { return selectedTransaction; }
             set 
@@ -39,14 +39,14 @@ namespace RuKiSo.ViewModels
         public ICommand EditTransactionCommand { get; set; }
         public ObservableCollection<TransactionProductDTO> Products { get; set; }
         public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
-        public ObservableCollection<TransactionDTO> Transactions { get; set; }
+        public ObservableCollection<TransactionRequest> Transactions { get; set; }
         public TransactionViewModel()
         {
             EditTransactionCommand = new RelayCommand(EditTransaction);
-            OpenEditTransactionPopupCommand = new RelayCommand<TransactionDTO>(OpenEditTransaction);
+            OpenEditTransactionPopupCommand = new RelayCommand<TransactionRequest>(OpenEditTransaction);
             AddPurchaseTransactionCommand = new RelayCommand<TransactionIngredientDTO>(AddPurchaseTransaction);
             AddSellTransactionCommand = new RelayCommand<TransactionProductDTO>(AddSellTransaction);
-            DeleteTransactionCommand = new RelayCommand<TransactionDTO>(DeleteTransaction);
+            DeleteTransactionCommand = new RelayCommand<TransactionRequest>(DeleteTransaction);
             InitData();    
         }
 
@@ -54,7 +54,7 @@ namespace RuKiSo.ViewModels
         {
             if (SelectedTransaction != null)
             {
-                TransactionDTO transaction = new()
+                TransactionRequest transaction = new()
                 {
                     Name = SelectedTransaction.Name,
                     TranDate = SelectedTransaction.TranDate,
@@ -69,7 +69,7 @@ namespace RuKiSo.ViewModels
             else return;
         }
 
-        private void OpenEditTransaction(TransactionDTO? transaction)
+        private void OpenEditTransaction(TransactionRequest? transaction)
         {
             if (transaction != null)
             {
@@ -83,7 +83,7 @@ namespace RuKiSo.ViewModels
         {
             if (product != null)
             {
-                var newTransaction = new TransactionDTO
+                var newTransaction = new TransactionRequest
                 {
                     Name = product.Name,
                     TranType = true,
@@ -101,7 +101,7 @@ namespace RuKiSo.ViewModels
         {
             if (ingredient != null && ingredient.UsedQuantity > 0)
             {
-                var newTransaction = new TransactionDTO
+                var newTransaction = new TransactionRequest
                 {
                     Name = ingredient.Name,
                     TranType = false,
@@ -116,7 +116,7 @@ namespace RuKiSo.ViewModels
             else return;
         }
 
-        private void DeleteTransaction(TransactionDTO? transaction)
+        private void DeleteTransaction(TransactionRequest? transaction)
         {
            if(transaction != null && Transactions.Contains(transaction))
             {
@@ -144,7 +144,7 @@ namespace RuKiSo.ViewModels
                 new() {Id = 5, Name = "Đòng đòng", PurchasePrice = 10, Unit = "Kg", Quantity = 1},
                 new() {Id = 6, Name = "Gạo nếp", PurchasePrice = 990, Unit = "Kg", Quantity = 3},
             };
-            Transactions = new ObservableCollection<TransactionDTO>
+            Transactions = new ObservableCollection<TransactionRequest>
             {
                 new() { Name = "Rượu đòng đòng 30", TranType = true, TranDate = DateTime.Now, Quantity = 10, Value= 100},
                 new() { Name = "Rượu trắng 45", TranType = false, TranDate = DateTime.Now, Quantity = 10, Value= 100},
