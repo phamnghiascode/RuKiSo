@@ -6,8 +6,8 @@
         public DateTime StartDate { get; set; }
         public DateTime EstimateEndDate { get; set; }
         public int Yield { get; set; }
-        public ProductRespone Product { get; set; }
+        public ProductResponse Product { get; set; }
         public int? ProductId { get; set; }
-        public ICollection<IngredientRespone> Ingredients { get; set; }
+        public ICollection<IngredientResponse> Ingredients { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RuKiSoBackEnd.Data;
-using RuKiSoBackEnd.Models.Domains;
 using RuKiSoBackEnd.Models.DTOs;
 using RuKiSoBackEnd.Util;
 

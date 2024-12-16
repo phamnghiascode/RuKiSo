@@ -1,6 +1,4 @@
-﻿using RuKiSo.Utils.MVVM;
-
-namespace RuKiSo.Features.Models
+﻿namespace RuKiSo.Features.Models
 {
     public class TransactionRequest
     {

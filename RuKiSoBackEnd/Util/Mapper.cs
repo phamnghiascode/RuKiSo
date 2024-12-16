@@ -18,9 +18,9 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        public static ProductRespone ToDTO(this Products products)
+        public static ProductResponse ToDTO(this Products products)
         {
-            return new ProductRespone()
+            return new ProductResponse()
             {
                 Id = products.Id,
                 Name = products.Name,
@@ -43,9 +43,9 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        public static IngredientRespone ToDTO(this Ingredients ingredients)
+        public static IngredientResponse ToDTO(this Ingredients ingredients)
         {
-            return new IngredientRespone()
+            return new IngredientResponse()
             {
                 Id = ingredients.Id,
                 Name = ingredients.Name,
@@ -55,6 +55,34 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
+        #endregion
+
+        #region Transaction
+        public static TransactionResponse ToDTO(this Transactions transaction)
+        {
+            return new TransactionResponse
+            {
+                Id = transaction.Id,
+                Name = transaction.Name, // Đã được set tên trong controller
+                TranType = transaction.TranType,
+                Quantity = transaction.Quantity,
+                Value = transaction.Value,
+                TranDate = transaction.TranDate,
+            };
+        }
+
+        public static Transactions ToDomain(this TransactionRequest request)
+        {
+            return new Transactions
+            {
+                TranType = request.TranType,
+                Quantity = request.Quantity,
+                Value = request.Value,
+                TranDate = request.TranDate ?? DateTime.Now,
+                IngredientId = !request.TranType ? request.IngredientId : null,
+                ProductId = request.TranType ? request.ProductId : null
+            };
+        }
         #endregion
     }
 }

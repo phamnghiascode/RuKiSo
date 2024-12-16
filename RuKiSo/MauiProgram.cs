@@ -7,6 +7,7 @@ using RuKiSo.Utils.MVVM;
 using RuKiSo.ViewModels;
 using RuKiSo.Views;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Transactions.Models;
 
 namespace RuKiSo
 {
@@ -39,6 +40,7 @@ namespace RuKiSo
 
             builder.Services.AddSingleton<IGenericService<IngredientRespone, IngredientRequest>, IngredientService>();
             builder.Services.AddSingleton<IGenericService<ProductRespone, ProductRequest>, ProductService>();
+            builder.Services.AddSingleton<IGenericService<TransactionRespone, TransactionRequest>, TransactionService>();
 
             builder.Services.AddTransient<ProductViewModel>();
             builder.Services.AddTransient<IngredientViewModel>();
