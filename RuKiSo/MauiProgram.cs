@@ -42,9 +42,11 @@ namespace RuKiSo
 
             builder.Services.AddTransient<ProductViewModel>();
             builder.Services.AddTransient<IngredientViewModel>();
+            builder.Services.AddTransient<TransactionViewModel>();
 
             builder.Services.AddTransient<ProductPage>();
             builder.Services.AddTransient<IngredientPage>();
+            builder.Services.AddTransient<TransactionPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -2,7 +2,7 @@
 
 namespace RuKiSo.Features.Models
 {
-    public class ProductRespone: BaseModel
+    public class ProductRespone : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
