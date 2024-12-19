@@ -1,6 +1,8 @@
-﻿namespace RuKiSo.Features.Models
+﻿using RuKiSo.Utils.MVVM;
+
+namespace RuKiSo.Features.Models
 {
-    public class TransactionRequest
+    public class TransactionRequest : BaseModel
     {
         public string Name { get; set; }
         public bool TranType {  get; set; }

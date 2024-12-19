@@ -1,8 +1,6 @@
 ﻿using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
-using RuKiSoBackEnd.Models.DTOs;
 using System.Net.Http.Json;
-using TransactionRequest = RuKiSo.Features.Models.TransactionRequest;
 
 namespace RuKiSo.Features.Services
 {

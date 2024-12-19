@@ -58,9 +58,9 @@ namespace RuKiSoBackEnd.Util
         #endregion
 
         #region Transaction
-        public static TransactionResponse ToDTO(this Transactions transaction)
+        public static TransactionRes ToDTO(this Transactions transaction)
         {
-            return new TransactionResponse
+            return new TransactionRes
             {
                 Id = transaction.Id,
                 Name = transaction.Name, // Đã được set tên trong controller
@@ -71,7 +71,7 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        public static Transactions ToDomain(this TransactionRequest request)
+        public static Transactions ToDomain(this TransactionReq request)
         {
             return new Transactions
             {

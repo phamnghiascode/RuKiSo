@@ -1,13 +1,11 @@
 ﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using RuKiSo.Features.Models;
 using RuKiSo.Features.Services;
-using Syncfusion.Maui.Core.Hosting;
 using RuKiSo.Utils.MVVM;
 using RuKiSo.ViewModels;
 using RuKiSo.Views;
-using RuKiSo.Features.Models;
-using RuKiSo.Features.Transactions.Models;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace RuKiSo
 {
@@ -40,7 +38,7 @@ namespace RuKiSo
 
             builder.Services.AddSingleton<IGenericService<IngredientRespone, IngredientRequest>, IngredientService>();
             builder.Services.AddSingleton<IGenericService<ProductRespone, ProductRequest>, ProductService>();
-            builder.Services.AddSingleton<IGenericService<TransactionRespone, TransactionRequest>, TransactionService>();
+            builder.Services.AddSingleton<IGenericService<TransactionResponse, TransactionRequest>, TransactionService>();
 
             builder.Services.AddTransient<ProductViewModel>();
             builder.Services.AddTransient<IngredientViewModel>();

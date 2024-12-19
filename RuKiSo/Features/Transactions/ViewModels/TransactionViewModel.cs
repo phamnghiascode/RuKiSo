@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
-using RuKiSo.Features.Transactions.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -11,7 +10,7 @@ namespace RuKiSo.ViewModels
     {
         private readonly IGenericService<ProductRespone, ProductRequest> productService;
         private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
-        private readonly IGenericService<TransactionRespone, TransactionRequest> transactionService;
+        private readonly IGenericService<TransactionResponse, TransactionRequest> transactionService;
         private TransactionRequest selectedTransaction;
 
         public TransactionRequest SelectedTransaction
@@ -45,7 +44,7 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<TransactionRequest> Transactions { get; set; }
         public TransactionViewModel(IGenericService<ProductRespone, ProductRequest> productService,
-                                    IGenericService<TransactionRespone, TransactionRequest> transactionService,
+                                    IGenericService<TransactionResponse, TransactionRequest> transactionService,
                                     IGenericService<IngredientRespone, IngredientRequest> ingredientService)
         {
             this.productService = productService;
@@ -136,7 +135,10 @@ namespace RuKiSo.ViewModels
                 Transactions.Remove(transaction);
             }
         }
-
+        private void HandleException(string message, Exception ex)
+        {
+            Console.WriteLine($"{message}: {ex.Message}");
+        }
         private async void InitializeData()
         {
             //Products = new ObservableCollection<TransactionProductDTO>
@@ -160,14 +162,14 @@ namespace RuKiSo.ViewModels
             try
             {
                 var response = await productService.GetAllAsync();
-                if (response != null)
-                {
-                    Products.Clear();
-                    foreach (var item in response)
-                    {
-                        Products.Add(item);
-                    }
-                }
+                //if (response != null)
+                //{
+                //    Products.Clear();
+                //    foreach (var item in response)
+                //    {
+                //        Products.Add(item);
+                //    }
+                //}
             }
             catch (Exception ex)
             {

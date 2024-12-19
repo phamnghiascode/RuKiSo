@@ -1,8 +1,8 @@
 ﻿using RuKiSo.Utils.MVVM;
 
-namespace RuKiSo.Features.Transactions.Models
+namespace RuKiSo.Features.Models
 {
-    public class TransactionRespone : BaseModel
+    public class TransactionResponse : BaseModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
