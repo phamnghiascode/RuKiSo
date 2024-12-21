@@ -27,7 +27,6 @@ namespace YourNamespace.Controllers
 
             var transactions = domainTransactions.Select(t =>
             {
-                // Xử lý tên trong controller
                 t.Name = t.TranType
                     ? dbContext.Products.Find(t.ProductId)?.Name
                     : dbContext.Ingredients.Find(t.IngredientId)?.Name;

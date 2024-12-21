@@ -63,11 +63,13 @@ namespace RuKiSoBackEnd.Util
             return new TransactionRes
             {
                 Id = transaction.Id,
-                Name = transaction.Name, // Đã được set tên trong controller
+                Name = transaction.Name,
                 TranType = transaction.TranType,
                 Quantity = transaction.Quantity,
                 Value = transaction.Value,
                 TranDate = transaction.TranDate,
+                ProductId = transaction.ProductId,
+                IngredientId = transaction.IngredientId,
             };
         }
 

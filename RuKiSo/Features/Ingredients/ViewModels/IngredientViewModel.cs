@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Converters;
-using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
@@ -189,7 +188,7 @@ namespace RuKiSo.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+                    Console.WriteLine($"Error retrieving ingredients {ex.Message}");
                 }
             }
         }
@@ -227,7 +226,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi tạo mới dữ liệu: {ex.Message}");
+                Console.WriteLine($"Error creating ingredient {ex.Message}");
             }
         }
 
@@ -252,7 +251,7 @@ namespace RuKiSo.ViewModels
                 if (respone != null)
                 {
                     var index = Ingredients.IndexOf(SelectedIngredient);
-                    if (index >= 0) { Ingredients[index] = SelectedIngredient; }
+                    if (index >= 0) { Ingredients[index] = respone; }
                     UpdateCardsInfo();
                     SelectedIngredient = null;
                     Reset();
@@ -260,7 +259,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Xảy ra lỗi trong quá trình cập nhật sản phẩm {ex.Message}");
+                Console.WriteLine($"Error updating ingredient {ex.Message}");
             }
         }
 
@@ -281,7 +280,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+                Console.WriteLine($"Error retrieving ingredients {ex.Message}");
             }
         }
         private void UpdateCardsInfo()

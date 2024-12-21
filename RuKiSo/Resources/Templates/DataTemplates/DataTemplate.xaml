@@ -428,7 +428,7 @@
                             Binding="{Binding TranType}"
                             TargetType="Image"
                             Value="false">
-                            <Setter Property="Source" Value="{x:Static ui:StaticImage.ArrowUp}" />
+                            <Setter Property="Source" Value="{x:Static ui:StaticImage.ArrowDown}" />
                         </DataTrigger>
                     </Image.Triggers>
                 </Image>

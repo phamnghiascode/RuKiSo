@@ -9,7 +9,7 @@ namespace RuKiSo.ViewModels
     public class ProductViewModel : BaseViewModel
     {
         private readonly IGenericService<ProductRespone, ProductRequest> productService;
-        private const double PercentProfit = 0.35;
+        private const double PercentProfit = 0.2;
 
         private ProductRespone? selectedProduct;
         private string name = string.Empty;
@@ -203,7 +203,7 @@ namespace RuKiSo.ViewModels
                     var index = Products.IndexOf(SelectedProduct);
                     if (index >= 0)
                     {
-                        Products[index] = SelectedProduct;
+                        Products[index] = response;
                     }
                     UpdateCardsInfo();
                     Reset();
