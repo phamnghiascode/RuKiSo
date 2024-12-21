@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RuKiSoBackEnd.Data;
 
@@ -11,9 +12,11 @@ using RuKiSoBackEnd.Data;
 namespace RuKiSoBackEnd.Migrations
 {
     [DbContext(typeof(RuKiSoDataContext))]
-    partial class RuKiSoDataContextModelSnapshot : ModelSnapshot
+    [Migration("20241221094857_changebatch")]
+    partial class changebatch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

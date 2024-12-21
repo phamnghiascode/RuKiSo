@@ -11,6 +11,6 @@ namespace RuKiSoBackEnd.Models.Domains
         public int Yield { get; set; }
         public Products Product { get; set; }
         public int? ProductId { get; set; }
-        public ICollection<Ingredients> Ingredients { get; set; } 
+        public ICollection<BatchIngredient> BatchIngredients { get; set; } = new List<BatchIngredient>();
     }
 }

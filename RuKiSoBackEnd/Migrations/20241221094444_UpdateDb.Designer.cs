@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RuKiSoBackEnd.Data;
 
@@ -11,9 +12,11 @@ using RuKiSoBackEnd.Data;
 namespace RuKiSoBackEnd.Migrations
 {
     [DbContext(typeof(RuKiSoDataContext))]
-    partial class RuKiSoDataContextModelSnapshot : ModelSnapshot
+    [Migration("20241221094444_UpdateDb")]
+    partial class UpdateDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace RuKiSoBackEnd.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("BatchIngredients", (string)null);
+                    b.ToTable("BatchIngredients");
 
                     b.HasData(
                         new
@@ -498,17 +501,21 @@ namespace RuKiSoBackEnd.Migrations
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.BatchIngredient", b =>
                 {
-                    b.HasOne("RuKiSoBackEnd.Models.Domains.Batches", null)
+                    b.HasOne("RuKiSoBackEnd.Models.Domains.Batches", "Batch")
                         .WithMany("BatchIngredients")
                         .HasForeignKey("BatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RuKiSoBackEnd.Models.Domains.Ingredients", null)
+                    b.HasOne("RuKiSoBackEnd.Models.Domains.Ingredients", "Ingredient")
                         .WithMany("BatchIngredients")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Batch");
+
+                    b.Navigation("Ingredient");
                 });
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Batches", b =>
