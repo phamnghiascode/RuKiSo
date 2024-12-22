@@ -15,7 +15,6 @@ namespace RuKiSoBackEnd.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Transactions configuration
             modelBuilder.Entity<Transactions>(entity =>
             {
                 entity.HasKey(t => t.Id);
@@ -33,7 +32,6 @@ namespace RuKiSoBackEnd.Data
                     .OnDelete(DeleteBehavior.SetNull);
             });
 
-            // Products configuration
             modelBuilder.Entity<Products>(entity =>
             {
                 entity.HasKey(p => p.Id);
@@ -44,19 +42,16 @@ namespace RuKiSoBackEnd.Data
                     .OnDelete(DeleteBehavior.SetNull);
             });
 
-            // Ingredients configuration
             modelBuilder.Entity<Ingredients>(entity =>
             {
                 entity.HasKey(i => i.Id);
             });
 
-            // Batches configuration
             modelBuilder.Entity<Batches>(entity =>
             {
                 entity.HasKey(b => b.Id);
             });
 
-            // BatchIngredient configuration
             modelBuilder.Entity<BatchIngredient>(entity =>
             {
                 entity.ToTable("BatchIngredients");

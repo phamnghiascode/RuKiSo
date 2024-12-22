@@ -1,13 +1,13 @@
 ﻿namespace RuKiSoBackEnd.Models.DTOs
 {
-    public class BatchRespone
+    public class BatchResponse
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EstimateEndDate { get; set; }
         public int Yield { get; set; }
-        public ProductResponse Product { get; set; }
         public int? ProductId { get; set; }
-        public ICollection<IngredientResponse> Ingredients { get; set; }
+        public ProductDTO Product { get; set; }
+        public List<BatchIngredientDTO> BatchIngredients { get; set; } = new();
     }
 }

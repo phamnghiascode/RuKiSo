@@ -1,6 +1,5 @@
 ﻿using RuKiSoBackEnd.Models.Domains;
 using RuKiSoBackEnd.Models.DTOs;
-using System.Runtime.CompilerServices;
 
 namespace RuKiSoBackEnd.Util
 {
@@ -85,6 +84,56 @@ namespace RuKiSoBackEnd.Util
                 ProductId = request.TranType ? request.ProductId : null
             };
         }
+        #endregion
+
+        #region Batch
+        public static Batches ToDomain(this BatchRequest request)
+        {
+            return new Batches
+            {
+                StartDate = request.StartDate,
+                EstimateEndDate = request.EstimateEndDate,
+                Yield = request.Yield,
+                ProductId = request.ProductId,
+                BatchIngredients = request.BatchIngredients.Select(bi => new BatchIngredient
+                {
+                    IngredientId = bi.IngredientId,
+                    Quantity = bi.Quantity
+                }).ToList()
+            };
+        }
+
+        public static BatchResponse ToDTO(this Batches batch)
+        {
+            return new BatchResponse
+            {
+                Id = batch.Id,
+                StartDate = batch.StartDate,
+                EstimateEndDate = batch.EstimateEndDate,
+                Yield = batch.Yield,
+                ProductId = batch.ProductId,
+                Product = batch.Product != null ? new ProductDTO
+                {
+                    Id = batch.Product.Id,
+                    Name = batch.Product.Name,
+                    Quantity = batch.Product.Quantity
+                } : null,
+                BatchIngredients = batch.BatchIngredients.Select(bi => new BatchIngredientDTO
+                {
+                    BatchId = bi.BatchId,
+                    IngredientId = bi.IngredientId,
+                    Quantity = bi.Quantity,
+                    Ingredient = bi.Ingredient != null ? new IngredientDTO
+                    {
+                        Id = bi.Ingredient.Id,
+                        Name = bi.Ingredient.Name,
+                        Unit = bi.Ingredient.Unit,
+                        Quantity = bi.Ingredient.Quantity
+                    } : null
+                }).ToList()
+            };
+        }
+
         #endregion
     }
 }
