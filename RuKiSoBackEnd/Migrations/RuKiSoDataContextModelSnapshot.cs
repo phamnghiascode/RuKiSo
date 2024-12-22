@@ -37,7 +37,7 @@ namespace RuKiSoBackEnd.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("BatchIngredients", (string)null);
+                    b.ToTable("BatchIngredients");
 
                     b.HasData(
                         new
@@ -67,7 +67,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             BatchId = 3,
-                            IngredientId = 3,
+                            IngredientId = 1,
                             Quantity = 40
                         },
                         new
@@ -79,7 +79,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             BatchId = 4,
-                            IngredientId = 2,
+                            IngredientId = 4,
                             Quantity = 30
                         },
                         new
@@ -91,44 +91,44 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             BatchId = 5,
-                            IngredientId = 1,
+                            IngredientId = 4,
                             Quantity = 25
                         },
                         new
                         {
                             BatchId = 5,
-                            IngredientId = 7,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            BatchId = 6,
-                            IngredientId = 3,
-                            Quantity = 20
-                        },
-                        new
-                        {
-                            BatchId = 6,
                             IngredientId = 6,
                             Quantity = 1
                         },
                         new
                         {
-                            BatchId = 7,
+                            BatchId = 6,
                             IngredientId = 4,
-                            Quantity = 15
+                            Quantity = 20
+                        },
+                        new
+                        {
+                            BatchId = 6,
+                            IngredientId = 7,
+                            Quantity = 1
                         },
                         new
                         {
                             BatchId = 7,
-                            IngredientId = 5,
+                            IngredientId = 2,
+                            Quantity = 35
+                        },
+                        new
+                        {
+                            BatchId = 7,
+                            IngredientId = 7,
                             Quantity = 1
                         },
                         new
                         {
                             BatchId = 8,
                             IngredientId = 3,
-                            Quantity = 20
+                            Quantity = 40
                         },
                         new
                         {
@@ -138,25 +138,7 @@ namespace RuKiSoBackEnd.Migrations
                         },
                         new
                         {
-                            BatchId = 9,
-                            IngredientId = 2,
-                            Quantity = 50
-                        },
-                        new
-                        {
-                            BatchId = 9,
-                            IngredientId = 6,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            BatchId = 10,
-                            IngredientId = 1,
-                            Quantity = 45
-                        },
-                        new
-                        {
-                            BatchId = 10,
+                            BatchId = 8,
                             IngredientId = 5,
                             Quantity = 1
                         });
@@ -200,73 +182,57 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 2,
-                            EstimateEndDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimateEndDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProductId = 2,
-                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Yield = 0
                         },
                         new
                         {
                             Id = 3,
-                            EstimateEndDate = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimateEndDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProductId = 3,
-                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Yield = 0
                         },
                         new
                         {
                             Id = 4,
-                            EstimateEndDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimateEndDate = new DateTime(2024, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProductId = 4,
-                            StartDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Yield = 0
                         },
                         new
                         {
                             Id = 5,
-                            EstimateEndDate = new DateTime(2024, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimateEndDate = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProductId = 5,
-                            StartDate = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Yield = 0
                         },
                         new
                         {
                             Id = 6,
-                            EstimateEndDate = new DateTime(2024, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimateEndDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProductId = 6,
-                            StartDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Yield = 0
                         },
                         new
                         {
                             Id = 7,
-                            EstimateEndDate = new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimateEndDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProductId = 7,
-                            StartDate = new DateTime(2024, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Yield = 0
                         },
                         new
                         {
                             Id = 8,
-                            EstimateEndDate = new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimateEndDate = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProductId = 8,
-                            StartDate = new DateTime(2024, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Yield = 0
-                        },
-                        new
-                        {
-                            Id = 9,
-                            EstimateEndDate = new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProductId = 1,
-                            StartDate = new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Yield = 0
-                        },
-                        new
-                        {
-                            Id = 10,
-                            EstimateEndDate = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProductId = 2,
-                            StartDate = new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2024, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Yield = 0
                         });
                 });
@@ -402,7 +368,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 2,
-                            Description = "Nếp đen, men thuốc bắc",
+                            Description = "Nếp cái hoa vàng, men thường",
                             Name = "Rượu trắng 40",
                             Price = 45000.0,
                             Quantity = 300
@@ -410,7 +376,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 3,
-                            Description = "Nếp đen, men thuốc bắc",
+                            Description = "Gạo nếp, men lá",
                             Name = "Rượu trắng 35",
                             Price = 40000.0,
                             Quantity = 250
@@ -418,7 +384,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 4,
-                            Description = "Nếp cái hoa vàng, men thuốc bắc",
+                            Description = "Đòng đòng, men thuốc bắc",
                             Name = "Đòng đòng 45",
                             Price = 75000.0,
                             Quantity = 80
@@ -426,7 +392,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 5,
-                            Description = "Nếp cái hoa vàng, men thuốc bắc",
+                            Description = "Đòng đòng, men thường",
                             Name = "Đòng đòng 40",
                             Price = 70000.0,
                             Quantity = 100
@@ -434,7 +400,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 6,
-                            Description = "Nếp cái hoa vàng, men thuốc bắc",
+                            Description = "Đòng đòng, men lá",
                             Name = "Đòng đòng 35",
                             Price = 60000.0,
                             Quantity = 50
@@ -442,7 +408,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 7,
-                            Description = "Gạo nếp, men lá",
+                            Description = "Nếp cái hoa vàng, men lá",
                             Name = "Rượu bách nhật",
                             Price = 40000.0,
                             Quantity = 10
@@ -450,7 +416,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 8,
-                            Description = "Nếp đen, táo mèo",
+                            Description = "Nếp đen, táo mèo, men thuốc bắc",
                             Name = "Rượu táo mèo",
                             Price = 60000.0,
                             Quantity = 20
@@ -498,17 +464,21 @@ namespace RuKiSoBackEnd.Migrations
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.BatchIngredient", b =>
                 {
-                    b.HasOne("RuKiSoBackEnd.Models.Domains.Batches", null)
+                    b.HasOne("RuKiSoBackEnd.Models.Domains.Batches", "Batch")
                         .WithMany("BatchIngredients")
                         .HasForeignKey("BatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RuKiSoBackEnd.Models.Domains.Ingredients", null)
+                    b.HasOne("RuKiSoBackEnd.Models.Domains.Ingredients", "Ingredient")
                         .WithMany("BatchIngredients")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Batch");
+
+                    b.Navigation("Ingredient");
                 });
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Batches", b =>

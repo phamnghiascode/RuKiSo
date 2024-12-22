@@ -87,8 +87,22 @@ namespace RuKiSoBackEnd.Util
         #endregion
 
         #region Batch
-        public static Batches ToDomain(this BatchRequest request)
+
+        public static Batches ToDomain(this BatchReq request)
         {
+            // Validation
+            if (request.StartDate >= request.EstimateEndDate)
+                throw new ArgumentException("Start date must be before estimate end date");
+
+            if (request.BatchIngredients == null || !request.BatchIngredients.Any())
+                throw new ArgumentException("Batch must have at least one ingredient");
+
+            if (request.Yield < 0)
+                throw new ArgumentException("Yield cannot be negative");
+
+            if (request.ProductId <= 0)
+                throw new ArgumentException("Invalid ProductId");
+
             return new Batches
             {
                 StartDate = request.StartDate,
@@ -97,43 +111,59 @@ namespace RuKiSoBackEnd.Util
                 ProductId = request.ProductId,
                 BatchIngredients = request.BatchIngredients.Select(bi => new BatchIngredient
                 {
-                    IngredientId = bi.IngredientId,
-                    Quantity = bi.Quantity
+                    IngredientId = bi.IngredientId > 0 ? bi.IngredientId :
+                        throw new ArgumentException($"Invalid IngredientId: {bi.IngredientId}"),
+                    Quantity = bi.Quantity > 0 ? bi.Quantity :
+                        throw new ArgumentException($"Quantity must be positive for ingredient {bi.IngredientId}")
                 }).ToList()
             };
         }
 
-        public static BatchResponse ToDTO(this Batches batch)
+        public static BatchRes ToDTO(this Batches batch)
         {
-            return new BatchResponse
+            return new BatchRes
             {
                 Id = batch.Id,
                 StartDate = batch.StartDate,
                 EstimateEndDate = batch.EstimateEndDate,
                 Yield = batch.Yield,
                 ProductId = batch.ProductId,
-                Product = batch.Product != null ? new ProductDTO
-                {
-                    Id = batch.Product.Id,
-                    Name = batch.Product.Name,
-                    Quantity = batch.Product.Quantity
-                } : null,
-                BatchIngredients = batch.BatchIngredients.Select(bi => new BatchIngredientDTO
-                {
-                    BatchId = bi.BatchId,
-                    IngredientId = bi.IngredientId,
-                    Quantity = bi.Quantity,
-                    Ingredient = bi.Ingredient != null ? new IngredientDTO
-                    {
-                        Id = bi.Ingredient.Id,
-                        Name = bi.Ingredient.Name,
-                        Unit = bi.Ingredient.Unit,
-                        Quantity = bi.Ingredient.Quantity
-                    } : null
-                }).ToList()
+                Product = batch.Product?.ToProductDTO(),
+                BatchIngredients = batch.BatchIngredients.Select(bi => bi.ToBatchIngredientDTO()).ToList()
             };
         }
 
+        private static ProductDTO ToProductDTO(this Products product)
+        {
+            return new ProductDTO
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Quantity = product.Quantity
+            };
+        }
+
+        private static BatchIngredientDTO ToBatchIngredientDTO(this BatchIngredient bi)
+        {
+            return new BatchIngredientDTO
+            {
+                BatchId = bi.BatchId,
+                IngredientId = bi.IngredientId,
+                Quantity = bi.Quantity,
+                Ingredient = bi.Ingredient?.ToIngredientDTO()
+            };
+        }
+
+        private static IngredientDTO ToIngredientDTO(this Ingredients ingredient)
+        {
+            return new IngredientDTO
+            {
+                Id = ingredient.Id,
+                Name = ingredient.Name,
+                Unit = ingredient.Unit,
+                Quantity = ingredient.Quantity
+            };
+        }
         #endregion
     }
 }

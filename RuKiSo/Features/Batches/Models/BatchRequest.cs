@@ -1,6 +1,6 @@
-﻿using RuKiSoBackEnd.Models.Domains;
+﻿using RuKiSoBackEnd.Models.DTOs;
 
-namespace RuKiSoBackEnd.Models.DTOs
+namespace RuKiSo.Features.Models
 {
     public class BatchRequest
     {
@@ -10,4 +10,5 @@ namespace RuKiSoBackEnd.Models.DTOs
         public int ProductId { get; set; }
         public List<BatchIngredientRequest> BatchIngredients { get; set; } = new();
     }
+}
 }

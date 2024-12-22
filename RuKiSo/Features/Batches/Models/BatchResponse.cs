@@ -2,7 +2,7 @@
 
 namespace RuKiSo.Features.Models
 {
-    public class BatchDTO : BaseModel
+    public class BatchResponse : BaseModel
     {
         public int Id { get; set; }
         public ProductRespone Product { get; set; }

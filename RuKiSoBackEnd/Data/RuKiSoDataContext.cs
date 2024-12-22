@@ -54,14 +54,13 @@ namespace RuKiSoBackEnd.Data
 
             modelBuilder.Entity<BatchIngredient>(entity =>
             {
-                entity.ToTable("BatchIngredients");
                 entity.HasKey(bi => new { bi.BatchId, bi.IngredientId });
 
-                entity.HasOne<Batches>()
+                entity.HasOne(bi => bi.Batch)
                     .WithMany(b => b.BatchIngredients)
                     .HasForeignKey(bi => bi.BatchId);
 
-                entity.HasOne<Ingredients>()
+                entity.HasOne(bi => bi.Ingredient)
                     .WithMany(i => i.BatchIngredients)
                     .HasForeignKey(bi => bi.IngredientId);
             });

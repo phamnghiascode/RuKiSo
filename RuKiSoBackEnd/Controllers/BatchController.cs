@@ -45,7 +45,7 @@ namespace RuKiSoBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] BatchRequest batchRequest)
+        public async Task<IActionResult> Create([FromBody] BatchReq batchRequest)
         {
             using var transaction = await dbContext.Database.BeginTransactionAsync();
             try
@@ -85,7 +85,7 @@ namespace RuKiSoBackEnd.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BatchRequest batchRequest)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BatchReq batchRequest)
         {
             using var transaction = await dbContext.Database.BeginTransactionAsync();
             try

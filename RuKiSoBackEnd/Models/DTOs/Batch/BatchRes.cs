@@ -1,6 +1,6 @@
 ﻿namespace RuKiSoBackEnd.Models.DTOs
 {
-    public class BatchResponse
+    public class BatchRes
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }

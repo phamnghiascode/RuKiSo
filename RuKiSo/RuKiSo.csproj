@@ -112,7 +112,6 @@
 	<ItemGroup>
 	  <Folder Include="DataAccess\Interfaces\" />
 	  <Folder Include="DataAccess\Services\" />
-	  <Folder Include="Features\Batches\Services\" />
 	</ItemGroup>
 
 	<ItemGroup>

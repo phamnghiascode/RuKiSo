@@ -5,7 +5,7 @@
 namespace RuKiSoBackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class changebatch : Migration
+    public partial class reseeddata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

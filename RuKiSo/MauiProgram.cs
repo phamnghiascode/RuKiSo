@@ -39,14 +39,18 @@ namespace RuKiSo
             builder.Services.AddSingleton<IGenericService<IngredientRespone, IngredientRequest>, IngredientService>();
             builder.Services.AddSingleton<IGenericService<ProductRespone, ProductRequest>, ProductService>();
             builder.Services.AddSingleton<IGenericService<TransactionResponse, TransactionRequest>, TransactionService>();
+            builder.Services.AddSingleton<IGenericService<BatchResponse, BatchRequest>, BatchService>();
 
             builder.Services.AddTransient<ProductViewModel>();
             builder.Services.AddTransient<IngredientViewModel>();
             builder.Services.AddTransient<TransactionViewModel>();
+            builder.Services.AddTransient<BatchViewModel>();
+            
 
             builder.Services.AddTransient<ProductPage>();
             builder.Services.AddTransient<IngredientPage>();
             builder.Services.AddTransient<TransactionPage>();
+            builder.Services.AddTransient<BatchPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

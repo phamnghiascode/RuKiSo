@@ -8,7 +8,7 @@ namespace RuKiSo.ViewModels
 {
     public partial class BatchViewModel : BaseViewModel
     {
-        private BatchDTO selectedBatch;
+        private BatchResponse selectedBatch;
         private ProductRespone? selectedProduct;
         private bool isEditCookPopupOpen;
         private int totalBatch;
@@ -22,7 +22,7 @@ namespace RuKiSo.ViewModels
         public ICommand SaveBatchCommand { get; }
         public ICommand ResetCommand { get; }
 
-        public BatchDTO SelectedBatch
+        public BatchResponse SelectedBatch
         {
             get { return selectedBatch; }
             set
@@ -99,16 +99,16 @@ namespace RuKiSo.ViewModels
             }
         }
         public ObservableCollection<BatchIngredientDTO> Ingredients { get; set; }
-        public ObservableCollection<BatchDTO> Batches { get; set; } = new ObservableCollection<BatchDTO>();
-        public ObservableCollection<BatchDTO> AllBatches { get; set; }
+        public ObservableCollection<BatchResponse> Batches { get; set; } = new ObservableCollection<BatchResponse>();
+        public ObservableCollection<BatchResponse> AllBatches { get; set; }
         public ObservableCollection<ProductRespone> Products { get; set; }
        
         public BatchViewModel()
         {
             ResetCommand = new RelayCommand(Reset);
-            EditCookBatchCommand = new RelayCommand<BatchDTO>(EditCookBatch);
+            EditCookBatchCommand = new RelayCommand<BatchResponse>(EditCookBatch);
             SaveBatchCommand = new RelayCommand(SaveBatch);
-            DeleteBatchCommand = new RelayCommand<BatchDTO>(DeleteBatch);
+            DeleteBatchCommand = new RelayCommand<BatchResponse>(DeleteBatch);
             AddBatchCommand = new RelayCommand(AddBatch);
             InitData();
         }
@@ -140,13 +140,13 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        private void EditCookBatch(BatchDTO batch)
+        private void EditCookBatch(BatchResponse batch)
         {
             SelectedBatch = batch;  
             IsEditCookPopupOpen = true;
         }
 
-        private void DeleteBatch(BatchDTO batch)
+        private void DeleteBatch(BatchResponse batch)
         {
             if (batch != null && Batches.Contains(batch))
             {
@@ -164,7 +164,7 @@ namespace RuKiSo.ViewModels
         {
             var selectedIngredients = GetSelectedIngredients();
 
-            var newBatch = new BatchDTO
+            var newBatch = new BatchResponse
             {
                 Product = SelectedProduct,
                 StartDate = StartDate,
@@ -196,7 +196,7 @@ namespace RuKiSo.ViewModels
             };
             AllBatches = new()
             {
-                new BatchDTO
+                new BatchResponse
                 {
                     Id = 1,
                     Product = Products[0],
@@ -208,7 +208,7 @@ namespace RuKiSo.ViewModels
                         new BatchIngredientDTO { Id = 3, IngredientName = "Nếp cái hoa vàng", StoredQuantity = 500, UsedQuantity = 100, PricePerUnit = 20, IsSelected = true },
                     }
                     },
-                new BatchDTO
+                new BatchResponse
                 {
                     Id = 2,
                     Product = Products[1],
@@ -220,7 +220,7 @@ namespace RuKiSo.ViewModels
                         new BatchIngredientDTO { Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, UsedQuantity = 150, PricePerUnit = 18, IsSelected = true },
                     }
                 },
-                new BatchDTO
+                new BatchResponse
                 {
                     Id = 3,
                     Product = Products[2],
@@ -232,7 +232,7 @@ namespace RuKiSo.ViewModels
                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
                     }
                 },
-                new BatchDTO
+                new BatchResponse
                 {
                     Id = 4,
                     Product = Products[3],
@@ -244,7 +244,7 @@ namespace RuKiSo.ViewModels
                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
                     }
                 },
-                new BatchDTO
+                new BatchResponse
                 {
                     Id = 5,
                     Product = Products[4],
@@ -256,7 +256,7 @@ namespace RuKiSo.ViewModels
                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                     }
                 },
-                new BatchDTO
+                new BatchResponse
                 {
                     Id = 6,
                     Product = Products[0],
@@ -268,7 +268,7 @@ namespace RuKiSo.ViewModels
                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
                     }
                 },
-                 new BatchDTO
+                 new BatchResponse
                  {
                      Id = 7,
                      Product = Products[1],
@@ -286,7 +286,7 @@ namespace RuKiSo.ViewModels
         private void UpdateBatches()
         {
             Batches.Clear();
-            foreach (BatchDTO batch in AllBatches.Where(b => b.Yield == 0))
+            foreach (BatchResponse batch in AllBatches.Where(b => b.Yield == 0))
             {
                 Batches.Add(batch);
             }

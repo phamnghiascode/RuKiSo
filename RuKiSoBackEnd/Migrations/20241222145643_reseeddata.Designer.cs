@@ -12,8 +12,8 @@ using RuKiSoBackEnd.Data;
 namespace RuKiSoBackEnd.Migrations
 {
     [DbContext(typeof(RuKiSoDataContext))]
-    [Migration("20241124032935_Init RuKiSo Database")]
-    partial class InitRuKiSoDatabase
+    [Migration("20241222145643_reseeddata")]
+    partial class reseeddata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,128 @@ namespace RuKiSoBackEnd.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.BatchIngredient", b =>
+                {
+                    b.Property<int>("BatchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("BatchId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("BatchIngredients");
+
+                    b.HasData(
+                        new
+                        {
+                            BatchId = 1,
+                            IngredientId = 3,
+                            Quantity = 50
+                        },
+                        new
+                        {
+                            BatchId = 1,
+                            IngredientId = 5,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            BatchId = 2,
+                            IngredientId = 2,
+                            Quantity = 45
+                        },
+                        new
+                        {
+                            BatchId = 2,
+                            IngredientId = 6,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            BatchId = 3,
+                            IngredientId = 1,
+                            Quantity = 40
+                        },
+                        new
+                        {
+                            BatchId = 3,
+                            IngredientId = 7,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            BatchId = 4,
+                            IngredientId = 4,
+                            Quantity = 30
+                        },
+                        new
+                        {
+                            BatchId = 4,
+                            IngredientId = 5,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            BatchId = 5,
+                            IngredientId = 4,
+                            Quantity = 25
+                        },
+                        new
+                        {
+                            BatchId = 5,
+                            IngredientId = 6,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            BatchId = 6,
+                            IngredientId = 4,
+                            Quantity = 20
+                        },
+                        new
+                        {
+                            BatchId = 6,
+                            IngredientId = 7,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            BatchId = 7,
+                            IngredientId = 2,
+                            Quantity = 35
+                        },
+                        new
+                        {
+                            BatchId = 7,
+                            IngredientId = 7,
+                            Quantity = 1
+                        },
+                        new
+                        {
+                            BatchId = 8,
+                            IngredientId = 3,
+                            Quantity = 40
+                        },
+                        new
+                        {
+                            BatchId = 8,
+                            IngredientId = 8,
+                            Quantity = 2
+                        },
+                        new
+                        {
+                            BatchId = 8,
+                            IngredientId = 5,
+                            Quantity = 1
+                        });
+                });
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Batches", b =>
                 {
@@ -50,6 +172,72 @@ namespace RuKiSoBackEnd.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Batches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EstimateEndDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 1,
+                            StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EstimateEndDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 2,
+                            StartDate = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EstimateEndDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 3,
+                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EstimateEndDate = new DateTime(2024, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 4,
+                            StartDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            EstimateEndDate = new DateTime(2024, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 5,
+                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            EstimateEndDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 6,
+                            StartDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            EstimateEndDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 7,
+                            StartDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            EstimateEndDate = new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProductId = 8,
+                            StartDate = new DateTime(2024, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Yield = 0
+                        });
                 });
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Ingredients", b =>
@@ -59,9 +247,6 @@ namespace RuKiSoBackEnd.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BatchId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -78,8 +263,6 @@ namespace RuKiSoBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BatchId");
 
                     b.ToTable("Ingredients");
 
@@ -188,7 +371,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 2,
-                            Description = "Nếp đen, men thuốc bắc",
+                            Description = "Nếp cái hoa vàng, men thường",
                             Name = "Rượu trắng 40",
                             Price = 45000.0,
                             Quantity = 300
@@ -196,7 +379,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 3,
-                            Description = "Nếp đen, men thuốc bắc",
+                            Description = "Gạo nếp, men lá",
                             Name = "Rượu trắng 35",
                             Price = 40000.0,
                             Quantity = 250
@@ -204,7 +387,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 4,
-                            Description = "Nếp cái hoa vàng, men thuốc bắc",
+                            Description = "Đòng đòng, men thuốc bắc",
                             Name = "Đòng đòng 45",
                             Price = 75000.0,
                             Quantity = 80
@@ -212,7 +395,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 5,
-                            Description = "Nếp cái hoa vàng, men thuốc bắc",
+                            Description = "Đòng đòng, men thường",
                             Name = "Đòng đòng 40",
                             Price = 70000.0,
                             Quantity = 100
@@ -220,7 +403,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 6,
-                            Description = "Nếp cái hoa vàng, men thuốc bắc",
+                            Description = "Đòng đòng, men lá",
                             Name = "Đòng đòng 35",
                             Price = 60000.0,
                             Quantity = 50
@@ -228,7 +411,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 7,
-                            Description = "Gạo nếp, men lá",
+                            Description = "Nếp cái hoa vàng, men lá",
                             Name = "Rượu bách nhật",
                             Price = 40000.0,
                             Quantity = 10
@@ -236,7 +419,7 @@ namespace RuKiSoBackEnd.Migrations
                         new
                         {
                             Id = 8,
-                            Description = "Nếp đen, táo mèo",
+                            Description = "Nếp đen, táo mèo, men thuốc bắc",
                             Name = "Rượu táo mèo",
                             Price = 60000.0,
                             Quantity = 20
@@ -282,6 +465,25 @@ namespace RuKiSoBackEnd.Migrations
                     b.ToTable("Transactions");
                 });
 
+            modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.BatchIngredient", b =>
+                {
+                    b.HasOne("RuKiSoBackEnd.Models.Domains.Batches", "Batch")
+                        .WithMany("BatchIngredients")
+                        .HasForeignKey("BatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RuKiSoBackEnd.Models.Domains.Ingredients", "Ingredient")
+                        .WithMany("BatchIngredients")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Batch");
+
+                    b.Navigation("Ingredient");
+                });
+
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Batches", b =>
                 {
                     b.HasOne("RuKiSoBackEnd.Models.Domains.Products", "Product")
@@ -290,16 +492,6 @@ namespace RuKiSoBackEnd.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Ingredients", b =>
-                {
-                    b.HasOne("RuKiSoBackEnd.Models.Domains.Batches", "Batch")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("BatchId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Batch");
                 });
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Transactions", b =>
@@ -321,11 +513,13 @@ namespace RuKiSoBackEnd.Migrations
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Batches", b =>
                 {
-                    b.Navigation("Ingredients");
+                    b.Navigation("BatchIngredients");
                 });
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.Ingredients", b =>
                 {
+                    b.Navigation("BatchIngredients");
+
                     b.Navigation("Transactions");
                 });
 

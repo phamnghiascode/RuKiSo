@@ -2,7 +2,7 @@
 
 namespace RuKiSo.Utils
 {
-    public static class UtilMapper
+    public static class UIMapper
     {
         public static TransactionProductDTO ToTransactionProductDTO(this ProductRespone product)
         {
