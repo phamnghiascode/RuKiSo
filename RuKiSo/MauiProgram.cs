@@ -26,11 +26,6 @@ namespace RuKiSo
                     fonts.AddFont("fa-regular-400.ttf", "FaRegu");
                     fonts.AddFont("fa-solid-900.ttf", "FaSolid");
                 });
-            //var config = new ConfigurationBuilder()
-            //                .SetBasePath(FileSystem.AppDataDirectory)
-            //                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            //                .Build();
-            //var apiClientOptions = config.GetSection("ApiClientOptions").Get<ApiClientOptions>();
             builder.Services.AddSingleton(new ApiClientOptions
             {
                 ApiBaseAddress = "https://localhost:7184"

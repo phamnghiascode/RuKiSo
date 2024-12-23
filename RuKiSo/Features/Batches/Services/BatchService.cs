@@ -17,14 +17,21 @@ namespace RuKiSo.Features.Services
                 BaseAddress = new Uri(apiClientOptions.ApiBaseAddress)
             };
         }
-        public Task<BatchResponse?> CreateAsync(BatchRequest request)
+        public async Task<BatchResponse?> CreateAsync(BatchRequest request)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.PostAsJsonAsync("/api/Batch", request);
+            if (response.IsSuccessStatusCode)
+            {
+                var batchRes = await response.Content.ReadFromJsonAsync<BatchRes>();
+                return batchRes?.ToViewModel();
+            }
+            return null;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.DeleteAsync($"/api/Batch/{id}");
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<IEnumerable<BatchResponse>?> GetAllAsync()
@@ -33,14 +40,21 @@ namespace RuKiSo.Features.Services
             return batches?.Select(b => b.ToViewModel());
         }
 
-        public Task<BatchResponse?> GetByIdAsync(int id)
+        public async Task<BatchResponse?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var batch = await httpClient.GetFromJsonAsync<BatchRes>($"/api/Batch/{id}");
+            return batch?.ToViewModel();
         }
 
-        public Task<BatchResponse?> UpdateAsync(int id, BatchRequest request)
+        public async Task<BatchResponse?> UpdateAsync(int id, BatchRequest request)
         {
-            throw new NotImplementedException();
+            var response = await httpClient.PutAsJsonAsync($"/api/Batch/{id}", request);
+            if (response.IsSuccessStatusCode)
+            {
+                var batchRes = await response.Content.ReadFromJsonAsync<BatchRes>();
+                return batchRes?.ToViewModel();
+            }
+            return null;
         }
     }
 }

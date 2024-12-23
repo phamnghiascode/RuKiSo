@@ -24,5 +24,9 @@ namespace RuKiSo.Utils.MVVM
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
+        public void HandleException(string message, Exception ex)
+        {
+            Console.WriteLine($"{message}: {ex.Message}");
+        }
     }
 }

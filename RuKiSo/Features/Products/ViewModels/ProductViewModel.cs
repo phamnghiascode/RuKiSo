@@ -307,10 +307,5 @@ namespace RuKiSo.ViewModels
                 Products.Add(product);
             }
         }
-
-        private void HandleException(string message, Exception ex)
-        {
-            Console.WriteLine($"{message}: {ex.Message}");
-        }
     }
 }

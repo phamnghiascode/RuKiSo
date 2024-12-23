@@ -188,7 +188,7 @@ namespace RuKiSo.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error retrieving ingredients {ex.Message}");
+                    HandleException("Error retrieving data", ex);
                 }
             }
         }
@@ -226,7 +226,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating ingredient {ex.Message}");
+                HandleException("Error retrieving data", ex);
             }
         }
 
@@ -259,7 +259,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating ingredient {ex.Message}");
+                HandleException("Error retrieving data", ex);
             }
         }
 
@@ -280,7 +280,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error retrieving ingredients {ex.Message}");
+                HandleException("Error retrieving data", ex);
             }
         }
         private void UpdateCardsInfo()

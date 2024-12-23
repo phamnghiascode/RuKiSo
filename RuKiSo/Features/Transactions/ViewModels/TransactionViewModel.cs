@@ -189,10 +189,6 @@ namespace RuKiSo.ViewModels
                 HandleException("Error deleting transaction", ex);
             }
         }
-        private void HandleException(string message, Exception ex)
-        {
-            Console.WriteLine($"{message}: {ex.Message}");
-        }
         private async Task InitializeData()
         {
             Transactions = new ObservableCollection<TransactionResponse>();
