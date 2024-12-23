@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
-using RuKiSo.Features.Services;
 using RuKiSo.Utils;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Windows.ApplicationModel.Background;
-using Windows.Security.Cryptography.Core;
 
 namespace RuKiSo.ViewModels
 {

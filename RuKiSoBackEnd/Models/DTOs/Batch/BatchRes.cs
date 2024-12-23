@@ -7,7 +7,7 @@
         public DateTime EstimateEndDate { get; set; }
         public int Yield { get; set; }
         public int? ProductId { get; set; }
-        public ProductDTO Product { get; set; }
-        public List<BatchIngredientDTO> BatchIngredients { get; set; } = new();
+        public ProductAPIDTO Product { get; set; }
+        public List<BatchIngredientAPIDTO> BatchIngredients { get; set; } = new();
     }
 }

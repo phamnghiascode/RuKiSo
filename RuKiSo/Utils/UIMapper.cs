@@ -27,9 +27,9 @@ namespace RuKiSo.Utils
                 UsedQuantity = 0
             };
         }
-        public static RuKiSo.Features.Models.BatchIngredientDTO ToBatchIngredientDTO(this IngredientRespone ingredient)
+        public static BatchIngredientDTO ToBatchIngredientDTO(this IngredientRespone ingredient)
         {
-            return new RuKiSo.Features.Models.BatchIngredientDTO
+            return new BatchIngredientDTO
             {
                 Id = ingredient.Id,
                 IngredientName = ingredient.Name,
@@ -53,7 +53,7 @@ namespace RuKiSo.Utils
             };
         }
 
-        public static ProductRespone ToViewModel(this ProductDTO dto)
+        public static ProductRespone ToViewModel(this ProductAPIDTO dto)
         {
             if (dto == null) return null;
             return new ProductRespone
@@ -64,10 +64,10 @@ namespace RuKiSo.Utils
             };
         }
 
-        public static Features.Models.BatchIngredientDTO ToViewModel(this RuKiSoBackEnd.Models.DTOs.BatchIngredientDTO dto)
+        public static BatchIngredientDTO ToViewModel(this BatchIngredientAPIDTO dto)
         {
             if (dto == null) return null;
-            return new Features.Models.BatchIngredientDTO
+            return new BatchIngredientDTO
             {
                 Id = dto.IngredientId,
                 IngredientName = dto.Ingredient?.Name,

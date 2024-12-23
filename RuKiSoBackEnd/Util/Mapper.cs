@@ -133,9 +133,9 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        private static ProductDTO ToProductDTO(this Products product)
+        private static ProductAPIDTO ToProductDTO(this Products product)
         {
-            return new ProductDTO
+            return new ProductAPIDTO
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -143,9 +143,9 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        private static BatchIngredientDTO ToBatchIngredientDTO(this BatchIngredient bi)
+        private static BatchIngredientAPIDTO ToBatchIngredientDTO(this BatchIngredient bi)
         {
-            return new BatchIngredientDTO
+            return new BatchIngredientAPIDTO
             {
                 BatchId = bi.BatchId,
                 IngredientId = bi.IngredientId,
@@ -154,9 +154,9 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        private static IngredientDTO ToIngredientDTO(this Ingredients ingredient)
+        private static IngredientAPIDTO ToIngredientDTO(this Ingredients ingredient)
         {
-            return new IngredientDTO
+            return new IngredientAPIDTO
             {
                 Id = ingredient.Id,
                 Name = ingredient.Name,
