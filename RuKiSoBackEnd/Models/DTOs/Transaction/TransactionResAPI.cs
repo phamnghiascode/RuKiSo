@@ -1,6 +1,6 @@
 ﻿namespace RuKiSoBackEnd.Models.DTOs
 {
-    public class TransactionRes
+    public class TransactionResAPI
     {
         public int Id { get; set; }
         public string Name { get; set; }

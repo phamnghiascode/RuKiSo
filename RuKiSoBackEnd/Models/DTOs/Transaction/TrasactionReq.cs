@@ -1,6 +1,6 @@
 ﻿namespace RuKiSoBackEnd.Models.DTOs
 {
-    public class TransactionReq
+    public class TransactionReqAPI
     {
         public bool TranType { get; set; }
         public int Quantity { get; set; }

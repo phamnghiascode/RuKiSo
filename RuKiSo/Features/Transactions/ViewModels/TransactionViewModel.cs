@@ -4,7 +4,6 @@ using RuKiSo.Utils;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Windows.Media.Playback;
 
 namespace RuKiSo.ViewModels
 {

@@ -6,7 +6,7 @@ namespace RuKiSoBackEnd.Util
     public static class Mapper
     {
         #region Product
-        public static Products ToDomain(this ProductRequest productRequest)
+        public static Products ToDomain(this ProductRequestAPI productRequest)
         {
             return new Products()
             {
@@ -17,9 +17,9 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        public static ProductResponse ToDTO(this Products products)
+        public static ProductResponseAPI ToDTO(this Products products)
         {
-            return new ProductResponse()
+            return new ProductResponseAPI()
             {
                 Id = products.Id,
                 Name = products.Name,
@@ -31,7 +31,7 @@ namespace RuKiSoBackEnd.Util
         #endregion
 
         #region Ingredient
-        public static Ingredients ToDomain(this IngredientRequest ingredientRequest)
+        public static Ingredients ToDomain(this IngredientRequestAPI ingredientRequest)
         {
             return new Ingredients()
             {
@@ -42,9 +42,9 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        public static IngredientResponse ToDTO(this Ingredients ingredients)
+        public static IngredientResponseAPI ToDTO(this Ingredients ingredients)
         {
-            return new IngredientResponse()
+            return new IngredientResponseAPI()
             {
                 Id = ingredients.Id,
                 Name = ingredients.Name,
@@ -57,9 +57,9 @@ namespace RuKiSoBackEnd.Util
         #endregion
 
         #region Transaction
-        public static TransactionRes ToDTO(this Transactions transaction)
+        public static TransactionResAPI ToDTO(this Transactions transaction)
         {
-            return new TransactionRes
+            return new TransactionResAPI
             {
                 Id = transaction.Id,
                 Name = transaction.Name,
@@ -72,7 +72,7 @@ namespace RuKiSoBackEnd.Util
             };
         }
 
-        public static Transactions ToDomain(this TransactionReq request)
+        public static Transactions ToDomain(this TransactionReqAPI request)
         {
             return new Transactions
             {

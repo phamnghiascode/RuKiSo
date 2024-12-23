@@ -19,13 +19,13 @@ namespace RuKiSo.ViewModels
         private DateTime startDate = DateTime.Now;
         private DateTime estimateEndDate = DateTime.Now;
 
-        private readonly IGenericService<ProductRespone, Features.Models.ProductRequest> productService;
-        private readonly IGenericService<IngredientRespone, Features.Models.IngredientRequest> ingredientService;
+        private readonly IGenericService<ProductRespone, ProductRequest> productService;
+        private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
         private readonly IGenericService<BatchResponse, BatchRequest> batchService;
 
         public BatchViewModel(
-            IGenericService<ProductRespone, Features.Models.ProductRequest> productService,
-            IGenericService<IngredientRespone, Features.Models.IngredientRequest> ingredientService,
+            IGenericService<ProductRespone, ProductRequest> productService,
+            IGenericService<IngredientRespone, IngredientRequest> ingredientService,
             IGenericService<BatchResponse, BatchRequest> batchService)
         {
             this.productService = productService;

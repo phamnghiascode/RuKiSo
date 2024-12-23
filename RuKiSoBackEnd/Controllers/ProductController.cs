@@ -40,7 +40,7 @@ namespace RuKiSoBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ProductRequest productRequest)
+        public async Task<IActionResult> Create([FromBody] ProductRequestAPI productRequest)
         {
             var domainProduct = productRequest.ToDomain();
 
@@ -54,7 +54,7 @@ namespace RuKiSoBackEnd.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductRequest productRequest)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ProductRequestAPI productRequest)
         {
             var domainProduct = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
             if (domainProduct == null)

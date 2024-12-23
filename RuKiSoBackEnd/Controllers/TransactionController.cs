@@ -58,7 +58,7 @@ namespace YourNamespace.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TransactionReq transactionRequest)
+        public async Task<IActionResult> Create([FromBody] TransactionReqAPI transactionRequest)
         {
             // Validate transaction type and required IDs
             if (!transactionRequest.TranType && !transactionRequest.IngredientId.HasValue)
@@ -96,7 +96,7 @@ namespace YourNamespace.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TransactionReq transactionRequest)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TransactionReqAPI transactionRequest)
         {
             var domainTransaction = await dbContext.Transactions.FirstOrDefaultAsync(t => t.Id == id);
 

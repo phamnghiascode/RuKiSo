@@ -39,7 +39,7 @@ namespace RuKiSoBackEnd.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] IngredientRequest ingredientRequest)
+        public async Task<IActionResult> Create([FromBody] IngredientRequestAPI ingredientRequest)
         {
             Ingredients ingredientDomain = ingredientRequest.ToDomain();
             await dbContext.Ingredients.AddAsync(ingredientDomain);
@@ -64,7 +64,7 @@ namespace RuKiSoBackEnd.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] IngredientRequest ingredientRequest)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] IngredientRequestAPI ingredientRequest)
         {
             var updateIngredient = await dbContext.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
             if(updateIngredient == null)

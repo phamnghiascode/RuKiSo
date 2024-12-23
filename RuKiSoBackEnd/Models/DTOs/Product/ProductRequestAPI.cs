@@ -1,8 +1,6 @@
-﻿using RuKiSoBackEnd.Models.Domains;
-
-namespace RuKiSoBackEnd.Models.DTOs
+﻿namespace RuKiSoBackEnd.Models.DTOs
 {
-    public class ProductRequest
+    public class ProductRequestAPI
     {
         public string Name { get; set; }
         public string Description { get; set; }
