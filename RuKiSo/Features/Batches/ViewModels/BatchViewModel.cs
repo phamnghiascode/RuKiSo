@@ -1,8 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
+using RuKiSo.Utils;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Windows.ApplicationModel.Background;
+using Windows.Security.Cryptography.Core;
 
 namespace RuKiSo.ViewModels
 {
@@ -98,21 +102,29 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(ProjectedYield));
             }
         }
+        public ObservableCollection<BatchResponse> Batches { get; set; }
         public ObservableCollection<BatchIngredientDTO> Ingredients { get; set; }
-        public ObservableCollection<BatchResponse> Batches { get; set; } = new ObservableCollection<BatchResponse>();
         public ObservableCollection<BatchResponse> AllBatches { get; set; }
         public ObservableCollection<ProductRespone> Products { get; set; }
-       
-        public BatchViewModel()
+
+        private readonly IGenericService<ProductRespone, ProductRequest> productService;
+        private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
+        private readonly IGenericService<BatchResponse, BatchRequest> batchService;
+
+        public BatchViewModel(IGenericService<ProductRespone, ProductRequest> productService,
+                              IGenericService<IngredientRespone, IngredientRequest> ingredientService,
+                              IGenericService<BatchResponse, BatchRequest> batchService)
         {
+            this.productService = productService;
+            this.ingredientService = ingredientService;
+            this.batchService = batchService;
             ResetCommand = new RelayCommand(Reset);
             EditCookBatchCommand = new RelayCommand<BatchResponse>(EditCookBatch);
             SaveBatchCommand = new RelayCommand(SaveBatch);
             DeleteBatchCommand = new RelayCommand<BatchResponse>(DeleteBatch);
             AddBatchCommand = new RelayCommand(AddBatch);
-            InitData();
+            InitializeData();
         }
-
         private void Reset()
         {
             SelectedProduct = null;
@@ -128,7 +140,7 @@ namespace RuKiSo.ViewModels
         private void SaveBatch()
         {
             var updateBatch = Batches.FirstOrDefault(p => p.Id == SelectedBatch.Id);
-            if (updateBatch != null) 
+            if (updateBatch != null)
             {
                 updateBatch.Product = SelectedBatch.Product;
                 updateBatch.StartDate = SelectedBatch.StartDate;
@@ -142,7 +154,7 @@ namespace RuKiSo.ViewModels
 
         private void EditCookBatch(BatchResponse batch)
         {
-            SelectedBatch = batch;  
+            SelectedBatch = batch;
             IsEditCookPopupOpen = true;
         }
 
@@ -176,111 +188,74 @@ namespace RuKiSo.ViewModels
             UpdateCardsData();
         }
 
-        private void InitData()
+        private async void InitializeData()
         {
-            Ingredients = new ObservableCollection<BatchIngredientDTO>
+            AllBatches = new();
+            Batches = new();
+            Ingredients = new();
+            Batches = new();
+            Products = new();
+
+            LoadIngredient();
+            LoadProduct();
+            LoadAllBaches();
+        }
+        private async Task LoadProduct()
+        {
+            try
             {
-                new() {Id = 1, IngredientName = "Men lá", StoredQuantity = 10, PricePerUnit = 200},
-                new() {Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, PricePerUnit = 150},
-                new() {Id = 3, IngredientName = "Nếp cái hoa vàng", StoredQuantity = 500, PricePerUnit = 20},
-                new() {Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, PricePerUnit = 18},
-                new() {Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, PricePerUnit = 50},
-            };
-            Products = new ObservableCollection<ProductRespone>
+                var response = await productService.GetAllAsync();
+                if (response != null)
+                {
+                    Products.Clear();
+                    foreach (var item in response)
+                    {
+                        Products.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                new() {Id = 1, Name = "Rượu trắng thượng hạng", Description = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
-                new() {Id = 2, Name = "Rượu trắng", Description = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
-                new() {Id = 3, Name = "Rượu trắng nhẹ", Description = "Nếp đen, men thuốc bắc", Quantity = 100, Price = 40000},
-                new() {Id = 4, Name = "Rượu đòng đòng", Description = "Nếp cái hoa vàng, bông lúa non, men thuốc bắc", Quantity = 500, Price = 75000},
-                new() {Id = 5, Name = "Rượu bách nhật", Description = "Nếp đen, men thuốc bắc", Quantity = 5, Price = 40000},
-            };
-            AllBatches = new()
+                HandleException("Error retrieving data", ex);
+            }
+        }
+        private async Task LoadIngredient()
+        {
+            try
             {
-                new BatchResponse
+                var response = await ingredientService.GetAllAsync();
+                if (response != null)
                 {
-                    Id = 1,
-                    Product = Products[0],
-                    StartDate = DateTime.Now,
-                    EstimateEndDate = DateTime.Now.AddMonths(3),
-                    Ingredients = new List<BatchIngredientDTO>
+                    Ingredients.Clear();    
+                    foreach (var item in response)
                     {
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 2, PricePerUnit = 200, IsSelected = true },
-                        new BatchIngredientDTO { Id = 3, IngredientName = "Nếp cái hoa vàng", StoredQuantity = 500, UsedQuantity = 100, PricePerUnit = 20, IsSelected = true },
+                        Ingredients.Add(item.ToBatchIngredientDTO());
                     }
-                    },
-                new BatchResponse
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error retrieving data", ex);
+            }
+        }
+        private async Task LoadAllBaches()
+        {
+            try
+            {
+                var response = await batchService.GetAllAsync();
+                if (response != null)
                 {
-                    Id = 2,
-                    Product = Products[1],
-                    StartDate = DateTime.Now,
-                    EstimateEndDate = DateTime.Now.AddMonths(4),
-                    Ingredients = new List<BatchIngredientDTO>
+                    AllBatches.Clear();
+                    foreach (var item in response)
                     {
-                        new BatchIngredientDTO { Id = 2, IngredientName = "Men thuốc bắc", StoredQuantity = 20, UsedQuantity = 3, PricePerUnit = 150 , IsSelected = true},
-                        new BatchIngredientDTO { Id = 4, IngredientName = "Nếp đen", StoredQuantity = 400, UsedQuantity = 150, PricePerUnit = 18, IsSelected = true },
+                        AllBatches.Add(item);
                     }
-                },
-                new BatchResponse
-                {
-                    Id = 3,
-                    Product = Products[2],
-                    StartDate = DateTime.Now,
-                    EstimateEndDate = DateTime.Now.AddMonths(5),
-                    Ingredients = new List<BatchIngredientDTO>
-                    {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50, IsSelected = true },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
-                    }
-                },
-                new BatchResponse
-                {
-                    Id = 4,
-                    Product = Products[3],
-                    StartDate = DateTime.Now,
-                    EstimateEndDate = DateTime.Now.AddMonths(5),
-                    Ingredients = new List<BatchIngredientDTO>
-                    {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50, IsSelected = true },
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200, IsSelected = true },
-                    }
-                },
-                new BatchResponse
-                {
-                    Id = 5,
-                    Product = Products[4],
-                    StartDate = DateTime.Now,
-                    EstimateEndDate = DateTime.Now.AddMonths(5),
-                    Ingredients = new List<BatchIngredientDTO>
-                    {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
-                    }
-                },
-                new BatchResponse
-                {
-                    Id = 6,
-                    Product = Products[0],
-                    StartDate = DateTime.Now,
-                    EstimateEndDate = DateTime.Now.AddMonths(5),
-                    Ingredients = new List<BatchIngredientDTO>
-                    {
-                        new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
-                        new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
-                    }
-                },
-                 new BatchResponse
-                 {
-                     Id = 7,
-                     Product = Products[1],
-                     StartDate = DateTime.Now,
-                     EstimateEndDate = DateTime.Now.AddMonths(5),
-                     Ingredients = new List<BatchIngredientDTO>
-                     {
-                         new BatchIngredientDTO { Id = 5, IngredientName = "Đòng đòng", StoredQuantity = 30, UsedQuantity = 5, PricePerUnit = 50 , IsSelected = true},
-                         new BatchIngredientDTO { Id = 1, IngredientName = "Men lá", StoredQuantity = 10, UsedQuantity = 3, PricePerUnit = 200 , IsSelected = true},
-                     }
-                 }
-            };
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error retrieving data", ex);
+            }
             UpdateBatches();
         }
         private void UpdateBatches()
@@ -298,6 +273,10 @@ namespace RuKiSo.ViewModels
             TotalBatch = Batches.Count;
             TotalValue = Batches.Sum(batch => batch.Value);
             ProjectedYield = 100;
+        }
+        private void HandleException(string message, Exception ex)
+        {
+            Console.WriteLine($"{message}: {ex.Message}");
         }
     }
 }

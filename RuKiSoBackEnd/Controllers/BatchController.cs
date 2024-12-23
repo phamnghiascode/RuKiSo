@@ -25,7 +25,7 @@ namespace RuKiSoBackEnd.Controllers
                 .Include(b => b.BatchIngredients)
                 .ToListAsync();
 
-            var batchesResponse = batches.Select(batch => batch.ToDTO()).ToList();
+            List<BatchRes> batchesResponse = batches.Select(batch => batch.ToDTO()).ToList();
             return Ok(batchesResponse);
         }
 

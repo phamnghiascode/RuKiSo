@@ -1,4 +1,5 @@
 ﻿using RuKiSo.Features.Models;
+using RuKiSoBackEnd.Models.DTOs;
 
 namespace RuKiSo.Utils
 {
@@ -15,7 +16,6 @@ namespace RuKiSo.Utils
                 UsedQuantity = 0
             };
         }
-
         public static TransactionIngredientDTO ToTransactionIngredientDTO(this IngredientRespone ingredient)
         {
             return new TransactionIngredientDTO
@@ -25,6 +25,56 @@ namespace RuKiSo.Utils
                 Quantity = ingredient.Quantity,
                 PurchasePrice = ingredient.PurchasePrice,
                 UsedQuantity = 0
+            };
+        }
+        public static RuKiSo.Features.Models.BatchIngredientDTO ToBatchIngredientDTO(this IngredientRespone ingredient)
+        {
+            return new RuKiSo.Features.Models.BatchIngredientDTO
+            {
+                Id = ingredient.Id,
+                IngredientName = ingredient.Name,
+                StoredQuantity = ingredient.Quantity,
+                UsedQuantity = 0,
+                PricePerUnit = ingredient.PurchasePrice,
+                IsSelected = false,
+            };
+        }
+        public static BatchResponse ToViewModel(this BatchRes res)
+        {
+            if (res == null) return null;
+            return new BatchResponse
+            {
+                Id = res.Id,
+                Product = res.Product?.ToViewModel(),
+                Ingredients = res.BatchIngredients?.Select(x => x.ToViewModel()).ToList() ?? new(),
+                StartDate = res.StartDate,
+                EstimateEndDate = res.EstimateEndDate,
+                Yield = res.Yield
+            };
+        }
+
+        public static ProductRespone ToViewModel(this ProductDTO dto)
+        {
+            if (dto == null) return null;
+            return new ProductRespone
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Quantity = dto.Quantity
+            };
+        }
+
+        public static Features.Models.BatchIngredientDTO ToViewModel(this RuKiSoBackEnd.Models.DTOs.BatchIngredientDTO dto)
+        {
+            if (dto == null) return null;
+            return new Features.Models.BatchIngredientDTO
+            {
+                Id = dto.IngredientId,
+                IngredientName = dto.Ingredient?.Name,
+                StoredQuantity = dto.Ingredient?.Quantity ?? 0,
+                UsedQuantity = dto.Quantity,
+                PricePerUnit = dto.Ingredient?.Price ?? 0,
+                IsSelected = false
             };
         }
     }

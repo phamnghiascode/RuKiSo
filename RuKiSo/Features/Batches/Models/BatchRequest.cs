@@ -11,4 +11,3 @@ namespace RuKiSo.Features.Models
         public List<BatchIngredientRequest> BatchIngredients { get; set; } = new();
     }
 }
-}

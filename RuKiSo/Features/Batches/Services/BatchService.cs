@@ -1,5 +1,7 @@
 ﻿using RuKiSo.Features.Models;
+using RuKiSo.Utils;
 using RuKiSo.Utils.MVVM;
+using RuKiSoBackEnd.Models.DTOs;
 using System.Net.Http.Json;
 
 namespace RuKiSo.Features.Services
@@ -27,7 +29,8 @@ namespace RuKiSo.Features.Services
 
         public async Task<IEnumerable<BatchResponse>?> GetAllAsync()
         {
-            return await httpClient.GetFromJsonAsync<IEnumerable<BatchResponse>>("/api/Batch");
+            var batches = await httpClient.GetFromJsonAsync<IEnumerable<BatchRes>>("/api/Batch");
+            return batches?.Select(b => b.ToViewModel());
         }
 
         public Task<BatchResponse?> GetByIdAsync(int id)
