@@ -1,181 +1,246 @@
 ﻿using RuKiSo.Features.Models;
 using RuKiSo.Utils.MVVM;
-using RuKiSoBackEnd.Models.Domains;
 using System.Collections.ObjectModel;
 
 namespace RuKiSo.ViewModels
 {
     public class DashBoardViewModel : BaseViewModel
     {
-        public ObservableCollection<WeeklyHistoryDTO> WeeklyHistories { get; set; }
-        public ObservableCollection<TopSellerDTO> TopSellers { get; set; }
-        public ObservableCollection<MostUsedIngredient> MostUsedIngredients { get; set; }
-        public ObservableCollection<ProfitDTO> MonthlyProfit { get; set; }
+        private ObservableCollection<WeeklyHistoryDTO> _weeklyHistories;
+        public ObservableCollection<WeeklyHistoryDTO> WeeklyHistories
+        {
+            get => _weeklyHistories;
+            set
+            {
+                _weeklyHistories = value;
+                OnPropertyChanged(nameof(WeeklyHistories));
+            }
+        }
+
+        private ObservableCollection<TopSellerDTO> _topSellers;
+        public ObservableCollection<TopSellerDTO> TopSellers
+        {
+            get => _topSellers;
+            set
+            {
+                _topSellers = value;
+                OnPropertyChanged(nameof(TopSellers));
+            }
+        }
+
+        private ObservableCollection<MostUsedIngredient> _mostUsedIngredients;
+        public ObservableCollection<MostUsedIngredient> MostUsedIngredients
+        {
+            get => _mostUsedIngredients;
+            set
+            {
+                _mostUsedIngredients = value;
+                OnPropertyChanged(nameof(MostUsedIngredients));
+            }
+        }
+
+        private ObservableCollection<ProfitDTO> _monthlyProfit;
+        public ObservableCollection<ProfitDTO> MonthlyProfit
+        {
+            get => _monthlyProfit;
+            set
+            {
+                _monthlyProfit = value;
+                OnPropertyChanged(nameof(MonthlyProfit));
+            }
+        }
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
         private readonly IGenericService<ProductRespone, ProductRequest> productService;
         private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
         private readonly IGenericService<TransactionResponse, TransactionRequest> transactionService;
+        private readonly IGenericService<BatchResponse, BatchRequest> batchService;
+
         public DashBoardViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
             IGenericService<IngredientRespone, IngredientRequest> ingredientService,
-            IGenericService<TransactionResponse, TransactionRequest> transactionService)
+            IGenericService<TransactionResponse, TransactionRequest> transactionService,
+            IGenericService<BatchResponse, BatchRequest> batchService)
         {
             this.productService = productService;
             this.ingredientService = ingredientService;
             this.transactionService = transactionService;
-            InitChartData();
+            this.batchService = batchService;
+
+            // Initialize collections
+            WeeklyHistories = new ObservableCollection<WeeklyHistoryDTO>();
+            TopSellers = new ObservableCollection<TopSellerDTO>();
+            MostUsedIngredients = new ObservableCollection<MostUsedIngredient>();
+            MonthlyProfit = new ObservableCollection<ProfitDTO>();
+
+            // Load data
+            LoadDataAsync();
         }
-        private async void InitChartData()
-        {
-            WeeklyHistories = new ObservableCollection<WeeklyHistoryDTO>()
-            {
-                new() { Purchase = 290, Sell = 300, Date = "Hai" },
-                new() { Purchase = 380, Sell = 500, Date = "Ba" },
-                new() { Purchase = 250, Sell = 400, Date = "Tư" },
-                new() { Purchase = 230, Sell = 400, Date = "Năm" },
-                new() { Purchase = 350, Sell = 350, Date = "Sáu" },
-                new() { Purchase = 250, Sell = 480, Date = "Bảy" },
-                new() { Purchase = 110, Sell = 350, Date = "CN" },
-            };
-            //TopSellers = new ObservableCollection<TopSellerDTO>()
-            //{
-            //    new() { Name = "Thượng hạng", Quantity = 400 },
-            //    new() { Name = "Đòng đòng", Quantity = 210 },
-            //    new() { Name = "Thường", Quantity = 200 },
-            //    new() { Name = "Khác", Quantity = 100 }
-            //};
-            MostUsedIngredients = new ObservableCollection<MostUsedIngredient>
-            {
-                new(){ Name = "Nếp đen", Quantity = 100},
-                new(){ Name = "Nếp cái hoa vàng", Quantity = 80},
-                new(){ Name = "Nếp thường", Quantity = 80},
-                new(){ Name = "Đòng đòng", Quantity = 80},
-                new(){ Name = "Men thuốc bắc", Quantity = 100},
-                new(){ Name = "Men lá", Quantity = 80},
-            };
-            MonthlyProfit = new ObservableCollection<ProfitDTO>
-                {
-                    new ProfitDTO{Date = new DateTime(2024,3,31), Profit = 18.3},
-                    new ProfitDTO{Date = new DateTime(2024,4,30), Profit = 14.2},
-                    new ProfitDTO{Date = new DateTime(2024,5,31), Profit = 16.7},
-                    new ProfitDTO{Date = new DateTime(2024,6,30), Profit = 10.9},
-                    new ProfitDTO{Date = new DateTime(2024,7,31), Profit = 13.4},
-                    new ProfitDTO{Date = new DateTime(2024,8,31), Profit = 17.6},
-                    new ProfitDTO{Date = new DateTime(2024,9,30), Profit = 19.2},
-                    new ProfitDTO{Date = new DateTime(2024,10,31), Profit = 15.5},
-                    new ProfitDTO{Date = new DateTime(2024,11,30), Profit = 12.3},
-                    new ProfitDTO{Date = new DateTime(2024,12,31), Profit = 18.7},
-                };
-            await GetTopSellerAsync();
-        }
-        private async Task GetTopSellerAsync()
+        private async Task InitChartDataAsync()
         {
             try
             {
-                // Lấy tất cả giao dịch
-                var transactions = await transactionService.GetAllAsync();
-                if (transactions == null || !transactions.Any())
-                {
-                    Console.WriteLine("No transactions found.");
-                    TopSellers = new ObservableCollection<TopSellerDTO>();
-                    return;
-                }
+                await Task.WhenAll(
+                    GetWeeklyHistoryAsync(),
+                    GetTopSellersAsync(),
+                    GetMostUsedIngredientsAsync()
+                );
+            }
+            catch (Exception ex)
+            {
+                // Handle error appropriately
+                Console.WriteLine($"Error initializing dashboard data: {ex.Message}");
+            }
+        }
 
-                // Nhóm và tính tổng Quantity theo ProductId
-                var topTransactions = transactions
-                    .Where(t => t.ProductId.HasValue) // Chỉ lấy các giao dịch có ProductId
-                    .GroupBy(t => t.ProductId)
-                    .Select(group => new
-                    {
-                        ProductId = group.Key,
-                        TotalQuantity = group.Sum(t => t.Quantity)
+        private async void LoadDataAsync()
+        {
+            try
+            {
+                IsLoading = true;
+                await InitChartDataAsync();
+
+                // Add debug logs
+                Console.WriteLine($"WeeklyHistories count: {WeeklyHistories?.Count}");
+                Console.WriteLine($"TopSellers count: {TopSellers?.Count}");
+                Console.WriteLine($"MostUsedIngredients count: {MostUsedIngredients?.Count}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading data: {ex}");
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        private async Task GetWeeklyHistoryAsync()
+        {
+            try
+            {
+                var transactions = await transactionService.GetAllAsync();
+                if (transactions == null) return;
+
+                var endDate = DateTime.Today;
+                var startDate = endDate.AddDays(-6);
+
+                var weeklyData = transactions
+                    .Where(t => t.TranDate >= startDate && t.TranDate <= endDate)
+                    .GroupBy(t => new {
+                        Date = t.TranDate.ToString("ddd"),
+                        t.TranType
                     })
-                    .OrderByDescending(t => t.TotalQuantity) // Sắp xếp giảm dần
-                    .Take(4) // Lấy 4 sản phẩm có số lượng cao nhất
+                    .Select(g => new {
+                        g.Key.Date,
+                        g.Key.TranType,
+                        Total = g.Sum(t => t.Quantity)
+                    })
                     .ToList();
 
-                // Lấy thông tin chi tiết sản phẩm từ ProductService
-                var products = await productService.GetAllAsync();
-                if (products == null)
+                var histories = new List<WeeklyHistoryDTO>();
+                var daysOfWeek = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+
+                foreach (var day in daysOfWeek)
                 {
-                    Console.WriteLine("No products found.");
-                    TopSellers = new ObservableCollection<TopSellerDTO>();
-                    return;
+                    var sells = weeklyData.FirstOrDefault(x => x.Date == day && x.TranType)?.Total ?? 0;
+                    var purchases = weeklyData.FirstOrDefault(x => x.Date == day && !x.TranType)?.Total ?? 0;
+
+                    histories.Add(new WeeklyHistoryDTO
+                    {
+                        Date = day,
+                        Sell = sells,
+                        Purchase = purchases
+                    });
                 }
 
-                // Kết hợp dữ liệu sản phẩm với topTransactions
-                var topSellers = topTransactions
-                    .Join(products,
+                WeeklyHistories = new ObservableCollection<WeeklyHistoryDTO>(histories);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting weekly history: {ex.Message}");
+            }
+        }
+
+        private async Task GetTopSellersAsync()
+        {
+            try
+            {
+                var transactions = await transactionService.GetAllAsync();
+                var products = await productService.GetAllAsync();
+
+                if (transactions == null || products == null) return;
+
+                var topProducts = transactions
+                    .Where(t => t.TranType && t.ProductId.HasValue)
+                    .GroupBy(t => t.ProductId)
+                    .Select(g => new {
+                        ProductId = g.Key,
+                        TotalQuantity = g.Sum(t => t.Quantity)
+                    })
+                    .OrderByDescending(x => x.TotalQuantity)
+                    .Take(3)
+                    .Join(
+                        products,
                         t => t.ProductId,
                         p => p.Id,
                         (t, p) => new TopSellerDTO
                         {
                             Name = p.Name,
                             Quantity = t.TotalQuantity
-                        })
+                        }
+                    )
                     .ToList();
 
-                // Cập nhật danh sách TopSellers
-                TopSellers = new ObservableCollection<TopSellerDTO>(topSellers);
+                TopSellers = new ObservableCollection<TopSellerDTO>(topProducts);
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving top sellers", ex);
-                TopSellers = new ObservableCollection<TopSellerDTO>();
+                Console.WriteLine($"Error getting top sellers: {ex.Message}");
             }
         }
-        private async Task<List<TopSellerDTO>> GetTopSeller()
+
+        private async Task GetMostUsedIngredientsAsync()
         {
             try
             {
-                // Lấy tất cả giao dịch
-                var transactions = await transactionService.GetAllAsync();
-                if (transactions == null || !transactions.Any())
-                {
-                    Console.WriteLine("No transactions found.");
-                    return new List<TopSellerDTO>();
-                }
+                var batches = await batchService.GetAllAsync();
+                var ingredients = await ingredientService.GetAllAsync();
 
-                // Nhóm và tính tổng Quantity theo ProductId
-                var topTransactions = transactions
-                    .Where(t => t.ProductId.HasValue) // Chỉ lấy các giao dịch có ProductId
-                    .GroupBy(t => t.ProductId)
-                    .Select(group => new
-                    {
-                        ProductId = group.Key,
-                        TotalQuantity = group.Sum(t => t.Quantity)
+                if (batches == null || ingredients == null) return;
+
+                var topIngredients = batches
+                    .SelectMany(b => b.Ingredients)
+                    .GroupBy(bi => bi.IngredientName)  // Group by name since we don't have IngredientId
+                    .Select(g => new {
+                        IngredientName = g.Key,
+                        TotalQuantity = g.Sum(bi => bi.UsedQuantity)  // Use UsedQuantity instead of Quantity
                     })
-                    .OrderByDescending(t => t.TotalQuantity) // Sắp xếp giảm dần
-                    .Take(4) // Lấy 4 sản phẩm có số lượng cao nhất
+                    .OrderByDescending(x => x.TotalQuantity)
+                    .Take(5)
+                    .Select(x => new MostUsedIngredient
+                    {
+                        Name = x.IngredientName,
+                        Quantity = (int)x.TotalQuantity
+                    })
                     .ToList();
 
-                // Lấy thông tin chi tiết sản phẩm từ ProductService
-                var products = await productService.GetAllAsync();
-                if (products == null)
-                {
-                    Console.WriteLine("No products found.");
-                    return new List<TopSellerDTO>();
-                }
-
-                // Kết hợp dữ liệu sản phẩm với topTransactions
-                var topSellers = topTransactions
-                    .Join(products,
-                        t => t.ProductId,
-                        p => p.Id,
-                        (t, p) => new TopSellerDTO
-                        {
-                            Name = p.Name,
-                            Quantity = t.TotalQuantity
-                        })
-                    .ToList();
-
-                return topSellers;
+                MostUsedIngredients = new ObservableCollection<MostUsedIngredient>(topIngredients);
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving top sellers", ex);
-                return new List<TopSellerDTO>();
+                Console.WriteLine($"Error getting most used ingredients: {ex.Message}");
             }
         }
-
     }
 }

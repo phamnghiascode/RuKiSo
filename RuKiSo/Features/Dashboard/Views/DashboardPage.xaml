@@ -133,7 +133,6 @@
                     Style="{StaticResource Border25BackGroundWhite}">
                     <Grid ColumnDefinitions="30, *, 30">
                         <chart:SfCartesianChart Grid.Column="1">
-
                             <chart:SfCartesianChart.XAxes>
                                 <chart:DateTimeAxis ShowMajorGridLines="True">
                                     <chart:DateTimeAxis.AxisLineStyle>
