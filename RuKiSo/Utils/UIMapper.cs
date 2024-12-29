@@ -73,7 +73,7 @@ namespace RuKiSo.Utils
                 IngredientName = dto.Ingredient?.Name,
                 StoredQuantity = dto.Ingredient?.Quantity ?? 0,
                 UsedQuantity = dto.Quantity,
-                PricePerUnit = dto.Ingredient?.Price ?? 0,
+                PricePerUnit = dto.Ingredient?.PurchasePrice ?? 0,
                 IsSelected = false
             };
         }

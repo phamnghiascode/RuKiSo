@@ -227,6 +227,7 @@ namespace RuKiSo.ViewModels
                 ProductId = SelectedBatch.Product?.Id ?? 0,
                 StartDate = SelectedBatch.StartDate,
                 EstimateEndDate = SelectedBatch.EstimateEndDate,
+                Yield = SelectedBatch.Yield,
                 BatchIngredients = SelectedBatch.Ingredients.Select(i => new BatchIngredientAPIRequest
                 {
                     IngredientId = i.Id,
@@ -242,7 +243,16 @@ namespace RuKiSo.ViewModels
                     var index = AllBatches.IndexOf(SelectedBatch);
                     if (index != -1)
                     {
-                        AllBatches[index] = updatedBatch;
+                        if (updatedBatch.Yield > 0)
+                        {
+                            // Nếu batch đã hoàn thành, xóa khỏi AllBatches
+                            AllBatches.RemoveAt(index);
+                        }
+                        else
+                        {
+                            // Nếu chưa hoàn thành, cập nhật trong AllBatches
+                            AllBatches[index] = updatedBatch;
+                        }
                     }
                     UpdateBatches();
                     IsEditCookPopupOpen = false;
@@ -257,7 +267,25 @@ namespace RuKiSo.ViewModels
         private void EditCookBatch(BatchResponse batch)
         {
             if (batch == null) return;
-            SelectedBatch = batch;
+
+            SelectedBatch = new BatchResponse
+            {
+                Id = batch.Id,
+                StartDate = batch.StartDate,
+                EstimateEndDate = batch.EstimateEndDate,
+                Yield = batch.Yield,
+                Product = batch.Product,
+                Ingredients = batch.Ingredients.Select(i => new BatchIngredientDTO
+                {
+                    Id = i.Id,
+                    IngredientName = i.IngredientName,
+                    StoredQuantity = i.StoredQuantity,
+                    UsedQuantity = i.UsedQuantity,
+                    PricePerUnit = i.PricePerUnit,
+                    IsSelected = true
+                }).ToList()
+            };
+
             IsEditCookPopupOpen = true;
         }
 
@@ -338,7 +366,7 @@ namespace RuKiSo.ViewModels
         private double CalculateProjectedYield()
         {
             // Implementation of yield calculation logic
-            return 100; // Placeholder value
+            return Batches.Count() * 12;
         }
 
         private void HandleException(string message, Exception ex)

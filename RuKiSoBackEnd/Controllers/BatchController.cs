@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RuKiSoBackEnd.Data;
+using RuKiSoBackEnd.Models.Domains;
 using RuKiSoBackEnd.Models.DTOs;
 using RuKiSoBackEnd.Util;
 
@@ -23,6 +24,7 @@ namespace RuKiSoBackEnd.Controllers
             var batches = await dbContext.Batches
                 .Include(b => b.Product)
                 .Include(b => b.BatchIngredients)
+                    .ThenInclude(bi => bi.Ingredient)
                 .ToListAsync();
 
             List<BatchRes> batchesResponse = batches.Select(batch => batch.ToDTO()).ToList();
@@ -36,6 +38,7 @@ namespace RuKiSoBackEnd.Controllers
             var batch = await dbContext.Batches
                 .Include(b => b.Product)
                 .Include(b => b.BatchIngredients)
+                    .ThenInclude(bi => bi.Ingredient)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (batch == null)
@@ -47,34 +50,62 @@ namespace RuKiSoBackEnd.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] BatchReq batchRequest)
         {
+            // Validate dates
+            if (batchRequest.StartDate >= batchRequest.EstimateEndDate)
+                return BadRequest("Start date must be before estimate end date");
+
+            // New batch should not have yield
+            if (batchRequest.Yield > 0)
+                return BadRequest("New batch cannot have yield");
+
             using var transaction = await dbContext.Database.BeginTransactionAsync();
             try
             {
-                var batchDomain = batchRequest.ToDomain();
-
                 // Verify if product exists
                 var product = await dbContext.Products.FindAsync(batchRequest.ProductId);
                 if (product == null)
                     return BadRequest("Product not found");
 
-                // Verify and update ingredient quantities
-                foreach (var ingredient in batchRequest.BatchIngredients)
+                // Create new batch
+                var batch = new Batches
                 {
-                    var inventoryIngredient = await dbContext.Ingredients.FindAsync(ingredient.IngredientId);
-                    if (inventoryIngredient == null)
-                        return BadRequest($"Ingredient with ID {ingredient.IngredientId} not found");
+                    StartDate = batchRequest.StartDate,
+                    EstimateEndDate = batchRequest.EstimateEndDate,
+                    ProductId = batchRequest.ProductId,
+                    Yield = 0
+                };
 
-                    if (inventoryIngredient.Quantity < ingredient.Quantity)
+                // Verify and update ingredient quantities
+                foreach (var ingredientRequest in batchRequest.BatchIngredients)
+                {
+                    var inventoryIngredient = await dbContext.Ingredients.FindAsync(ingredientRequest.IngredientId);
+                    if (inventoryIngredient == null)
+                        return BadRequest($"Ingredient with ID {ingredientRequest.IngredientId} not found");
+
+                    if (inventoryIngredient.Quantity < ingredientRequest.Quantity)
                         return BadRequest($"Insufficient quantity for ingredient {inventoryIngredient.Name}");
 
-                    inventoryIngredient.Quantity -= ingredient.Quantity;
+                    inventoryIngredient.Quantity -= ingredientRequest.Quantity;
+
+                    batch.BatchIngredients.Add(new BatchIngredient
+                    {
+                        IngredientId = ingredientRequest.IngredientId,
+                        Quantity = ingredientRequest.Quantity
+                    });
                 }
 
-                await dbContext.Batches.AddAsync(batchDomain);
+                await dbContext.Batches.AddAsync(batch);
                 await dbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return CreatedAtAction(nameof(GetById), new { id = batchDomain.Id }, batchDomain.ToDTO());
+                // Reload batch with all relations for response
+                batch = await dbContext.Batches
+                    .Include(b => b.Product)
+                    .Include(b => b.BatchIngredients)
+                        .ThenInclude(bi => bi.Ingredient)
+                    .FirstAsync(b => b.Id == batch.Id);
+
+                return CreatedAtAction(nameof(GetById), new { id = batch.Id }, batch.ToDTO());
             }
             catch (Exception)
             {
@@ -87,39 +118,94 @@ namespace RuKiSoBackEnd.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] BatchReq batchRequest)
         {
+            if (batchRequest.StartDate >= batchRequest.EstimateEndDate)
+                return BadRequest("Start date must be before estimate end date");
+
             using var transaction = await dbContext.Database.BeginTransactionAsync();
             try
             {
                 var batch = await dbContext.Batches
                     .Include(b => b.Product)
+                    .Include(b => b.BatchIngredients)
                     .FirstOrDefaultAsync(b => b.Id == id);
 
                 if (batch == null)
                     return NotFound();
 
-                // Cập nhật thông tin cơ bản của batch
+                // Update batch info
                 batch.StartDate = batchRequest.StartDate;
                 batch.EstimateEndDate = batchRequest.EstimateEndDate;
-                batch.ProductId = batchRequest.ProductId;
 
-                // Nếu có cập nhật Yield, tức là hoàn thành mẻ
+                // Handle product change if needed
+                if (batch.ProductId != batchRequest.ProductId)
+                {
+                    var newProduct = await dbContext.Products.FindAsync(batchRequest.ProductId);
+                    if (newProduct == null)
+                        return BadRequest("Product not found");
+                    batch.ProductId = batchRequest.ProductId;
+                }
+
+                // Handle yield update
                 if (batchRequest.Yield > 0)
                 {
-                    // Kiểm tra xem mẻ đã hoàn thành chưa
                     if (batch.Yield > 0)
                         return BadRequest("Batch already completed");
 
                     batch.Yield = batchRequest.Yield;
 
-                    // Cập nhật số lượng sản phẩm
+                    // Update product quantity
                     if (batch.Product != null)
                     {
                         batch.Product.Quantity += batchRequest.Yield;
                     }
                 }
 
+                // Update ingredients if batch is not completed
+                if (batch.Yield == 0)
+                {
+                    // Return current ingredients to inventory
+                    foreach (var oldIngredient in batch.BatchIngredients)
+                    {
+                        var inventoryIngredient = await dbContext.Ingredients.FindAsync(oldIngredient.IngredientId);
+                        if (inventoryIngredient != null)
+                        {
+                            inventoryIngredient.Quantity += oldIngredient.Quantity;
+                        }
+                    }
+
+                    // Clear current ingredients
+                    batch.BatchIngredients.Clear();
+
+                    // Add new ingredients
+                    foreach (var ingredientRequest in batchRequest.BatchIngredients)
+                    {
+                        var inventoryIngredient = await dbContext.Ingredients.FindAsync(ingredientRequest.IngredientId);
+                        if (inventoryIngredient == null)
+                            return BadRequest($"Ingredient with ID {ingredientRequest.IngredientId} not found");
+
+                        if (inventoryIngredient.Quantity < ingredientRequest.Quantity)
+                            return BadRequest($"Insufficient quantity for ingredient {inventoryIngredient.Name}");
+
+                        inventoryIngredient.Quantity -= ingredientRequest.Quantity;
+
+                        batch.BatchIngredients.Add(new BatchIngredient
+                        {
+                            BatchId = batch.Id,
+                            IngredientId = ingredientRequest.IngredientId,
+                            Quantity = ingredientRequest.Quantity
+                        });
+                    }
+                }
+
                 await dbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
+
+                // Reload batch with all relations for response
+                batch = await dbContext.Batches
+                    .Include(b => b.Product)
+                    .Include(b => b.BatchIngredients)
+                        .ThenInclude(bi => bi.Ingredient)
+                    .FirstAsync(b => b.Id == batch.Id);
 
                 return Ok(batch.ToDTO());
             }
@@ -134,29 +220,40 @@ namespace RuKiSoBackEnd.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var batch = await dbContext.Batches
-                .Include(b => b.BatchIngredients)
-                .FirstOrDefaultAsync(b => b.Id == id);
-
-            if (batch == null)
-                return NotFound();
-
-            if (batch.Yield > 0)
-                return BadRequest("Cannot delete completed batch");
-
-            // Return ingredients to inventory
-            foreach (var batchIngredient in batch.BatchIngredients)
+            using var transaction = await dbContext.Database.BeginTransactionAsync();
+            try
             {
-                var ingredient = await dbContext.Ingredients.FindAsync(batchIngredient.IngredientId);
-                if (ingredient != null)
-                {
-                    ingredient.Quantity += batchIngredient.Quantity;
-                }
-            }
+                var batch = await dbContext.Batches
+                    .Include(b => b.BatchIngredients)
+                    .FirstOrDefaultAsync(b => b.Id == id);
 
-            dbContext.Batches.Remove(batch);
-            await dbContext.SaveChangesAsync();
-            return Ok();
+                if (batch == null)
+                    return NotFound();
+
+                if (batch.Yield > 0)
+                    return BadRequest("Cannot delete completed batch");
+
+                // Return ingredients to inventory
+                foreach (var batchIngredient in batch.BatchIngredients)
+                {
+                    var ingredient = await dbContext.Ingredients.FindAsync(batchIngredient.IngredientId);
+                    if (ingredient != null)
+                    {
+                        ingredient.Quantity += batchIngredient.Quantity;
+                    }
+                }
+
+                dbContext.Batches.Remove(batch);
+                await dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }

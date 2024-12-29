@@ -65,7 +65,7 @@ namespace RuKiSoBackEnd.Data
                     .HasForeignKey(bi => bi.IngredientId);
             });
 
-            SeedData(modelBuilder);
+            //SeedData(modelBuilder);
         }
     }
 }

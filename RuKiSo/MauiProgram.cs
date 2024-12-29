@@ -40,12 +40,14 @@ namespace RuKiSo
             builder.Services.AddTransient<IngredientViewModel>();
             builder.Services.AddTransient<TransactionViewModel>();
             builder.Services.AddTransient<BatchViewModel>();
+            builder.Services.AddTransient<DashBoardViewModel>();
             
 
             builder.Services.AddTransient<ProductPage>();
             builder.Services.AddTransient<IngredientPage>();
             builder.Services.AddTransient<TransactionPage>();
             builder.Services.AddTransient<BatchPage>();
+            builder.Services.AddTransient<DashboardPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
