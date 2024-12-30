@@ -12,8 +12,8 @@ using RuKiSoBackEnd.Data;
 namespace RuKiSoBackEnd.Migrations
 {
     [DbContext(typeof(RuKiSoDataContext))]
-    [Migration("20241222144825_recreatedb")]
-    partial class recreatedb
+    [Migration("20241230125435_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -463,6 +463,408 @@ namespace RuKiSoBackEnd.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Transactions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IngredientId = 3,
+                            Name = "Mua nếp đen",
+                            Quantity = 200,
+                            TranDate = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 4600000.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IngredientId = 5,
+                            Name = "Mua men thuốc bắc",
+                            Quantity = 2,
+                            TranDate = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 300000.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Bán rượu trắng 45",
+                            ProductId = 1,
+                            Quantity = 100,
+                            TranDate = new DateTime(2024, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 5000000.0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Bán đòng đòng 45",
+                            ProductId = 4,
+                            Quantity = 30,
+                            TranDate = new DateTime(2024, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 2250000.0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IngredientId = 2,
+                            Name = "Mua nếp cái hoa vàng",
+                            Quantity = 150,
+                            TranDate = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 3750000.0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            IngredientId = 4,
+                            Name = "Mua đòng đòng",
+                            Quantity = 50,
+                            TranDate = new DateTime(2024, 4, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 1500000.0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Bán rượu trắng 40",
+                            ProductId = 2,
+                            Quantity = 120,
+                            TranDate = new DateTime(2024, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 5400000.0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Bán đòng đòng 40",
+                            ProductId = 5,
+                            Quantity = 40,
+                            TranDate = new DateTime(2024, 4, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 2800000.0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            IngredientId = 1,
+                            Name = "Mua gạo nếp",
+                            Quantity = 180,
+                            TranDate = new DateTime(2024, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 3600000.0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            IngredientId = 7,
+                            Name = "Mua men lá",
+                            Quantity = 2,
+                            TranDate = new DateTime(2024, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 200000.0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Bán rượu trắng 35",
+                            ProductId = 3,
+                            Quantity = 150,
+                            TranDate = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 6000000.0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Bán đòng đòng 35",
+                            ProductId = 6,
+                            Quantity = 35,
+                            TranDate = new DateTime(2024, 5, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 2100000.0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            IngredientId = 3,
+                            Name = "Mua nếp đen",
+                            Quantity = 220,
+                            TranDate = new DateTime(2024, 6, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 5060000.0
+                        },
+                        new
+                        {
+                            Id = 14,
+                            IngredientId = 8,
+                            Name = "Mua táo mèo",
+                            Quantity = 10,
+                            TranDate = new DateTime(2024, 6, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 300000.0
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Name = "Bán rượu trắng 45",
+                            ProductId = 1,
+                            Quantity = 130,
+                            TranDate = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 6500000.0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Name = "Bán rượu táo mèo",
+                            ProductId = 8,
+                            Quantity = 40,
+                            TranDate = new DateTime(2024, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 2400000.0
+                        },
+                        new
+                        {
+                            Id = 17,
+                            IngredientId = 2,
+                            Name = "Mua nếp cái hoa vàng",
+                            Quantity = 160,
+                            TranDate = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 4000000.0
+                        },
+                        new
+                        {
+                            Id = 18,
+                            IngredientId = 5,
+                            Name = "Mua men thuốc bắc",
+                            Quantity = 2,
+                            TranDate = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 300000.0
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Name = "Bán rượu trắng 40",
+                            ProductId = 2,
+                            Quantity = 140,
+                            TranDate = new DateTime(2024, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 6300000.0
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Name = "Bán bách nhật",
+                            ProductId = 7,
+                            Quantity = 45,
+                            TranDate = new DateTime(2024, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 1800000.0
+                        },
+                        new
+                        {
+                            Id = 21,
+                            IngredientId = 4,
+                            Name = "Mua đòng đòng",
+                            Quantity = 100,
+                            TranDate = new DateTime(2024, 8, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 3000000.0
+                        },
+                        new
+                        {
+                            Id = 22,
+                            IngredientId = 7,
+                            Name = "Mua men lá",
+                            Quantity = 3,
+                            TranDate = new DateTime(2024, 8, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 300000.0
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Name = "Bán đòng đòng 45",
+                            ProductId = 4,
+                            Quantity = 50,
+                            TranDate = new DateTime(2024, 8, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 3750000.0
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Name = "Bán đòng đòng 40",
+                            ProductId = 5,
+                            Quantity = 60,
+                            TranDate = new DateTime(2024, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 4200000.0
+                        },
+                        new
+                        {
+                            Id = 25,
+                            IngredientId = 3,
+                            Name = "Mua nếp đen",
+                            Quantity = 180,
+                            TranDate = new DateTime(2024, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 4140000.0
+                        },
+                        new
+                        {
+                            Id = 26,
+                            IngredientId = 5,
+                            Name = "Mua men thuốc bắc",
+                            Quantity = 2,
+                            TranDate = new DateTime(2024, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 300000.0
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Name = "Bán rượu trắng 45",
+                            ProductId = 1,
+                            Quantity = 110,
+                            TranDate = new DateTime(2024, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 5500000.0
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Name = "Bán rượu táo mèo",
+                            ProductId = 8,
+                            Quantity = 50,
+                            TranDate = new DateTime(2024, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 3000000.0
+                        },
+                        new
+                        {
+                            Id = 29,
+                            IngredientId = 2,
+                            Name = "Mua nếp cái hoa vàng",
+                            Quantity = 170,
+                            TranDate = new DateTime(2024, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 4250000.0
+                        },
+                        new
+                        {
+                            Id = 30,
+                            IngredientId = 8,
+                            Name = "Mua táo mèo",
+                            Quantity = 15,
+                            TranDate = new DateTime(2024, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 450000.0
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Name = "Bán rượu trắng 40",
+                            ProductId = 2,
+                            Quantity = 130,
+                            TranDate = new DateTime(2024, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 5850000.0
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Name = "Bán bách nhật",
+                            ProductId = 7,
+                            Quantity = 40,
+                            TranDate = new DateTime(2024, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 1600000.0
+                        },
+                        new
+                        {
+                            Id = 33,
+                            IngredientId = 1,
+                            Name = "Mua gạo nếp",
+                            Quantity = 200,
+                            TranDate = new DateTime(2024, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 4000000.0
+                        },
+                        new
+                        {
+                            Id = 34,
+                            IngredientId = 7,
+                            Name = "Mua men lá",
+                            Quantity = 2,
+                            TranDate = new DateTime(2024, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 200000.0
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Name = "Bán rượu trắng 35",
+                            ProductId = 3,
+                            Quantity = 140,
+                            TranDate = new DateTime(2024, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 5600000.0
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Name = "Bán đòng đòng 35",
+                            ProductId = 6,
+                            Quantity = 45,
+                            TranDate = new DateTime(2024, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 2700000.0
+                        },
+                        new
+                        {
+                            Id = 37,
+                            IngredientId = 4,
+                            Name = "Mua đòng đòng",
+                            Quantity = 80,
+                            TranDate = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 2400000.0
+                        },
+                        new
+                        {
+                            Id = 38,
+                            IngredientId = 5,
+                            Name = "Mua men thuốc bắc",
+                            Quantity = 3,
+                            TranDate = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = false,
+                            Value = 450000.0
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Name = "Bán đòng đòng 45",
+                            ProductId = 4,
+                            Quantity = 45,
+                            TranDate = new DateTime(2024, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 3375000.0
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Name = "Bán rượu trắng 45",
+                            ProductId = 1,
+                            Quantity = 120,
+                            TranDate = new DateTime(2024, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TranType = true,
+                            Value = 6000000.0
+                        });
                 });
 
             modelBuilder.Entity("RuKiSoBackEnd.Models.Domains.BatchIngredient", b =>

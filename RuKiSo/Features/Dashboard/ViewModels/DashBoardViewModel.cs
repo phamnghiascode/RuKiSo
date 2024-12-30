@@ -93,7 +93,8 @@ namespace RuKiSo.ViewModels
                 await Task.WhenAll(
                     GetWeeklyHistoryAsync(),
                     GetTopSellersAsync(),
-                    GetMostUsedIngredientsAsync()
+                    GetMostUsedIngredientsAsync(),
+                    GetMonthlyProfitAsync()
                 );
             }
             catch (Exception ex)
@@ -240,6 +241,35 @@ namespace RuKiSo.ViewModels
             catch (Exception ex)
             {
                 Console.WriteLine($"Error getting most used ingredients: {ex.Message}");
+            }
+        }
+
+        private async Task GetMonthlyProfitAsync()
+        {
+            try
+            {
+                var transactions = await transactionService.GetAllAsync();
+                if (transactions == null) return;
+
+                var monthlyData = transactions
+                    .GroupBy(t => new DateTime(t.TranDate.Year, t.TranDate.Month, 1))
+                    .Select(g => new ProfitDTO
+                    {
+                        Date = g.Key,
+                        Profit = g.Sum(t => t.TranType
+                            ? t.Value * 0.20  // 20% profit from sales
+                            : -t.Value        // Subtract purchase costs
+                        )
+                    })
+                    .OrderBy(x => x.Date)
+                    .Take(10)  // Get last 10 months
+                    .ToList();
+
+                MonthlyProfit = new ObservableCollection<ProfitDTO>(monthlyData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error calculating monthly profit: {ex.Message}");
             }
         }
     }

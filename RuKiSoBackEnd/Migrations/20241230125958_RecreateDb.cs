@@ -5,7 +5,7 @@
 namespace RuKiSoBackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class reseeddata : Migration
+    public partial class RecreateDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

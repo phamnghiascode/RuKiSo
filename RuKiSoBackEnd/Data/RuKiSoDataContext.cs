@@ -18,13 +18,11 @@ namespace RuKiSoBackEnd.Data
             modelBuilder.Entity<Transactions>(entity =>
             {
                 entity.HasKey(t => t.Id);
-
                 entity.HasOne(t => t.Ingredient)
                     .WithMany(i => i.Transactions)
                     .HasForeignKey(t => t.IngredientId)
                     .IsRequired(false)
                     .OnDelete(DeleteBehavior.SetNull);
-
                 entity.HasOne(t => t.Product)
                     .WithMany(p => p.Transactions)
                     .HasForeignKey(t => t.ProductId)
@@ -35,7 +33,6 @@ namespace RuKiSoBackEnd.Data
             modelBuilder.Entity<Products>(entity =>
             {
                 entity.HasKey(p => p.Id);
-
                 entity.HasMany(p => p.Batches)
                     .WithOne(b => b.Product)
                     .HasForeignKey(b => b.ProductId)
@@ -55,17 +52,15 @@ namespace RuKiSoBackEnd.Data
             modelBuilder.Entity<BatchIngredient>(entity =>
             {
                 entity.HasKey(bi => new { bi.BatchId, bi.IngredientId });
-
                 entity.HasOne(bi => bi.Batch)
                     .WithMany(b => b.BatchIngredients)
                     .HasForeignKey(bi => bi.BatchId);
-
                 entity.HasOne(bi => bi.Ingredient)
                     .WithMany(i => i.BatchIngredients)
                     .HasForeignKey(bi => bi.IngredientId);
             });
 
-            //SeedData(modelBuilder);
+            SeedData(modelBuilder);
         }
     }
 }

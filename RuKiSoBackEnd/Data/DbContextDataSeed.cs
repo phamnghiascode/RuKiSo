@@ -66,6 +66,68 @@ namespace RuKiSoBackEnd.Data
             };
 
             modelBuilder.Entity<BatchIngredient>().HasData(batchIngredients);
+
+            modelBuilder.Entity<Transactions>().HasData(
+                // Tháng 3/2024
+                new Transactions { Id = 1, Name = "Mua nếp đen", TranType = false, Quantity = 200, Value = 4600000, TranDate = new DateTime(2024, 3, 5), IngredientId = 3 },
+                new Transactions { Id = 2, Name = "Mua men thuốc bắc", TranType = false, Quantity = 2, Value = 300000, TranDate = new DateTime(2024, 3, 5), IngredientId = 5 },
+                new Transactions { Id = 3, Name = "Bán rượu trắng 45", TranType = true, Quantity = 100, Value = 5000000, TranDate = new DateTime(2024, 3, 20), ProductId = 1 },
+                new Transactions { Id = 4, Name = "Bán đòng đòng 45", TranType = true, Quantity = 30, Value = 2250000, TranDate = new DateTime(2024, 3, 25), ProductId = 4 },
+
+                // Tháng 4/2024
+                new Transactions { Id = 5, Name = "Mua nếp cái hoa vàng", TranType = false, Quantity = 150, Value = 3750000, TranDate = new DateTime(2024, 4, 3), IngredientId = 2 },
+                new Transactions { Id = 6, Name = "Mua đòng đòng", TranType = false, Quantity = 50, Value = 1500000, TranDate = new DateTime(2024, 4, 3), IngredientId = 4 },
+                new Transactions { Id = 7, Name = "Bán rượu trắng 40", TranType = true, Quantity = 120, Value = 5400000, TranDate = new DateTime(2024, 4, 15), ProductId = 2 },
+                new Transactions { Id = 8, Name = "Bán đòng đòng 40", TranType = true, Quantity = 40, Value = 2800000, TranDate = new DateTime(2024, 4, 28), ProductId = 5 },
+
+                // Tháng 5/2024
+                new Transactions { Id = 9, Name = "Mua gạo nếp", TranType = false, Quantity = 180, Value = 3600000, TranDate = new DateTime(2024, 5, 5), IngredientId = 1 },
+                new Transactions { Id = 10, Name = "Mua men lá", TranType = false, Quantity = 2, Value = 200000, TranDate = new DateTime(2024, 5, 5), IngredientId = 7 },
+                new Transactions { Id = 11, Name = "Bán rượu trắng 35", TranType = true, Quantity = 150, Value = 6000000, TranDate = new DateTime(2024, 5, 20), ProductId = 3 },
+                new Transactions { Id = 12, Name = "Bán đòng đòng 35", TranType = true, Quantity = 35, Value = 2100000, TranDate = new DateTime(2024, 5, 25), ProductId = 6 },
+
+                // Tháng 6/2024
+                new Transactions { Id = 13, Name = "Mua nếp đen", TranType = false, Quantity = 220, Value = 5060000, TranDate = new DateTime(2024, 6, 2), IngredientId = 3 },
+                new Transactions { Id = 14, Name = "Mua táo mèo", TranType = false, Quantity = 10, Value = 300000, TranDate = new DateTime(2024, 6, 2), IngredientId = 8 },
+                new Transactions { Id = 15, Name = "Bán rượu trắng 45", TranType = true, Quantity = 130, Value = 6500000, TranDate = new DateTime(2024, 6, 18), ProductId = 1 },
+                new Transactions { Id = 16, Name = "Bán rượu táo mèo", TranType = true, Quantity = 40, Value = 2400000, TranDate = new DateTime(2024, 6, 28), ProductId = 8 },
+
+                // Tháng 7/2024
+                new Transactions { Id = 17, Name = "Mua nếp cái hoa vàng", TranType = false, Quantity = 160, Value = 4000000, TranDate = new DateTime(2024, 7, 4), IngredientId = 2 },
+                new Transactions { Id = 18, Name = "Mua men thuốc bắc", TranType = false, Quantity = 2, Value = 300000, TranDate = new DateTime(2024, 7, 4), IngredientId = 5 },
+                new Transactions { Id = 19, Name = "Bán rượu trắng 40", TranType = true, Quantity = 140, Value = 6300000, TranDate = new DateTime(2024, 7, 15), ProductId = 2 },
+                new Transactions { Id = 20, Name = "Bán bách nhật", TranType = true, Quantity = 45, Value = 1800000, TranDate = new DateTime(2024, 7, 25), ProductId = 7 },
+
+                // Tháng 8/2024
+                new Transactions { Id = 21, Name = "Mua đòng đòng", TranType = false, Quantity = 100, Value = 3000000, TranDate = new DateTime(2024, 8, 3), IngredientId = 4 },
+                new Transactions { Id = 22, Name = "Mua men lá", TranType = false, Quantity = 3, Value = 300000, TranDate = new DateTime(2024, 8, 3), IngredientId = 7 },
+                new Transactions { Id = 23, Name = "Bán đòng đòng 45", TranType = true, Quantity = 50, Value = 3750000, TranDate = new DateTime(2024, 8, 18), ProductId = 4 },
+                new Transactions { Id = 24, Name = "Bán đòng đòng 40", TranType = true, Quantity = 60, Value = 4200000, TranDate = new DateTime(2024, 8, 28), ProductId = 5 },
+
+                // Tháng 9/2024
+                new Transactions { Id = 25, Name = "Mua nếp đen", TranType = false, Quantity = 180, Value = 4140000, TranDate = new DateTime(2024, 9, 5), IngredientId = 3 },
+                new Transactions { Id = 26, Name = "Mua men thuốc bắc", TranType = false, Quantity = 2, Value = 300000, TranDate = new DateTime(2024, 9, 5), IngredientId = 5 },
+                new Transactions { Id = 27, Name = "Bán rượu trắng 45", TranType = true, Quantity = 110, Value = 5500000, TranDate = new DateTime(2024, 9, 15), ProductId = 1 },
+                new Transactions { Id = 28, Name = "Bán rượu táo mèo", TranType = true, Quantity = 50, Value = 3000000, TranDate = new DateTime(2024, 9, 25), ProductId = 8 },
+
+                // Tháng 10/2024
+                new Transactions { Id = 29, Name = "Mua nếp cái hoa vàng", TranType = false, Quantity = 170, Value = 4250000, TranDate = new DateTime(2024, 10, 4), IngredientId = 2 },
+                new Transactions { Id = 30, Name = "Mua táo mèo", TranType = false, Quantity = 15, Value = 450000, TranDate = new DateTime(2024, 10, 4), IngredientId = 8 },
+                new Transactions { Id = 31, Name = "Bán rượu trắng 40", TranType = true, Quantity = 130, Value = 5850000, TranDate = new DateTime(2024, 10, 18), ProductId = 2 },
+                new Transactions { Id = 32, Name = "Bán bách nhật", TranType = true, Quantity = 40, Value = 1600000, TranDate = new DateTime(2024, 10, 28), ProductId = 7 },
+
+                // Tháng 11/2024
+                new Transactions { Id = 33, Name = "Mua gạo nếp", TranType = false, Quantity = 200, Value = 4000000, TranDate = new DateTime(2024, 11, 3), IngredientId = 1 },
+                new Transactions { Id = 34, Name = "Mua men lá", TranType = false, Quantity = 2, Value = 200000, TranDate = new DateTime(2024, 11, 3), IngredientId = 7 },
+                new Transactions { Id = 35, Name = "Bán rượu trắng 35", TranType = true, Quantity = 140, Value = 5600000, TranDate = new DateTime(2024, 11, 15), ProductId = 3 },
+                new Transactions { Id = 36, Name = "Bán đòng đòng 35", TranType = true, Quantity = 45, Value = 2700000, TranDate = new DateTime(2024, 11, 25), ProductId = 6 },
+
+                // Tháng 12/2024
+                new Transactions { Id = 37, Name = "Mua đòng đòng", TranType = false, Quantity = 80, Value = 2400000, TranDate = new DateTime(2024, 12, 5), IngredientId = 4 },
+                new Transactions { Id = 38, Name = "Mua men thuốc bắc", TranType = false, Quantity = 3, Value = 450000, TranDate = new DateTime(2024, 12, 5), IngredientId = 5 },
+                new Transactions { Id = 39, Name = "Bán đòng đòng 45", TranType = true, Quantity = 45, Value = 3375000, TranDate = new DateTime(2024, 12, 20), ProductId = 4 },
+                new Transactions { Id = 40, Name = "Bán rượu trắng 45", TranType = true, Quantity = 120, Value = 6000000, TranDate = new DateTime(2024, 12, 28), ProductId = 1 }
+            );
         }
     }
 }
