@@ -11,6 +11,6 @@
         ColumnDefinitions="auto, *, auto, auto"
         HeightRequest="{x:Static ui:AppDimens.Height60}">
         <Label Style="{x:StaticResource PageTitleLabelStyle}" Text="{Binding Title}" />
-        <controls:NotificationButton Grid.Column="3" />
+        <!--<controls:NotificationButton Grid.Column="3" />-->
     </Grid>
 </ContentView>

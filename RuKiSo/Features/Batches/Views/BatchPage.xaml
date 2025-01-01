@@ -8,8 +8,7 @@
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
-    x:DataType="vm:BatchViewModel"
-    BindingContext="{vm:BatchViewModel}">
+    x:DataType="vm:BatchViewModel">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"

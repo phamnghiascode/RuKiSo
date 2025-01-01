@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuKiSo", "RuKiSo\RuKiSo.csproj", "{ED96AD55-C4E9-4306-972B-D83D5B9DD151}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RuKiSo", "RuKiSo\RuKiSo.csproj", "{ED96AD55-C4E9-4306-972B-D83D5B9DD151}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuKiSoBackEnd", "RuKiSoBackEnd\RuKiSoBackEnd.csproj", "{CF4E9B30-B436-49A3-A033-88C7CCDF37DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{ED96AD55-C4E9-4306-972B-D83D5B9DD151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED96AD55-C4E9-4306-972B-D83D5B9DD151}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED96AD55-C4E9-4306-972B-D83D5B9DD151}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CF4E9B30-B436-49A3-A033-88C7CCDF37DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4E9B30-B436-49A3-A033-88C7CCDF37DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4E9B30-B436-49A3-A033-88C7CCDF37DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4E9B30-B436-49A3-A033-88C7CCDF37DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

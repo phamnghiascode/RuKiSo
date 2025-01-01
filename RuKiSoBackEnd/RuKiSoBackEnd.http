@@ -1,0 +1,6 @@
+@RuKiSoBackEnd_HostAddress = http://localhost:5022
+
+GET {{RuKiSoBackEnd_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

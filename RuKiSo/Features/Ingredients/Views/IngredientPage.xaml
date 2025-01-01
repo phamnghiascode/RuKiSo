@@ -7,8 +7,7 @@
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
-    x:DataType="{x:Type vm:IngredientViewModel}"
-    BindingContext="{vm:IngredientViewModel}">
+    x:DataType="{x:Type vm:IngredientViewModel}">
     <Grid
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"
@@ -64,6 +63,7 @@
                             Text="{x:Static resource:AppTexts.PurchasePrice}" />
                         <Entry
                             HorizontalOptions="Start"
+                            IsEnabled="{Binding IsPurchasePriceEnabled}"
                             Text="{Binding PurchasePrice}"
                             WidthRequest="{x:Static ui:AppDimens.Height280}" />
                         <Label

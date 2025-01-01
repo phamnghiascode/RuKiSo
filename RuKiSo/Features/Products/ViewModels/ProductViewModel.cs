@@ -6,45 +6,238 @@ using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
 {
-    public partial class ProductViewModel : BaseViewModel
+    public class ProductViewModel : BaseViewModel
     {
-        public ProductViewModel()
+        private readonly IGenericService<ProductRespone, ProductRequest> productService;
+        private const double PercentProfit = 0.2;
+
+        private ProductRespone? selectedProduct;
+        private string name = string.Empty;
+        private string description = string.Empty;
+        private int quantity;
+        private double price;
+        private int totalProduct;
+        private double totalValue;
+        private double estimatedProfit;
+
+        public ObservableCollection<ProductRespone> Products { get; } = new();
+
+        public ProductViewModel(IGenericService<ProductRespone, ProductRequest> productService)
+        {
+            this.productService = productService;
+            InitializeCommands();
+            InitializeData();
+        }
+
+        public ProductRespone? SelectedProduct
+        {
+            get => selectedProduct;
+            set
+            {
+                if (selectedProduct != value)
+                {
+                    selectedProduct = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string Description
+        {
+            get => description;
+            set
+            {
+                if (description != value)
+                {
+                    description = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Quantity
+        {
+            get => quantity;
+            set
+            {
+                if (quantity != value)
+                {
+                    quantity = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double Price
+        {
+            get => price;
+            set
+            {
+                if (price != value)
+                {
+                    price = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int TotalProduct
+        {
+            get => totalProduct;
+            set
+            {
+                if (totalProduct != value)
+                {
+                    totalProduct = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double TotalValue
+        {
+            get => totalValue;
+            set
+            {
+                if (totalValue != value)
+                {
+                    totalValue = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double EstimatedProfit
+        {
+            get => estimatedProfit;
+            set
+            {
+                if (estimatedProfit != value)
+                {
+                    estimatedProfit = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ICommand ResetCommand { get; private set; }
+        public ICommand UpSertProductCommand { get; private set; }
+        public ICommand EditProductCommand { get; private set; }
+        public ICommand DeleteProductCommand { get; private set; }
+        public ICommand QuantityFilterCommand { get; private set; }
+        public ICommand PriceFilterCommand { get; private set; }
+
+        private void InitializeCommands()
         {
             ResetCommand = new RelayCommand(Reset);
             UpSertProductCommand = new RelayCommand(UpSertProduct);
-            EditProductCommand = new RelayCommand<ProductDTO>(EditProduct);
-            DeleteProductCommand = new RelayCommand<ProductDTO>(DeleteProduct);
+            EditProductCommand = new RelayCommand<ProductRespone>(EditProduct);
+            DeleteProductCommand = new RelayCommand<ProductRespone>(DeleteProduct);
             QuantityFilterCommand = new RelayCommand(OnQuantityFilter);
             PriceFilterCommand = new RelayCommand(OnPriceFilter);
+        }
 
-            InitData();
+        private async void InitializeData()
+        {
+            try
+            {
+                var response = await productService.GetAllAsync();
+                if (response != null)
+                {
+                    Products.Clear();
+                    foreach (var item in response)
+                    {
+                        Products.Add(item);
+                    }
+                    UpdateCardsInfo();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error retrieving data", ex);
+            }
         }
 
         private void UpSertProduct()
         {
-            if (SelectedProduct != null) 
+            if (SelectedProduct != null)
             {
-                SelectedProduct.Name = Name;
-                SelectedProduct.Ingredients = Ingredients;
-                SelectedProduct.Price = Price;
-                SelectedProduct.Quantity = Quantity;
-                
-                var index = Products.IndexOf(SelectedProduct);
-                if (index >= 0) { Products[index] = SelectedProduct; }
-                SelectedProduct = null;
+                UpdateProduct();
             }
             else
             {
-                ProductDTO product = new()
+                CreateProduct();
+            }
+        }
+
+        private async void UpdateProduct()
+        {
+            if (SelectedProduct == null) return;
+
+            var updateProduct = new ProductRequest
+            {
+                Name = Name,
+                Description = Description,
+                Price = Price,
+                Quantity = Quantity
+            };
+
+            try
+            {
+                var response = await productService.UpdateAsync(SelectedProduct.Id, updateProduct);
+                if (response != null)
                 {
-                    Name = Name,
-                    Ingredients = Ingredients,
-                    Price = Price,
-                    Quantity = Quantity,
-                };
-                Products.Add(product);
-                UpdateCardsInfo();
-                Reset();
+                    var index = Products.IndexOf(SelectedProduct);
+                    if (index >= 0)
+                    {
+                        Products[index] = response;
+                    }
+                    UpdateCardsInfo();
+                    Reset();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error updating product", ex);
+            }
+        }
+
+        private async void CreateProduct()
+        {
+            var product = new ProductRequest
+            {
+                Name = Name,
+                Description = Description,
+                Price = Price,
+                Quantity = Quantity,
+            };
+
+            try
+            {
+                var response = await productService.CreateAsync(product);
+                if (response != null)
+                {
+                    Products.Add(response);
+                    UpdateCardsInfo();
+                    Reset();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error creating product", ex);
             }
         }
 
@@ -52,185 +245,61 @@ namespace RuKiSo.ViewModels
         {
             SelectedProduct = null;
             Name = string.Empty;
-            Ingredients = string.Empty;
+            Description = string.Empty;
             Quantity = 0;
             Price = 0;
         }
 
-        private void EditProduct(ProductDTO? product)
+        private void EditProduct(ProductRespone? product)
         {
-            if (product != null)
-            {
-                SelectedProduct = product;
-                Name = product.Name;
-                Ingredients = product.Ingredients;
-                Quantity = product.Quantity;
-                Price = product.Price;
-            }
-            else return;
+            if (product == null) return;
+
+            SelectedProduct = product;
+            Name = product.Name;
+            Description = product.Description;
+            Quantity = product.Quantity;
+            Price = product.Price;
         }
 
-        private ProductDTO? selectedProduct;
-        private int totalProduct;
-        private double totalValue;
-        private double estimatedProfit;
-        private string name;
-        private string ingredients;
-        private int quantity;
-        private double price;
-
-        public string Name
+        private async void DeleteProduct(ProductRespone? product)
         {
-            get { return name; }
-            set
-            {
-                name = value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
+            if (product == null || !Products.Contains(product)) return;
 
-        public string Ingredients
-        {
-            get { return ingredients; }
-            set
+            try
             {
-                ingredients = value;
-                OnPropertyChanged(nameof(Ingredients));
-            }
-        } 
-        public int Quantity
-        {
-            get { return quantity; }
-            set
-            {
-                quantity = value;
-                OnPropertyChanged(nameof(Quantity));
-            }
-        }
-
-        public double Price
-        {
-            get { return price; }
-            set
-            {
-                price = value;
-                OnPropertyChanged(nameof(Price));
-            }
-        }
-
-        public ProductDTO? SelectedProduct 
-        { 
-            get { return selectedProduct; }
-            set {
-                selectedProduct = value;
-                OnPropertyChanged(nameof(SelectedProduct)); 
+                bool isDeleted = await productService.DeleteAsync(product.Id);
+                if (isDeleted)
+                {
+                    Products.Remove(product);
+                    UpdateCardsInfo();
                 }
-        }
-        public int TotalProduct
-        {
-            get { return totalProduct; }
-            set
-            {
-                totalProduct = value;
-                OnPropertyChanged(nameof(TotalProduct));
             }
-        }
-
-        public double TotalValue
-        {
-            get { return totalValue; }
-            set
+            catch (Exception ex)
             {
-                totalValue = value;
-                OnPropertyChanged(nameof(TotalValue));
+                HandleException("Error deleting product", ex);
             }
-        }
-
-        public double EstimatedProfit
-        {
-            get { return estimatedProfit; }
-            set
-            {
-                estimatedProfit = value;
-                OnPropertyChanged(nameof(EstimatedProfit));
-            }
-        }
-
-
-        private readonly double percentProfit = 0.35;
-
-        public ObservableCollection<ProductDTO> Products { get; private set; } = new();
-
-        public ICommand ResetCommand { get; }
-        public ICommand EditProductCommand { get; }
-        public ICommand DeleteProductCommand { get; }
-        public ICommand QuantityFilterCommand { get; }
-        public ICommand PriceFilterCommand { get; }
-        public ICommand UpSertProductCommand { get; }
-
-        private void InitData()
-        {
-            Products = new ObservableCollection<ProductDTO>
-            {
-                new() {Id = 1, Name = "Rượu trắng thượng hạng", Ingredients = "Nếp cái hoa vàng, men thuốc bắc", Quantity = 300, Price = 50000},
-                new() {Id = 2, Name = "Rượu trắng", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 700, Price = 45000},
-                new() {Id = 3, Name = "Rượu trắng nhẹ", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 100, Price = 40000},
-                new() {Id = 4, Name = "Rượu đòng đòng", Ingredients = "Nếp cái hoa vàng, bông lúa non, men thuốc bắc", Quantity = 500, Price = 75000},
-                new() {Id = 5, Name = "Rượu bách nhật", Ingredients = "Nếp đen, men thuốc bắc", Quantity = 5, Price = 40000},
-            };
-            UpdateCardsInfo();
         }
 
         private void UpdateCardsInfo()
         {
             TotalProduct = Products.Count;
             TotalValue = Products.Sum(product => product.TotalValue);
-            EstimatedProfit = Math.Floor(TotalValue * percentProfit);
-        }
-
-        private void SaveProduct()
-        {
-            if (SelectedProduct != null)
-            {
-                if (!Products.Contains(SelectedProduct))
-                {
-                    Products.Add(SelectedProduct);
-                }
-                else
-                {
-                    var updateProduct = Products.FirstOrDefault(p => p.Id == SelectedProduct.Id);
-                    {
-                        updateProduct.Name = SelectedProduct.Name;
-                        updateProduct.Quantity = SelectedProduct.Quantity;
-                        updateProduct.Price = SelectedProduct.Price;
-                    }
-                }
-                UpdateCardsInfo();
-            }
-        }
-
-        private void DeleteProduct(ProductDTO? product)
-        {
-            if (product != null && Products.Contains(product))
-            {
-                Products.Remove(product);
-                UpdateCardsInfo();
-            }
+            EstimatedProfit = Math.Floor(TotalValue * PercentProfit);
         }
 
         private void OnQuantityFilter()
         {
             var filteredProducts = Products.OrderByDescending(p => p.Quantity).ToList();
-            UpdateProducts(filteredProducts);
+            UpdateProductList(filteredProducts);
         }
 
         private void OnPriceFilter()
         {
             var filteredProducts = Products.OrderByDescending(p => p.Price).ToList();
-            UpdateProducts(filteredProducts);
+            UpdateProductList(filteredProducts);
         }
 
-        private void UpdateProducts(IEnumerable<ProductDTO> filteredProducts)
+        private void UpdateProductList(IEnumerable<ProductRespone> filteredProducts)
         {
             Products.Clear();
             foreach (var product in filteredProducts)
