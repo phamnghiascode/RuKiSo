@@ -126,7 +126,13 @@ namespace RuKiSoBackEnd.Data
                 new Transactions { Id = 37, Name = "Mua đòng đòng", TranType = false, Quantity = 80, Value = 2400000, TranDate = new DateTime(2024, 12, 5), IngredientId = 4 },
                 new Transactions { Id = 38, Name = "Mua men thuốc bắc", TranType = false, Quantity = 3, Value = 450000, TranDate = new DateTime(2024, 12, 5), IngredientId = 5 },
                 new Transactions { Id = 39, Name = "Bán đòng đòng 45", TranType = true, Quantity = 45, Value = 3375000, TranDate = new DateTime(2024, 12, 20), ProductId = 4 },
-                new Transactions { Id = 40, Name = "Bán rượu trắng 45", TranType = true, Quantity = 120, Value = 6000000, TranDate = new DateTime(2024, 12, 28), ProductId = 1 }
+                new Transactions { Id = 40, Name = "Bán rượu trắng 45", TranType = true, Quantity = 120, Value = 6000000, TranDate = new DateTime(2024, 12, 28), ProductId = 1 },
+
+                new Transactions { Id = 41, Name = "Bán rượu trắng 40", TranType = true, Quantity = 50, Value = 2250000, TranDate = DateTime.Now.AddDays(-6), ProductId = 2 },
+                new Transactions { Id = 42, Name = "Mua men thuốc bắc", TranType = false, Quantity = 1, Value = 150000, TranDate = DateTime.Now.AddDays(-5), IngredientId = 5 },
+                new Transactions { Id = 43, Name = "Bán đòng đòng 40", TranType = true, Quantity = 30, Value = 2100000, TranDate = DateTime.Now.AddDays(-3), ProductId = 5 },
+                new Transactions { Id = 44, Name = "Bán rượu táo mèo", TranType = true, Quantity = 25, Value = 1500000, TranDate = DateTime.Now.AddDays(-2), ProductId = 8 },
+                new Transactions { Id = 45, Name = "Mua nếp đen", TranType = false, Quantity = 100, Value = 2300000, TranDate = DateTime.Now.AddDays(-1), IngredientId = 3 }
             );
         }
     }

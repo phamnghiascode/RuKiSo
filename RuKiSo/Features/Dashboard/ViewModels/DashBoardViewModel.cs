@@ -256,13 +256,11 @@ namespace RuKiSo.ViewModels
                     .Select(g => new ProfitDTO
                     {
                         Date = g.Key,
-                        Profit = g.Sum(t => t.TranType
-                            ? t.Value * 0.20  // 20% profit from sales
-                            : -t.Value        // Subtract purchase costs
-                        )
+                        Profit = g.Where(t => t.TranType) // Chỉ lấy giao dịch bán hàng
+                                 .Sum(t => t.Value * 0.20) // Tính 20% lợi nhuận
                     })
                     .OrderBy(x => x.Date)
-                    .Take(10)  // Get last 10 months
+                    .Take(10)
                     .ToList();
 
                 MonthlyProfit = new ObservableCollection<ProfitDTO>(monthlyData);

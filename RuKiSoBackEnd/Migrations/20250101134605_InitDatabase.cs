@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RuKiSoBackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -212,7 +212,12 @@ namespace RuKiSoBackEnd.Migrations
                     { 37, 4, "Mua đòng đòng", null, 80, new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 2400000.0 },
                     { 38, 5, "Mua men thuốc bắc", null, 3, new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 450000.0 },
                     { 39, null, "Bán đòng đòng 45", 4, 45, new DateTime(2024, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 3375000.0 },
-                    { 40, null, "Bán rượu trắng 45", 1, 120, new DateTime(2024, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 6000000.0 }
+                    { 40, null, "Bán rượu trắng 45", 1, 120, new DateTime(2024, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 6000000.0 },
+                    { 41, null, "Bán rượu trắng 40", 2, 50, new DateTime(2024, 12, 26, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3391), true, 2250000.0 },
+                    { 42, 5, "Mua men thuốc bắc", null, 1, new DateTime(2024, 12, 27, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3404), false, 150000.0 },
+                    { 43, null, "Bán đòng đòng 40", 5, 30, new DateTime(2024, 12, 29, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3406), true, 2100000.0 },
+                    { 44, null, "Bán rượu táo mèo", 8, 25, new DateTime(2024, 12, 30, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3407), true, 1500000.0 },
+                    { 45, 3, "Mua nếp đen", null, 100, new DateTime(2024, 12, 31, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3408), false, 2300000.0 }
                 });
 
             migrationBuilder.InsertData(

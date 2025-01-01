@@ -12,8 +12,8 @@ using RuKiSoBackEnd.Data;
 namespace RuKiSoBackEnd.Migrations
 {
     [DbContext(typeof(RuKiSoDataContext))]
-    [Migration("20241230125435_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250101134605_InitDatabase")]
+    partial class InitDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -864,6 +864,56 @@ namespace RuKiSoBackEnd.Migrations
                             TranDate = new DateTime(2024, 12, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TranType = true,
                             Value = 6000000.0
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Name = "Bán rượu trắng 40",
+                            ProductId = 2,
+                            Quantity = 50,
+                            TranDate = new DateTime(2024, 12, 26, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3391),
+                            TranType = true,
+                            Value = 2250000.0
+                        },
+                        new
+                        {
+                            Id = 42,
+                            IngredientId = 5,
+                            Name = "Mua men thuốc bắc",
+                            Quantity = 1,
+                            TranDate = new DateTime(2024, 12, 27, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3404),
+                            TranType = false,
+                            Value = 150000.0
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Name = "Bán đòng đòng 40",
+                            ProductId = 5,
+                            Quantity = 30,
+                            TranDate = new DateTime(2024, 12, 29, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3406),
+                            TranType = true,
+                            Value = 2100000.0
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Name = "Bán rượu táo mèo",
+                            ProductId = 8,
+                            Quantity = 25,
+                            TranDate = new DateTime(2024, 12, 30, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3407),
+                            TranType = true,
+                            Value = 1500000.0
+                        },
+                        new
+                        {
+                            Id = 45,
+                            IngredientId = 3,
+                            Name = "Mua nếp đen",
+                            Quantity = 100,
+                            TranDate = new DateTime(2024, 12, 31, 20, 46, 3, 978, DateTimeKind.Local).AddTicks(3408),
+                            TranType = false,
+                            Value = 2300000.0
                         });
                 });
 
