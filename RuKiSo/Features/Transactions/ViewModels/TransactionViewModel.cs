@@ -213,8 +213,9 @@ namespace RuKiSo.ViewModels
                 var response = await transactionService.GetAllAsync();
                 if (response?.Any() == true)
                 {
+                    var orderedResponse = response.OrderByDescending(t => t.TranDate);
                     Transactions.Clear();
-                    foreach (var item in response)
+                    foreach (var item in orderedResponse)
                     {
                         Transactions.Add(item);
                     }
@@ -233,8 +234,9 @@ namespace RuKiSo.ViewModels
                 var response = await productService.GetAllAsync();
                 if (response?.Any() == true)
                 {
+                    var orderedResponse = response.OrderByDescending(p => p.Quantity);
                     Products.Clear();
-                    foreach (var item in response)
+                    foreach (var item in orderedResponse)
                     {
                         Products.Add(item.ToTransactionProductDTO());
                     }
@@ -253,8 +255,9 @@ namespace RuKiSo.ViewModels
                 var response = await ingredientService.GetAllAsync();
                 if (response?.Any() == true)
                 {
+                    var orderedRespone = response.OrderBy(i => i.Quantity);
                     Ingredients.Clear();
-                    foreach (var item in response)
+                    foreach (var item in orderedRespone)
                     {
                         Ingredients.Add(item.ToTransactionIngredientDTO());
                     }
