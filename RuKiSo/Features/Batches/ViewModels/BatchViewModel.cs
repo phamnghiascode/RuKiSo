@@ -42,8 +42,6 @@ namespace RuKiSo.ViewModels
             SaveBatchCommand = new RelayCommand(SaveBatch);
             DeleteBatchCommand = new RelayCommand<BatchResponse>(DeleteBatch);
             AddBatchCommand = new RelayCommand(AddBatch);
-
-            InitializeData();
         }
 
         public BatchResponse SelectedBatch
@@ -137,11 +135,20 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<BatchResponse> AllBatches { get; }
         public ObservableCollection<ProductRespone> Products { get; }
 
-        private async void InitializeData()
+        protected override async Task LoadDataAsync()
         {
-            await LoadProduct();
-            await LoadIngredient();
-            await LoadAllBaches();
+            try
+            {
+                await Task.WhenAll(
+                    LoadProduct(),
+                    LoadIngredient(),
+                    LoadAllBaches()
+                );
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error loading dashboard data", ex);
+            }
         }
 
         private async Task LoadProduct()

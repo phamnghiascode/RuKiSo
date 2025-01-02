@@ -26,7 +26,6 @@ namespace RuKiSo.ViewModels
         {
             this.productService = productService;
             InitializeCommands();
-            InitializeData();
         }
 
         public ProductRespone? SelectedProduct
@@ -150,7 +149,7 @@ namespace RuKiSo.ViewModels
             PriceFilterCommand = new RelayCommand(OnPriceFilter);
         }
 
-        private async void InitializeData()
+        protected override async Task LoadDataAsync()
         {
             try
             {

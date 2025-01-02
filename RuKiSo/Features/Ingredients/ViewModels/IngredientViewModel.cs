@@ -134,7 +134,6 @@ namespace RuKiSo.ViewModels
             QuantityFilterCommand = new RelayCommand(FilterByquantity);
             DeleteIngredientCommand = new RelayCommand<IngredientRespone>(DeleteIngredient);
             UpSertIngredientCommand = new RelayCommand(UpSertIngredient);
-            InitializeData();
         }
 
         private void EditIngredient(IngredientRespone? ingredient)
@@ -263,7 +262,7 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        private async void InitializeData()
+        protected override async Task LoadDataAsync()
         {
             try
             {

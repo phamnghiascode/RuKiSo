@@ -51,7 +51,9 @@ namespace RuKiSo.ViewModels
             this.productService = productService;
             this.transactionService = transactionService;
             this.ingredientService = ingredientService;
-            InitializeData();
+            Transactions = new ObservableCollection<TransactionResponse>();
+            Products = new ObservableCollection<TransactionProductDTO>();
+            Ingredients = new ObservableCollection<TransactionIngredientDTO>();
             InitializeCommand();
         }
         private void InitializeCommand()
@@ -188,15 +190,20 @@ namespace RuKiSo.ViewModels
                 HandleException("Error deleting transaction", ex);
             }
         }
-        private async Task InitializeData()
+        protected override async Task LoadDataAsync()
         {
-            Transactions = new ObservableCollection<TransactionResponse>();
-            Products = new ObservableCollection<TransactionProductDTO>();
-            Ingredients = new ObservableCollection<TransactionIngredientDTO>();
-
-            await LoadTransactions();
-            await LoadProducts();
-            await LoadIngredients();
+            try
+            {
+                await Task.WhenAll(
+                    LoadTransactions(),
+                    LoadProducts(),
+                    LoadIngredients()
+                );
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error loading dashboard data", ex);
+            }
         }
 
         private async Task LoadTransactions()

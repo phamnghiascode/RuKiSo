@@ -4,9 +4,16 @@ namespace RuKiSo.Views;
 
 public partial class IngredientPage : ContentPage
 {
-	public IngredientPage(IngredientViewModel ingredientViewModel)
+    private readonly IngredientViewModel _viewModel;
+    public IngredientPage(IngredientViewModel ingredientViewModel)
 	{
 		InitializeComponent();
+		_viewModel = ingredientViewModel;
 		BindingContext = ingredientViewModel;
 	}
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _viewModel.OnAppearingAsync();
+    }
 }

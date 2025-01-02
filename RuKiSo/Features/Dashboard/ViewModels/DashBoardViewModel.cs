@@ -49,18 +49,6 @@ namespace RuKiSo.ViewModels
                 OnPropertyChanged(nameof(MonthlyProfit));
             }
         }
-
-        private bool _isLoading;
-        public bool IsLoading
-        {
-            get => _isLoading;
-            set
-            {
-                _isLoading = value;
-                OnPropertyChanged(nameof(IsLoading));
-            }
-        }
-
         private readonly IGenericService<ProductRespone, ProductRequest> productService;
         private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
         private readonly IGenericService<TransactionResponse, TransactionRequest> transactionService;
@@ -82,11 +70,8 @@ namespace RuKiSo.ViewModels
             TopSellers = new ObservableCollection<TopSellerDTO>();
             MostUsedIngredients = new ObservableCollection<MostUsedIngredient>();
             MonthlyProfit = new ObservableCollection<ProfitDTO>();
-
-            // Load data
-            LoadDataAsync();
         }
-        private async Task InitChartDataAsync()
+        protected override async Task LoadDataAsync()
         {
             try
             {
@@ -99,30 +84,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                // Handle error appropriately
-                Console.WriteLine($"Error initializing dashboard data: {ex.Message}");
-            }
-        }
-
-        private async void LoadDataAsync()
-        {
-            try
-            {
-                IsLoading = true;
-                await InitChartDataAsync();
-
-                // Add debug logs
-                Console.WriteLine($"WeeklyHistories count: {WeeklyHistories?.Count}");
-                Console.WriteLine($"TopSellers count: {TopSellers?.Count}");
-                Console.WriteLine($"MostUsedIngredients count: {MostUsedIngredients?.Count}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error loading data: {ex}");
-            }
-            finally
-            {
-                IsLoading = false;
+                HandleException("Error loading dashboard data", ex);
             }
         }
 

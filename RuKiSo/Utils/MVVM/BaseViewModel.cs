@@ -5,13 +5,14 @@ namespace RuKiSo.Utils.MVVM
 {
     public abstract partial class BaseViewModel : ObservableRecipient, INotifyPropertyChanged
     {
-        public virtual Task OnAppearingAsync()
+        public virtual async Task OnAppearingAsync()
         {
-            System.Diagnostics.Debug.WriteLine($"{GetType().Name}.{nameof(OnAppearingAsync)}");
-
+            await LoadDataAsync();
+        }
+        protected virtual Task LoadDataAsync()
+        {
             return Task.CompletedTask;
         }
-
         public virtual Task OnDisappearingAsync()
         {
             System.Diagnostics.Debug.WriteLine($"{GetType().Name}.{nameof(OnDisappearingAsync)}");
