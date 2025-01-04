@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace RuKiSo.ViewModels
 {
-    public class DashBoardViewModel : BaseViewModel
+    public partial class DashBoardViewModel : BaseViewModel
     {
         private ObservableCollection<WeeklyHistoryDTO> _weeklyHistories;
         public ObservableCollection<WeeklyHistoryDTO> WeeklyHistories

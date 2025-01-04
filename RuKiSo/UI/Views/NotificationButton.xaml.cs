@@ -1,21 +1,25 @@
+using RuKiSo.ViewModels;
+using System.Windows.Input;
 namespace RuKiSo.UI.Views;
-
 public partial class NotificationButton : ContentView
 {
-
-    public static readonly BindableProperty HaveNotiProperty = BindableProperty.Create(
-        nameof(HaveNotiProperty),
+    public static readonly BindableProperty HasNotificationsProperty = BindableProperty.Create(
+        nameof(HasNotifications),
         typeof(bool),
         typeof(NotificationButton),
-        default(bool));
+        false);
 
-    public string HaveNoti
+    public bool HasNotifications
     {
-        get => (string)GetValue(HaveNotiProperty);
-        set => SetValue(HaveNotiProperty, value);
+        get => (bool)GetValue(HasNotificationsProperty);
+        set => SetValue(HasNotificationsProperty, value);
     }
-	public NotificationButton()
-	{
-		InitializeComponent();
-	}
+
+    public ICommand ShowNotificationsCommand { get; }
+
+    public NotificationButton(BatchReminderViewModel batchReminderViewModel)
+    {
+        InitializeComponent();
+        BindingContext = batchReminderViewModel;
+    }
 }

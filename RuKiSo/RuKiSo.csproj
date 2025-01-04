@@ -112,6 +112,7 @@
 	<ItemGroup>
 	  <Folder Include="DataAccess\Interfaces\" />
 	  <Folder Include="DataAccess\Services\" />
+	  <Folder Include="Features\BatchReminder\Views\" />
 	</ItemGroup>
 
 	<ItemGroup>

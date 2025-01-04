@@ -373,7 +373,7 @@ namespace RuKiSo.ViewModels
         private double CalculateProjectedYield()
         {
             // Implementation of yield calculation logic
-            return Batches.Count() * 12;
+            return Batches.Count * 12;
         }
 
         private void HandleException(string message, Exception ex)

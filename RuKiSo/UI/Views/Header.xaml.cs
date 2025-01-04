@@ -1,3 +1,4 @@
+using RuKiSo.ViewModels;
 namespace RuKiSo.UI.Views;
 
 public partial class Header : ContentView
@@ -15,10 +16,8 @@ public partial class Header : ContentView
         get => (string)GetValue(TitleProperty);
         set => SetValue(TitleProperty, value);
     }
-
     public Header()
 	{
         InitializeComponent();
-        BindingContext = this;
 	}
 }

@@ -13,6 +13,9 @@
         StrokeShape="RoundRectangle 25"
         StrokeThickness="0"
         WidthRequest="{x:Static ui:AppDimens.Height50}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding OpenCommand}" />
+        </Border.GestureRecognizers>
         <AbsoluteLayout>
             <Label
                 AbsoluteLayout.LayoutBounds="11, 10, -1, -1"
@@ -26,7 +29,7 @@
                 AbsoluteLayout.LayoutBounds="28, 10, -1, -1"
                 BackgroundColor="{x:Static ui:AppColors.Red}"
                 HeightRequest="{x:Static ui:AppDimens.FontSize12}"
-                IsVisible="True"
+                IsVisible="{Binding HasNotifications}"
                 StrokeShape="RoundRectangle 6"
                 StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
                 WidthRequest="{x:Static ui:AppDimens.FontSize12}" />

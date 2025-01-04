@@ -5,12 +5,45 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
-    xmlns:ui="clr-namespace:RuKiSo.UI">
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels">
+    <ContentView.BindingContext>
+        <vm:BatchReminderViewModel />
+    </ContentView.BindingContext>
     <Grid
         BackgroundColor="{x:Static ui:AppColors.White}"
         ColumnDefinitions="auto, *, auto, auto"
         HeightRequest="{x:Static ui:AppDimens.Height60}">
         <Label Style="{x:StaticResource PageTitleLabelStyle}" Text="{Binding Title}" />
-        <!--<controls:NotificationButton Grid.Column="3" />-->
+        <Border
+            Grid.Column="3"
+            Margin="0,0,20,0"
+            BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
+            HeightRequest="{x:Static ui:AppDimens.Height50}"
+            StrokeShape="RoundRectangle 25"
+            StrokeThickness="0"
+            WidthRequest="{x:Static ui:AppDimens.Height50}">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenCommand}" />
+            </Border.GestureRecognizers>
+            <AbsoluteLayout>
+                <Label
+                    AbsoluteLayout.LayoutBounds="11, 10, -1, -1"
+                    FontFamily="FaSolid"
+                    FontSize="{x:Static ui:AppDimens.FontSize30}"
+                    HorizontalOptions="Center"
+                    Text="{x:Static resource:AwesomeIcon.Bell}"
+                    TextColor="{x:Static ui:AppColors.LightBlue}"
+                    VerticalOptions="Center" />
+                <Border
+                    AbsoluteLayout.LayoutBounds="28, 10, -1, -1"
+                    BackgroundColor="{x:Static ui:AppColors.Red}"
+                    HeightRequest="{x:Static ui:AppDimens.FontSize12}"
+                    IsVisible="{Binding HasNotifications}"
+                    StrokeShape="RoundRectangle 6"
+                    StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
+                    WidthRequest="{x:Static ui:AppDimens.FontSize12}" />
+            </AbsoluteLayout>
+        </Border>
     </Grid>
 </ContentView>
