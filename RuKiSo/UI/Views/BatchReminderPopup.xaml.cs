@@ -2,9 +2,9 @@ using CommunityToolkit.Maui.Views;
 using RuKiSo.ViewModels;
 
 namespace RuKiSo.UI.Views;
-public partial class BatchReminder : Popup
+public partial class BatchReminderPopup : Popup
 {
-    public BatchReminder(BatchReminderViewModel viewModel)
+    public BatchReminderPopup(BatchReminderViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

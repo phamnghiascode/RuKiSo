@@ -53,17 +53,20 @@ namespace RuKiSo.ViewModels
         private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
         private readonly IGenericService<TransactionResponse, TransactionRequest> transactionService;
         private readonly IGenericService<BatchResponse, BatchRequest> batchService;
+        public BatchReminderViewModel ReminderViewModel { get; }
 
         public DashBoardViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
             IGenericService<IngredientRespone, IngredientRequest> ingredientService,
             IGenericService<TransactionResponse, TransactionRequest> transactionService,
-            IGenericService<BatchResponse, BatchRequest> batchService)
+            IGenericService<BatchResponse, BatchRequest> batchService,
+            BatchReminderViewModel reminderViewModel)
         {
             this.productService = productService;
             this.ingredientService = ingredientService;
             this.transactionService = transactionService;
             this.batchService = batchService;
+            ReminderViewModel = reminderViewModel;
 
             // Initialize collections
             WeeklyHistories = new ObservableCollection<WeeklyHistoryDTO>();

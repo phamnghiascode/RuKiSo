@@ -6,15 +6,14 @@
     xmlns:controls="clr-namespace:RuKiSo.UI.Views"
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
-    xmlns:vm="clr-namespace:RuKiSo.ViewModels">
-    <ContentView.BindingContext>
-        <vm:BatchReminderViewModel />
-    </ContentView.BindingContext>
+    xmlns:vm="clr-namespace:RuKiSo.ViewModels"
+    x:Name="this">
+
     <Grid
         BackgroundColor="{x:Static ui:AppColors.White}"
         ColumnDefinitions="auto, *, auto, auto"
         HeightRequest="{x:Static ui:AppDimens.Height60}">
-        <Label Style="{x:StaticResource PageTitleLabelStyle}" Text="{Binding Title}" />
+        <Label Style="{x:StaticResource PageTitleLabelStyle}" Text="{Binding Title, Source={x:Reference this}}" />
         <Border
             Grid.Column="3"
             Margin="0,0,20,0"
@@ -24,7 +23,7 @@
             StrokeThickness="0"
             WidthRequest="{x:Static ui:AppDimens.Height50}">
             <Border.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding OpenCommand}" />
+                <TapGestureRecognizer Command="{Binding Source={x:Reference this}, Path=ReminderViewModel.OpenCommand}" />
             </Border.GestureRecognizers>
             <AbsoluteLayout>
                 <Label
@@ -39,7 +38,7 @@
                     AbsoluteLayout.LayoutBounds="28, 10, -1, -1"
                     BackgroundColor="{x:Static ui:AppColors.Red}"
                     HeightRequest="{x:Static ui:AppDimens.FontSize12}"
-                    IsVisible="{Binding HasNotifications}"
+                    IsVisible="{Binding Source={x:Reference this}, Path=ReminderViewModel.HasNotifications}"
                     StrokeShape="RoundRectangle 6"
                     StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
                     WidthRequest="{x:Static ui:AppDimens.FontSize12}" />

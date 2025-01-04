@@ -22,15 +22,18 @@ namespace RuKiSo.ViewModels
         private readonly IGenericService<ProductRespone, ProductRequest> productService;
         private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
         private readonly IGenericService<BatchResponse, BatchRequest> batchService;
+        public BatchReminderViewModel ReminderViewModel { get; }
 
         public BatchViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
             IGenericService<IngredientRespone, IngredientRequest> ingredientService,
-            IGenericService<BatchResponse, BatchRequest> batchService)
+            IGenericService<BatchResponse, BatchRequest> batchService,
+            BatchReminderViewModel reminderViewModel)
         {
             this.productService = productService;
             this.ingredientService = ingredientService;
             this.batchService = batchService;
+            ReminderViewModel = reminderViewModel;
 
             Batches = new();
             Ingredients = new();

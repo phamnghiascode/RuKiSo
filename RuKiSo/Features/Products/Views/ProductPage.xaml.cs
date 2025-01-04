@@ -5,10 +5,12 @@ namespace RuKiSo.Views;
 public partial class ProductPage : ContentPage
 {
     private readonly ProductViewModel _viewModel;
-    public ProductPage(ProductViewModel viewModel)
+    private readonly BatchReminderViewModel _reminderViewModel;
+    public ProductPage(ProductViewModel viewModel, BatchReminderViewModel reminderViewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;
+        _reminderViewModel = reminderViewModel;
         BindingContext = viewModel;
     }
 

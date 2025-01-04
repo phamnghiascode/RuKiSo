@@ -7,5 +7,6 @@ namespace RuKiSo.Features.Services
     {
         Task<List<BatchResponse>> GetDueBatchesAsync();
         void ShowPopup(Popup popup);
+        void ClosePopup(Popup popup);
     }
 }

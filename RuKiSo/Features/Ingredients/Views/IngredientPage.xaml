@@ -12,7 +12,10 @@
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         ColumnDefinitions="*"
         RowDefinitions="auto, *">
-        <controls:Header Title="{x:Static resource:AppTexts.Ingredient}" HorizontalOptions="Fill" />
+        <controls:Header
+            Title="{x:Static resource:AppTexts.Ingredient}"
+            HorizontalOptions="Fill"
+            ReminderViewModel="{Binding ReminderViewModel}" />
         <Grid
             Grid.Row="1"
             Padding="20,8,20,8"

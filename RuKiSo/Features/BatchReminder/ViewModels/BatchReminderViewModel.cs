@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Features.Services;
 using RuKiSo.UI.Views;
@@ -12,6 +13,14 @@ namespace RuKiSo.ViewModels
     {
         private readonly IReminderService _reminderService;
         private readonly IDispatcherTimer _timer;
+        private Popup? _currentPopup;
+
+        private bool _hasNotifications;
+        public bool HasNotifications
+        {
+            get => _hasNotifications;
+            set => SetProperty(ref _hasNotifications, value);
+        }
 
         public ObservableCollection<BatchResponse> Batches { get; }
         public ICommand CloseCommand { get; }
@@ -25,44 +34,65 @@ namespace RuKiSo.ViewModels
             CloseCommand = new RelayCommand(ClosePopupAsync);
             OpenCommand = new RelayCommand(LoadAndShowPopupAsync);
 
-            // Set up timer to check batches every hour
             _timer = Application.Current.Dispatcher.CreateTimer();
             _timer.Interval = TimeSpan.FromHours(1);
             _timer.Tick += async (s, e) => await CheckBatches();
             _timer.Start();
 
             // Initial check
-            CheckBatches().ConfigureAwait(false);
-        }
-
-        private async void LoadAndShowPopupAsync()
-        {
-            await LoadAllBatches();
-            var popup = new BatchReminder(this);
-            _reminderService.ShowPopup(popup);
-        }
-
-        private void ClosePopupAsync()
-        {
-            if (Application.Current?.MainPage?.Handler?.MauiContext != null)
-            {
-                return;
-            }
+            Task.Run(async () => await CheckBatches());
         }
 
         private async Task CheckBatches()
         {
-            await LoadAllBatches();
-
-            foreach (var batch in Batches)
+            try
             {
-                var daysRemaining = (batch.EstimateEndDate - DateTime.Now).Days;
-                if (daysRemaining is 3 or 2 or 1)
+                await LoadAllBatches();
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    var reminderPopup = new BatchReminder(this);
-                    _reminderService.ShowPopup(reminderPopup);
-                    break;
+                    HasNotifications = Batches.Any(b =>
+                    {
+                        var daysRemaining = (b.EstimateEndDate.Date - DateTime.Today).Days;
+                        return daysRemaining is >= 0 and <= 3;
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error checking batches", ex);
+            }
+        }
+
+        private async void LoadAndShowPopupAsync()
+        {
+            try
+            {
+                await LoadAllBatches();
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    _currentPopup = new BatchReminderPopup(this);
+                    _reminderService.ShowPopup(_currentPopup);
+                });
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error loading popup", ex);
+            }
+        }
+
+        private void ClosePopupAsync()
+        {
+            try
+            {
+                if (_currentPopup != null)
+                {
+                    _reminderService.ClosePopup(_currentPopup);
+                    _currentPopup = null;
                 }
+            }
+            catch (Exception ex)
+            {
+                HandleException("Error closing popup", ex);
             }
         }
 
@@ -71,16 +101,24 @@ namespace RuKiSo.ViewModels
             try
             {
                 var dueBatches = await _reminderService.GetDueBatchesAsync();
-                Batches.Clear();
-                foreach (var batch in dueBatches)
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    Batches.Add(batch);
-                }
+                    Batches.Clear();
+                    foreach (var batch in dueBatches)
+                    {
+                        Batches.Add(batch);
+                    }
+                });
             }
             catch (Exception ex)
             {
                 HandleException("Error loading batches", ex);
             }
+        }
+
+        private void HandleException(string message, Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"{message}: {ex}");
         }
     }
 }

@@ -112,7 +112,6 @@
 	<ItemGroup>
 	  <Folder Include="DataAccess\Interfaces\" />
 	  <Folder Include="DataAccess\Services\" />
-	  <Folder Include="Features\BatchReminder\Views\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -133,6 +132,9 @@
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>AppTexts.resx</DependentUpon>
+	  </Compile>
+	  <Compile Update="UI\Views\BatchReminderPopup.xaml.cs">
+	    <DependentUpon>BatchReminderPopup.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -166,16 +168,10 @@
 	  <MauiXaml Update="UI\Converters\CustomConverters.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="UI\Views\AddProductPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\Header.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\MostPurchaseCustomers.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="UI\Views\NotificationButton.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\OverViewCard.xaml">

@@ -10,7 +10,10 @@
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
     x:Name="root">
     <Grid BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}" RowDefinitions="auto, *">
-        <controls:Header Title="{x:Static resource:AppTexts.DashBoard}" HorizontalOptions="Fill" />
+        <controls:Header
+            Title="{x:Static resource:AppTexts.DashBoard}"
+            HorizontalOptions="Fill"
+            ReminderViewModel="{Binding ReminderViewModel}" />
         <Grid
             Grid.Row="1"
             Padding="20,8,20,8"

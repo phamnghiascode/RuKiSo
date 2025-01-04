@@ -9,6 +9,7 @@ namespace RuKiSo.ViewModels
     public class ProductViewModel : BaseViewModel
     {
         private readonly IGenericService<ProductRespone, ProductRequest> productService;
+        public BatchReminderViewModel ReminderViewModel { get; }
         private const double PercentProfit = 0.2;
 
         private ProductRespone? selectedProduct;
@@ -22,9 +23,10 @@ namespace RuKiSo.ViewModels
 
         public ObservableCollection<ProductRespone> Products { get; } = new();
 
-        public ProductViewModel(IGenericService<ProductRespone, ProductRequest> productService)
+        public ProductViewModel(IGenericService<ProductRespone, ProductRequest> productService, BatchReminderViewModel reminderViewModel)
         {
             this.productService = productService;
+            ReminderViewModel = reminderViewModel;
             InitializeCommands();
         }
 

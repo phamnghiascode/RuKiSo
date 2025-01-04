@@ -44,16 +44,21 @@ namespace RuKiSo.ViewModels
         public ObservableCollection<TransactionProductDTO> Products { get; set; }
         public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<TransactionResponse> Transactions { get; set; }
+        public BatchReminderViewModel ReminderViewModel { get; }
         public TransactionViewModel(IGenericService<ProductRespone, ProductRequest> productService,
                                     IGenericService<TransactionResponse, TransactionRequest> transactionService,
-                                    IGenericService<IngredientRespone, IngredientRequest> ingredientService)
+                                    IGenericService<IngredientRespone, IngredientRequest> ingredientService,
+                                    BatchReminderViewModel reminderViewModel)
         {
             this.productService = productService;
             this.transactionService = transactionService;
             this.ingredientService = ingredientService;
+            ReminderViewModel = reminderViewModel;
+
             Transactions = new ObservableCollection<TransactionResponse>();
             Products = new ObservableCollection<TransactionProductDTO>();
             Ingredients = new ObservableCollection<TransactionIngredientDTO>();
+
             InitializeCommand();
         }
         private void InitializeCommand()

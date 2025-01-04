@@ -125,9 +125,12 @@ namespace RuKiSo.ViewModels
             }
         }
         public ObservableCollection<IngredientRespone> Ingredients { get; set; } = new();
-        public IngredientViewModel(IGenericService<IngredientRespone, IngredientRequest> ingredientService)
+        public BatchReminderViewModel ReminderViewModel { get; }
+        public IngredientViewModel(IGenericService<IngredientRespone, IngredientRequest> ingredientService, BatchReminderViewModel reminderViewModel)
         {
             this.ingredientService = ingredientService;
+            ReminderViewModel = reminderViewModel;
+
             ResetCommand = new RelayCommand(Reset);
             EditIngredientCommand = new RelayCommand<IngredientRespone>(EditIngredient);
             PurchasePriceFilterCommand = new RelayCommand(FilterByPurchasePrice);

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="RuKiSo.UI.Views.BatchReminderPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    Color="Transparent">
+    <Border
+        Margin="20"
+        Padding="20"
+        BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
+        HeightRequest="400"
+        StrokeShape="RoundRectangle 10"
+        VerticalOptions="Center">
+        <Grid RowDefinitions="Auto,*">
+            <Label
+                Grid.Row="0"
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="Mẻ rượu có thể nấu" />
+            <CollectionView
+                Grid.Row="1"
+                ItemsSource="{Binding Batches}"
+                VerticalScrollBarVisibility="Always">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space7}" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="0,0,0,10"
+                            BackgroundColor="{x:Static ui:AppColors.White}"
+                            StrokeShape="RoundRectangle 10">
+                            <Grid Padding="10" RowDefinitions="Auto,Auto">
+                                <Label FontAttributes="Bold" Text="{Binding Product.Name}" />
+                                <Label Grid.Row="1" Text="{Binding EstimateEndDate, StringFormat='Ngày nấu dự tính: {0:d}'}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Border>
+</toolkit:Popup>
