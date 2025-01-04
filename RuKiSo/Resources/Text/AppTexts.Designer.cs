@@ -133,6 +133,15 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mẻ rượu sắp tới ngày nấu.
+        /// </summary>
+        internal static string BatchReminderPopupTitle {
+            get {
+                return ResourceManager.GetString("BatchReminderPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nấu.
         /// </summary>
         internal static string Cook {
@@ -210,6 +219,15 @@ namespace RuKiSo.Resources {
         internal static string End {
             get {
                 return ResourceManager.GetString("End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ngày có thể nấu rượu dự tính: {0:d}.
+        /// </summary>
+        internal static string EstimateBatch {
+            get {
+                return ResourceManager.GetString("EstimateBatch", resourceCulture);
             }
         }
         

@@ -3,6 +3,7 @@
     x:Class="RuKiSo.UI.Views.BatchReminderPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     Color="Transparent">
@@ -17,12 +18,9 @@
             <Label
                 Grid.Row="0"
                 FontAttributes="Bold"
-                FontSize="20"
-                Text="Mẻ rượu có thể nấu" />
-            <CollectionView
-                Grid.Row="1"
-                ItemsSource="{Binding Batches}"
-                VerticalScrollBarVisibility="Always">
+                FontSize="{x:Static ui:AppDimens.FontSize20}"
+                Text="{x:Static resource:AppTexts.BatchReminderPopupTitle}" />
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Batches}">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space7}" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
@@ -34,7 +32,7 @@
                             StrokeShape="RoundRectangle 10">
                             <Grid Padding="10" RowDefinitions="Auto,Auto">
                                 <Label FontAttributes="Bold" Text="{Binding Product.Name}" />
-                                <Label Grid.Row="1" Text="{Binding EstimateEndDate, StringFormat='Ngày nấu dự tính: {0:d}'}" />
+                                <Label Grid.Row="1" Text="{Binding EstimateEndDate, StringFormat={x:Static resource:AppTexts.EstimateBatch}}" />
                             </Grid>
                         </Border>
                     </DataTemplate>

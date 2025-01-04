@@ -300,4 +300,10 @@
   <data name="EditTransaction" xml:space="preserve">
     <value>Sửa giao dịch</value>
   </data>
+  <data name="BatchReminderPopupTitle" xml:space="preserve">
+    <value>Mẻ rượu sắp tới ngày nấu</value>
+  </data>
+  <data name="EstimateBatch" xml:space="preserve">
+    <value>Ngày có thể nấu rượu dự tính: {0:d}</value>
+  </data>
 </root>

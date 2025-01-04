@@ -48,14 +48,15 @@ namespace RuKiSo.ViewModels
             try
             {
                 await LoadAllBatches();
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    HasNotifications = Batches.Any(b =>
-                    {
-                        var daysRemaining = (b.EstimateEndDate.Date - DateTime.Today).Days;
-                        return daysRemaining is >= 0 and <= 3;
-                    });
-                });
+                //MainThread.BeginInvokeOnMainThread(() =>
+                //{
+                //    HasNotifications = Batches.Any(b =>
+                //    {
+                //        var daysRemaining = (b.EstimateEndDate.Date - DateTime.Today).Days;
+                //        return daysRemaining is >= 0 and <= 3;
+                //    });
+                //});
+                HasNotifications = true;
             }
             catch (Exception ex)
             {
