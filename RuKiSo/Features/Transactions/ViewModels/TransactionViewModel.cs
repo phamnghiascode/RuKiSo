@@ -11,12 +11,17 @@ namespace RuKiSo.ViewModels
 {
     public partial class TransactionViewModel : BaseViewModel
     {
+
+        #region Fields
+
         private readonly IGenericService<ProductRespone, ProductRequest> _productService;
         private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
         private readonly IGenericService<TransactionResponse, TransactionRequest> _transactionService;
 
         private TransactionResponse selectedTransaction;
         private bool isPopupOpen;
+
+        #endregion
 
         public TransactionViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
@@ -34,52 +39,14 @@ namespace RuKiSo.ViewModels
             InitializeCommands();
         }
 
+        #region Initialization
+
         private void InitializeCollections()
         {
             Transactions = new();
             Products = new();
             Ingredients = new();
         }
-
-        private void InitializeCommands()
-        {
-            EditTransactionCommand = new RelayCommand(EditTransaction);
-            OpenEditTransactionPopupCommand = new RelayCommand<TransactionResponse>(OpenEditTransaction);
-            AddPurchaseTransactionCommand = new RelayCommand<TransactionIngredientDTO>(AddPurchaseTransaction);
-            AddSellTransactionCommand = new RelayCommand<TransactionProductDTO>(AddSellTransaction);
-            DeleteTransactionCommand = new RelayCommand<TransactionResponse>(DeleteTransaction);
-        }
-
-        public TransactionResponse SelectedTransaction
-        {
-            get => selectedTransaction;
-            set
-            {
-                selectedTransaction = value;
-                OnPropertyChanged(nameof(SelectedTransaction));
-            }
-        }
-
-        public bool IsPopupOpen
-        {
-            get => isPopupOpen;
-            set
-            {
-                isPopupOpen = value;
-                OnPropertyChanged(nameof(IsPopupOpen));
-            }
-        }
-
-        public ICommand EditTransactionCommand { get; set; }
-        public ICommand OpenEditTransactionPopupCommand { get; set; }
-        public ICommand AddPurchaseTransactionCommand { get; set; }
-        public ICommand AddSellTransactionCommand { get; set; }
-        public ICommand DeleteTransactionCommand { get; set; }
-
-        public ObservableCollection<TransactionProductDTO> Products { get; set; }
-        public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
-        public ObservableCollection<TransactionResponse> Transactions { get; set; }
-        public BatchReminderViewModel ReminderViewModel { get; }
 
         protected override async Task LoadDataAsync()
         {
@@ -156,6 +123,57 @@ namespace RuKiSo.ViewModels
                 HandleException(ErrorMessages.LOADING_INGREDIENTS, ex);
             }
         }
+
+        #endregion
+
+        #region Properties
+
+        public TransactionResponse SelectedTransaction
+        {
+            get => selectedTransaction;
+            set
+            {
+                selectedTransaction = value;
+                OnPropertyChanged(nameof(SelectedTransaction));
+            }
+        }
+
+        public bool IsPopupOpen
+        {
+            get => isPopupOpen;
+            set
+            {
+                isPopupOpen = value;
+                OnPropertyChanged(nameof(IsPopupOpen));
+            }
+        }
+
+        public ObservableCollection<TransactionProductDTO> Products { get; set; }
+        public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
+        public ObservableCollection<TransactionResponse> Transactions { get; set; }
+        public BatchReminderViewModel ReminderViewModel { get; }
+
+#endregion
+
+        #region Commands
+
+        public ICommand EditTransactionCommand { get; set; }
+        public ICommand OpenEditTransactionPopupCommand { get; set; }
+        public ICommand AddPurchaseTransactionCommand { get; set; }
+        public ICommand AddSellTransactionCommand { get; set; }
+        public ICommand DeleteTransactionCommand { get; set; }
+        private void InitializeCommands()
+        {
+            EditTransactionCommand = new RelayCommand(EditTransaction);
+            OpenEditTransactionPopupCommand = new RelayCommand<TransactionResponse>(OpenEditTransaction);
+            AddPurchaseTransactionCommand = new RelayCommand<TransactionIngredientDTO>(AddPurchaseTransaction);
+            AddSellTransactionCommand = new RelayCommand<TransactionProductDTO>(AddSellTransaction);
+            DeleteTransactionCommand = new RelayCommand<TransactionResponse>(DeleteTransaction);
+        }
+
+        #endregion
+
+        #region Command Handlers
 
         private async void EditTransaction()
         {
@@ -285,5 +303,7 @@ namespace RuKiSo.ViewModels
                 Transactions[index] = updatedTransaction;
             }
         }
+
+        #endregion
     }
 }

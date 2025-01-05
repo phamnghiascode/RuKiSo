@@ -10,6 +10,8 @@ namespace RuKiSo.ViewModels
 {
     public partial class IngredientViewModel : BaseViewModel
     {
+        #region Fields
+
         private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
 
         private IngredientRespone? selectedIngredient;
@@ -22,6 +24,8 @@ namespace RuKiSo.ViewModels
         private double purchasePrice;
         private bool isQuantityEnabled;
         private bool isPurchasePriceEnabled;
+
+        #endregion
 
         public IngredientViewModel(
             IGenericService<IngredientRespone, IngredientRequest> ingredientService,
@@ -37,7 +41,7 @@ namespace RuKiSo.ViewModels
 
         #region Properties
 
-        public ObservableCollection<IngredientRespone> Ingredients { get; private set; }
+        public ObservableCollection<IngredientRespone> Ingredients { get; set; }
         public BatchReminderViewModel ReminderViewModel { get; }
 
         public IngredientRespone? SelectedIngredient
@@ -144,12 +148,12 @@ namespace RuKiSo.ViewModels
 
         #region Commands
 
-        public ICommand UpSertIngredientCommand { get; private set; }
-        public ICommand DeleteIngredientCommand { get; private set; }
-        public ICommand EditIngredientCommand { get; private set; }
-        public ICommand QuantityFilterCommand { get; private set; }
+        public ICommand UpSertIngredientCommand { get; set; }
+        public ICommand DeleteIngredientCommand { get; set; }
+        public ICommand EditIngredientCommand { get; set; }
+        public ICommand QuantityFilterCommand { get; set; }
         public ICommand PurchasePriceFilterCommand { get; private set; }
-        public ICommand ResetCommand { get; private set; }
+        public ICommand ResetCommand { get; set; }
 
         private void InitializeCommands()
         {

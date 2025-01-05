@@ -10,6 +10,8 @@ namespace RuKiSo.ViewModels
 {
     public partial class ProductViewModel : BaseViewModel
     {
+        #region Fields
+
         private readonly IGenericService<ProductRespone, ProductRequest> _productService;
         private const double PercentProfit = 0.2;
 
@@ -23,6 +25,8 @@ namespace RuKiSo.ViewModels
         private double estimatedProfit;
         private bool isPopupOpen;
 
+        #endregion
+
         public ProductViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
             BatchReminderViewModel reminderViewModel,
@@ -35,20 +39,7 @@ namespace RuKiSo.ViewModels
             InitializeCommands();
         }
 
-        private void InitializeCollections()
-        {
-            Products = new();
-        }
-
-        private void InitializeCommands()
-        {
-            ResetCommand = new RelayCommand(Reset);
-            UpsertProductCommand = new RelayCommand(UpsertProduct);
-            EditProductCommand = new RelayCommand<ProductRespone>(EditProduct);
-            DeleteProductCommand = new RelayCommand<ProductRespone>(DeleteProduct);
-            QuantityFilterCommand = new RelayCommand(SortByQuantity);
-            PriceFilterCommand = new RelayCommand(SortByPrice);
-        }
+        #region Properties
 
         public ObservableCollection<ProductRespone> Products { get; set; }
         public BatchReminderViewModel ReminderViewModel { get; }
@@ -143,13 +134,15 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        public ICommand ResetCommand { get; set; }
-        public ICommand UpsertProductCommand { get; set; }
-        public ICommand EditProductCommand { get; set; }
-        public ICommand DeleteProductCommand { get; set; }
-        public ICommand QuantityFilterCommand { get; private set; }
-        public ICommand PriceFilterCommand { get; set; }
-    
+        #endregion
+
+        #region Initialization
+
+        private void InitializeCollections()
+        {
+            Products = new();
+        }
+
         protected override async Task LoadDataAsync()
         {
             try
@@ -171,6 +164,74 @@ namespace RuKiSo.ViewModels
             }
         }
 
+        #endregion
+
+        #region Helpers
+        private void Reset()
+        {
+            SelectedProduct = null;
+            Name = string.Empty;
+            Description = string.Empty;
+            Quantity = 0;
+            Price = 0;
+            IsPopupOpen = false;
+        }
+
+        private void UpdateCardsInfo()
+        {
+            TotalProduct = Products.Count;
+            TotalValue = Products.Sum(product => product.TotalValue);
+            EstimatedProfit = Math.Floor(TotalValue * PercentProfit);
+        }
+
+        private void UpdateProductList(IEnumerable<ProductRespone> sortedProducts)
+        {
+            Products.Clear();
+            foreach (var product in sortedProducts)
+            {
+                Products.Add(product);
+            }
+        }
+
+        #endregion
+
+        #region Sort
+
+        private void SortByQuantity()
+        {
+            var sortedProducts = Products.OrderByDescending(p => p.Quantity).ToList();
+            UpdateProductList(sortedProducts);
+        }
+
+        private void SortByPrice()
+        {
+            var sortedProducts = Products.OrderByDescending(p => p.Price).ToList();
+            UpdateProductList(sortedProducts);
+        }
+
+        #endregion
+
+        #region Commands
+
+        public ICommand ResetCommand { get; set; }
+        public ICommand UpsertProductCommand { get; set; }
+        public ICommand EditProductCommand { get; set; }
+        public ICommand DeleteProductCommand { get; set; }
+        public ICommand QuantityFilterCommand { get; set; }
+        public ICommand PriceFilterCommand { get; set; }
+        private void InitializeCommands()
+        {
+            ResetCommand = new RelayCommand(Reset);
+            UpsertProductCommand = new RelayCommand(UpsertProduct);
+            EditProductCommand = new RelayCommand<ProductRespone>(EditProduct);
+            DeleteProductCommand = new RelayCommand<ProductRespone>(DeleteProduct);
+            QuantityFilterCommand = new RelayCommand(SortByQuantity);
+            PriceFilterCommand = new RelayCommand(SortByPrice);
+        }
+
+        #endregion
+
+        #region Command Handlers
         private async void UpsertProduct()
         {
             if (SelectedProduct != null)
@@ -245,16 +306,6 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        private void Reset()
-        {
-            SelectedProduct = null;
-            Name = string.Empty;
-            Description = string.Empty;
-            Quantity = 0;
-            Price = 0;
-            IsPopupOpen = false;
-        }
-
         private void EditProduct(ProductRespone product)
         {
             if (product == null) return;
@@ -286,32 +337,6 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        private void UpdateCardsInfo()
-        {
-            TotalProduct = Products.Count;
-            TotalValue = Products.Sum(product => product.TotalValue);
-            EstimatedProfit = Math.Floor(TotalValue * PercentProfit);
-        }
-
-        private void SortByQuantity()
-        {
-            var sortedProducts = Products.OrderByDescending(p => p.Quantity).ToList();
-            UpdateProductList(sortedProducts);
-        }
-
-        private void SortByPrice()
-        {
-            var sortedProducts = Products.OrderByDescending(p => p.Price).ToList();
-            UpdateProductList(sortedProducts);
-        }
-
-        private void UpdateProductList(IEnumerable<ProductRespone> sortedProducts)
-        {
-            Products.Clear();
-            foreach (var product in sortedProducts)
-            {
-                Products.Add(product);
-            }
-        }
+        #endregion
     }
 }

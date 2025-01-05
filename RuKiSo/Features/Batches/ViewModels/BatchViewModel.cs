@@ -12,6 +12,8 @@ namespace RuKiSo.ViewModels
 {
     public partial class BatchViewModel : BaseViewModel
     {
+        #region Fields
+
         private readonly IGenericService<ProductRespone, ProductRequest> _productService;
         private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
         private readonly IGenericService<BatchResponse, BatchRequest> _batchService;
@@ -24,6 +26,8 @@ namespace RuKiSo.ViewModels
         private double projectedYield;
         private DateTime startDate = DateTime.Now;
         private DateTime estimateEndDate = DateTime.Now;
+
+        #endregion
 
         public BatchViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
@@ -41,6 +45,8 @@ namespace RuKiSo.ViewModels
             InitializeCommands();
         }
 
+        #region Initialization
+
         private void InitializeCollections()
         {
             Batches = new();
@@ -49,14 +55,86 @@ namespace RuKiSo.ViewModels
             Products = new();
         }
 
-        private void InitializeCommands()
+        protected override async Task LoadDataAsync()
         {
-            ResetCommand = new RelayCommand(Reset);
-            EditCookBatchCommand = new RelayCommand<BatchResponse>(EditCookBatch);
-            SaveBatchCommand = new RelayCommand(SaveBatch);
-            DeleteBatchCommand = new RelayCommand<BatchResponse>(DeleteBatch);
-            AddBatchCommand = new RelayCommand(AddBatch);
+            try
+            {
+                await Task.WhenAll(
+                    LoadProduct(),
+                    LoadIngredient(),
+                    LoadAllBaches()
+                );
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.LOADING_DASHBOARD, ex);
+            }
         }
+
+        private async Task LoadProduct()
+        {
+            try
+            {
+                var response = await _productService.GetAllAsync();
+                if (response != null)
+                {
+                    Products.Clear();
+                    foreach (var item in response)
+                    {
+                        Products.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.LOADING_PRODUCTS, ex);
+            }
+        }
+
+        private async Task LoadIngredient()
+        {
+            try
+            {
+                var response = await _ingredientService.GetAllAsync();
+                if (response != null)
+                {
+                    Ingredients.Clear();
+                    foreach (var item in response)
+                    {
+                        Ingredients.Add(item.ToBatchIngredientDTO());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.LOADING_INGREDIENTS, ex);
+            }
+        }
+
+        private async Task LoadAllBaches()
+        {
+            try
+            {
+                var response = await _batchService.GetAllAsync();
+                if (response != null)
+                {
+                    AllBatches.Clear();
+                    foreach (var item in response)
+                    {
+                        AllBatches.Add(item);
+                    }
+                }
+                UpdateBatches();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.LOADING_BATCHES, ex);
+            }
+        }
+
+        #endregion
+
+        #region Properties
 
         public BatchResponse SelectedBatch
         {
@@ -138,107 +216,33 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        public ICommand AddBatchCommand { get; set; }
-        public ICommand EditCookBatchCommand { get; set; }
-        public ICommand DeleteBatchCommand { get; set; }
-        public ICommand SaveBatchCommand { get; set; }
-        public ICommand ResetCommand { get; set; }
-
         public ObservableCollection<BatchResponse> Batches { get; set; }
         public ObservableCollection<BatchIngredientDTO> Ingredients { get; set; }
         public ObservableCollection<BatchResponse> AllBatches { get; set;}
         public ObservableCollection<ProductRespone> Products { get; set; }
         public BatchReminderViewModel ReminderViewModel { get; set; }
 
-        protected override async Task LoadDataAsync()
-        {
-            try
-            {
-                await Task.WhenAll(
-                    LoadProduct(),
-                    LoadIngredient(),
-                    LoadAllBaches()
-                );
-            }
-            catch (Exception ex)
-            {
-                HandleException(ErrorMessages.LOADING_DASHBOARD, ex);
-            }
-        }
+        #endregion
 
-        private async Task LoadProduct()
-        {
-            try
-            {
-                var response = await _productService.GetAllAsync();
-                if (response != null)
-                {
-                    Products.Clear();
-                    foreach (var item in response)
-                    {
-                        Products.Add(item);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ErrorMessages.LOADING_PRODUCTS, ex);
-            }
-        }
+        #region Commands
 
-        private async Task LoadIngredient()
-        {
-            try
-            {
-                var response = await _ingredientService.GetAllAsync();
-                if (response != null)
-                {
-                    Ingredients.Clear();
-                    foreach (var item in response)
-                    {
-                        Ingredients.Add(item.ToBatchIngredientDTO());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException(ErrorMessages.LOADING_INGREDIENTS, ex);
-            }
-        }
+        public ICommand AddBatchCommand { get; set; }
+        public ICommand EditCookBatchCommand { get; set; }
+        public ICommand DeleteBatchCommand { get; set; }
+        public ICommand SaveBatchCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
 
-        private async Task LoadAllBaches()
+        private void InitializeCommands()
         {
-            try
-            {
-                var response = await _batchService.GetAllAsync();
-                if (response != null)
-                {
-                    AllBatches.Clear();
-                    foreach (var item in response)
-                    {
-                        AllBatches.Add(item);
-                    }
-                }
-                UpdateBatches();
-            }
-            catch (Exception ex)
-            {
-                HandleException(ErrorMessages.LOADING_BATCHES, ex);
-            }
+            ResetCommand = new RelayCommand(Reset);
+            EditCookBatchCommand = new RelayCommand<BatchResponse>(EditCookBatch);
+            SaveBatchCommand = new RelayCommand(SaveBatch);
+            DeleteBatchCommand = new RelayCommand<BatchResponse>(DeleteBatch);
+            AddBatchCommand = new RelayCommand(AddBatch);
         }
+        #endregion
 
-        private void Reset()
-        {
-            SelectedProduct = null;
-            StartDate = DateTime.Now;
-            EstimateEndDate = DateTime.Now;
-            foreach (var ingredient in Ingredients)
-            {
-                ingredient.IsSelected = false;
-                ingredient.UsedQuantity = 0;
-            }
-            OnPropertyChanged(nameof(Ingredients));
-        }
+        #region Command Handlers
 
         private async void SaveBatch()
         {
@@ -262,6 +266,7 @@ namespace RuKiSo.ViewModels
         }
 
         private BatchRequest CreateBatchRequest(BatchResponse batch)
+
         {
             return new BatchRequest
             {
@@ -276,7 +281,6 @@ namespace RuKiSo.ViewModels
                 }).ToList()
             };
         }
-
         private void EditCookBatch(BatchResponse batch)
         {
             if (batch == null) return;
@@ -363,6 +367,10 @@ namespace RuKiSo.ViewModels
             return Ingredients.Where(i => i.IsSelected && i.UsedQuantity > 0).ToList();
         }
 
+        #endregion
+
+        #region Helpers
+
         private void UpdateBatchInCollection(BatchResponse updatedBatch)
         {
             var index = AllBatches.IndexOf(SelectedBatch);
@@ -390,6 +398,19 @@ namespace RuKiSo.ViewModels
             UpdateCardsData();
         }
 
+        private void Reset()
+        {
+            SelectedProduct = null;
+            StartDate = DateTime.Now;
+            EstimateEndDate = DateTime.Now;
+            foreach (var ingredient in Ingredients)
+            {
+                ingredient.IsSelected = false;
+                ingredient.UsedQuantity = 0;
+            }
+            OnPropertyChanged(nameof(Ingredients));
+        }
+
         private void UpdateCardsData()
         {
             TotalBatch = Batches.Count;
@@ -401,5 +422,7 @@ namespace RuKiSo.ViewModels
         {
             return Batches.Count * 12;
         }
+
+        #endregion
     }
 }

@@ -8,6 +8,9 @@ namespace RuKiSo.ViewModels
 {
     public partial class DashBoardViewModel : BaseViewModel
     {
+
+        #region Fields
+
         private readonly IGenericService<ProductRespone, ProductRequest> _productService;
         private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
         private readonly IGenericService<TransactionResponse, TransactionRequest> _transactionService;
@@ -17,6 +20,8 @@ namespace RuKiSo.ViewModels
         private ObservableCollection<TopSellerDTO> topSellers;
         private ObservableCollection<MostUsedIngredient> mostUsedIngredients;
         private ObservableCollection<ProfitDTO> monthlyProfit;
+
+        #endregion
 
         public DashBoardViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
@@ -34,6 +39,8 @@ namespace RuKiSo.ViewModels
 
             InitializeCollections();
         }
+
+        #region Properties
 
         private void InitializeCollections()
         {
@@ -85,6 +92,8 @@ namespace RuKiSo.ViewModels
 
         public BatchReminderViewModel ReminderViewModel { get; }
 
+        #endregion
+
         protected override async Task LoadDataAsync()
         {
             try
@@ -133,13 +142,6 @@ namespace RuKiSo.ViewModels
             {
                 HandleException(ErrorMessages.WEEKLY_HISTORY, ex);
             }
-        }
-
-        private class WeeklyTransactionData
-        {
-            public string Date { get; set; }
-            public bool TranType { get; set; }
-            public double Total { get; set; }
         }
 
         private static List<WeeklyHistoryDTO> GenerateWeeklyHistories(List<WeeklyTransactionData> weeklyData)
