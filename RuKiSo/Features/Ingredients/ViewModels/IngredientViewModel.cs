@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -126,7 +127,9 @@ namespace RuKiSo.ViewModels
         }
         public ObservableCollection<IngredientRespone> Ingredients { get; set; } = new();
         public BatchReminderViewModel ReminderViewModel { get; }
-        public IngredientViewModel(IGenericService<IngredientRespone, IngredientRequest> ingredientService, BatchReminderViewModel reminderViewModel)
+        public IngredientViewModel(IGenericService<IngredientRespone, IngredientRequest> ingredientService, 
+                                    BatchReminderViewModel reminderViewModel,
+                                    IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
             this.ingredientService = ingredientService;
             ReminderViewModel = reminderViewModel;

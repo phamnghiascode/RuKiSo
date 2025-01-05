@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
+using RuKiSo.Resources.Text;
 using RuKiSo.Utils;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
@@ -7,61 +9,39 @@ using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
 {
-    public class TransactionViewModel : BaseViewModel
+    public partial class TransactionViewModel : BaseViewModel
     {
-        private readonly IGenericService<ProductRespone, ProductRequest> productService;
-        private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
-        private readonly IGenericService<TransactionResponse, TransactionRequest> transactionService;
+        private readonly IGenericService<ProductRespone, ProductRequest> _productService;
+        private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
+        private readonly IGenericService<TransactionResponse, TransactionRequest> _transactionService;
+
         private TransactionResponse selectedTransaction;
-
-        public TransactionResponse SelectedTransaction
-        {
-            get { return selectedTransaction; }
-            set
-            {
-                selectedTransaction = value;
-                OnPropertyChanged(nameof(SelectedTransaction));
-            }
-        }
-
         private bool isPopupOpen;
 
-        public bool IsPopupOpen
+        public TransactionViewModel(
+            IGenericService<ProductRespone, ProductRequest> productService,
+            IGenericService<IngredientRespone, IngredientRequest> ingredientService,
+            IGenericService<TransactionResponse, TransactionRequest> transactionService,
+            BatchReminderViewModel reminderViewModel,
+            IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
-            get { return isPopupOpen; }
-            set
-            {
-                isPopupOpen = value;
-                OnPropertyChanged(nameof(IsPopupOpen));
-            }
-        }
-
-        public ICommand DeleteTransactionCommand { get; set; }
-        public ICommand AddPurchaseTransactionCommand { get; set; }
-        public ICommand AddSellTransactionCommand { get; set; }
-        public ICommand OpenEditTransactionPopupCommand { get; set; }
-        public ICommand EditTransactionCommand { get; set; }
-        public ObservableCollection<TransactionProductDTO> Products { get; set; }
-        public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
-        public ObservableCollection<TransactionResponse> Transactions { get; set; }
-        public BatchReminderViewModel ReminderViewModel { get; }
-        public TransactionViewModel(IGenericService<ProductRespone, ProductRequest> productService,
-                                    IGenericService<TransactionResponse, TransactionRequest> transactionService,
-                                    IGenericService<IngredientRespone, IngredientRequest> ingredientService,
-                                    BatchReminderViewModel reminderViewModel)
-        {
-            this.productService = productService;
-            this.transactionService = transactionService;
-            this.ingredientService = ingredientService;
+            _productService = productService;
+            _ingredientService = ingredientService;
+            _transactionService = transactionService;
             ReminderViewModel = reminderViewModel;
 
-            Transactions = new ObservableCollection<TransactionResponse>();
-            Products = new ObservableCollection<TransactionProductDTO>();
-            Ingredients = new ObservableCollection<TransactionIngredientDTO>();
-
-            InitializeCommand();
+            InitializeCollections();
+            InitializeCommands();
         }
-        private void InitializeCommand()
+
+        private void InitializeCollections()
+        {
+            Transactions = new();
+            Products = new();
+            Ingredients = new();
+        }
+
+        private void InitializeCommands()
         {
             EditTransactionCommand = new RelayCommand(EditTransaction);
             OpenEditTransactionPopupCommand = new RelayCommand<TransactionResponse>(OpenEditTransaction);
@@ -70,131 +50,37 @@ namespace RuKiSo.ViewModels
             DeleteTransactionCommand = new RelayCommand<TransactionResponse>(DeleteTransaction);
         }
 
-        private async void EditTransaction()
+        public TransactionResponse SelectedTransaction
         {
-            if (SelectedTransaction != null)
+            get => selectedTransaction;
+            set
             {
-                TransactionRequest transaction = new()
-                {
-                    ProductId = SelectedTransaction.ProductId,
-                    IngredientId = SelectedTransaction.IngredientId,
-                    TranDate = SelectedTransaction.TranDate,
-                    TranType = SelectedTransaction.TranType,
-                    Value = SelectedTransaction.Value,
-                    Quantity = SelectedTransaction.Quantity
-                };
-                try
-                {
-                    var response = await transactionService.UpdateAsync(SelectedTransaction.Id, transaction);
-                    if (response != null)
-                    {
-                        var index = Transactions.IndexOf(SelectedTransaction);
-                        if (index >= 0)
-                        {
-                            IsPopupOpen = false;
-                            Transactions[index] = response;
-                            await LoadProducts();
-                            await LoadIngredients();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    HandleException("Error updating transaction", ex);
-                }
+                selectedTransaction = value;
+                OnPropertyChanged(nameof(SelectedTransaction));
             }
-            else return;
         }
 
-        private void OpenEditTransaction(TransactionResponse? transaction)
+        public bool IsPopupOpen
         {
-            if (transaction != null)
+            get => isPopupOpen;
+            set
             {
-                SelectedTransaction = transaction;
-                IsPopupOpen = true;
+                isPopupOpen = value;
+                OnPropertyChanged(nameof(IsPopupOpen));
             }
-            else return;
-        }
-        private async void AddSellTransaction(TransactionProductDTO? product)
-        {
-            if (product != null)
-            {
-                var newTransaction = new TransactionRequest
-                {
-                    TranType = true,
-                    Quantity = product.UsedQuantity,
-                    Value = product.UsedQuantity * product.Price,
-                    TranDate = DateTime.Now,
-                    ProductId = product.Id,
-                };
-                try
-                {
-                    var response = await transactionService.CreateAsync(newTransaction);
-                    if (response != null)
-                    {
-                        Transactions.Add(response);
-                        await LoadProducts();
-                        await LoadIngredients();
-                        product.UsedQuantity = 0;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    HandleException("Error creating transaction", ex);
-                }
-            }
-            else return;
         }
 
-        private async void AddPurchaseTransaction(TransactionIngredientDTO? ingredient)
-        {
-            if (ingredient != null)
-            {
-                var newTransaction = new TransactionRequest
-                {
-                    TranType = false,
-                    Quantity = ingredient.UsedQuantity,
-                    Value = ingredient.UsedQuantity * ingredient.PurchasePrice,
-                    TranDate = DateTime.Now,
-                    IngredientId = ingredient.Id,
-                };
-                try
-                {
-                    var response = await transactionService.CreateAsync(newTransaction);
-                    if (response != null)
-                    {
-                        Transactions.Add(response);
-                        await LoadProducts();
-                        await LoadIngredients();
-                        ingredient.UsedQuantity = 0;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    HandleException("Error creating transaction", ex);
-                }
-            }
-            else return;
-        }
+        public ICommand EditTransactionCommand { get; set; }
+        public ICommand OpenEditTransactionPopupCommand { get; set; }
+        public ICommand AddPurchaseTransactionCommand { get; set; }
+        public ICommand AddSellTransactionCommand { get; set; }
+        public ICommand DeleteTransactionCommand { get; set; }
 
-        private async void DeleteTransaction(TransactionResponse? transaction)
-        {
-            if(transaction == null || !Transactions.Contains(transaction)) return;
-            try
-            {
-                bool isDeleted = await transactionService.DeleteAsync(transaction.Id);
-                if (isDeleted)
-                {
-                    Transactions.Remove(transaction);
-                    await LoadProducts();
-                    await LoadIngredients();
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException("Error deleting transaction", ex);
-            }
-        }
+        public ObservableCollection<TransactionProductDTO> Products { get; set; }
+        public ObservableCollection<TransactionIngredientDTO> Ingredients { get; set; }
+        public ObservableCollection<TransactionResponse> Transactions { get; set; }
+        public BatchReminderViewModel ReminderViewModel { get; }
+
         protected override async Task LoadDataAsync()
         {
             try
@@ -207,7 +93,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error loading dashboard data", ex);
+                HandleException(ErrorMessages.LOADING_DASHBOARD, ex);
             }
         }
 
@@ -215,12 +101,11 @@ namespace RuKiSo.ViewModels
         {
             try
             {
-                var response = await transactionService.GetAllAsync();
+                var response = await _transactionService.GetAllAsync();
                 if (response?.Any() == true)
                 {
-                    var orderedResponse = response.OrderByDescending(t => t.TranDate);
                     Transactions.Clear();
-                    foreach (var item in orderedResponse)
+                    foreach (var item in response.OrderByDescending(t => t.TranDate))
                     {
                         Transactions.Add(item);
                     }
@@ -228,7 +113,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving transactions", ex);
+                HandleException(ErrorMessages.LOADING_TRANSACTIONS, ex);
             }
         }
 
@@ -236,12 +121,11 @@ namespace RuKiSo.ViewModels
         {
             try
             {
-                var response = await productService.GetAllAsync();
+                var response = await _productService.GetAllAsync();
                 if (response?.Any() == true)
                 {
-                    var orderedResponse = response.OrderByDescending(p => p.Quantity);
                     Products.Clear();
-                    foreach (var item in orderedResponse)
+                    foreach (var item in response.OrderByDescending(p => p.Quantity))
                     {
                         Products.Add(item.ToTransactionProductDTO());
                     }
@@ -249,7 +133,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving products", ex);
+                HandleException(ErrorMessages.LOADING_PRODUCTS, ex);
             }
         }
 
@@ -257,12 +141,11 @@ namespace RuKiSo.ViewModels
         {
             try
             {
-                var response = await ingredientService.GetAllAsync();
+                var response = await _ingredientService.GetAllAsync();
                 if (response?.Any() == true)
                 {
-                    var orderedRespone = response.OrderBy(i => i.Quantity);
                     Ingredients.Clear();
-                    foreach (var item in orderedRespone)
+                    foreach (var item in response.OrderBy(i => i.Quantity))
                     {
                         Ingredients.Add(item.ToTransactionIngredientDTO());
                     }
@@ -270,7 +153,136 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving ingredients", ex);
+                HandleException(ErrorMessages.LOADING_INGREDIENTS, ex);
+            }
+        }
+
+        private async void EditTransaction()
+        {
+            if (SelectedTransaction == null) return;
+
+            try
+            {
+                var request = CreateTransactionRequest(SelectedTransaction);
+                var updatedTransaction = await _transactionService.UpdateAsync(SelectedTransaction.Id, request);
+
+                if (updatedTransaction != null)
+                {
+                    UpdateTransactionInCollection(updatedTransaction);
+                    IsPopupOpen = false;
+                    await Task.WhenAll(LoadProducts(), LoadIngredients());
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.UPDATING_TRANSACTION, ex);
+            }
+        }
+
+        private TransactionRequest CreateTransactionRequest(TransactionResponse transaction)
+        {
+            return new TransactionRequest
+            {
+                ProductId = transaction.ProductId,
+                IngredientId = transaction.IngredientId,
+                TranDate = transaction.TranDate,
+                TranType = transaction.TranType,
+                Value = transaction.Value,
+                Quantity = transaction.Quantity
+            };
+        }
+
+        private void OpenEditTransaction(TransactionResponse? transaction)
+        {
+            if (transaction == null) return;
+
+            SelectedTransaction = transaction;
+            IsPopupOpen = true;
+        }
+
+        private async void AddSellTransaction(TransactionProductDTO? product)
+        {
+            if (product == null) return;
+
+            try
+            {
+                var request = new TransactionRequest
+                {
+                    TranType = true,
+                    Quantity = product.UsedQuantity,
+                    Value = product.UsedQuantity * product.Price,
+                    TranDate = DateTime.Now,
+                    ProductId = product.Id,
+                };
+
+                var response = await _transactionService.CreateAsync(request);
+                if (response != null)
+                {
+                    Transactions.Add(response);
+                    await Task.WhenAll(LoadProducts(), LoadIngredients());
+                    product.UsedQuantity = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.CREATING_TRANSACTION, ex);
+            }
+        }
+
+        private async void AddPurchaseTransaction(TransactionIngredientDTO? ingredient)
+        {
+            if (ingredient == null) return;
+
+            try
+            {
+                var request = new TransactionRequest
+                {
+                    TranType = false,
+                    Quantity = ingredient.UsedQuantity,
+                    Value = ingredient.UsedQuantity * ingredient.PurchasePrice,
+                    TranDate = DateTime.Now,
+                    IngredientId = ingredient.Id,
+                };
+
+                var response = await _transactionService.CreateAsync(request);
+                if (response != null)
+                {
+                    Transactions.Add(response);
+                    await Task.WhenAll(LoadProducts(), LoadIngredients());
+                    ingredient.UsedQuantity = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.CREATING_TRANSACTION, ex);
+            }
+        }
+
+        private async void DeleteTransaction(TransactionResponse? transaction)
+        {
+            if (transaction == null || !Transactions.Contains(transaction)) return;
+
+            try
+            {
+                var isDeleted = await _transactionService.DeleteAsync(transaction.Id);
+                if (isDeleted)
+                {
+                    Transactions.Remove(transaction);
+                    await Task.WhenAll(LoadProducts(), LoadIngredients());
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.DELETING_TRANSACTION, ex);
+            }
+        }
+
+        private void UpdateTransactionInCollection(TransactionResponse updatedTransaction)
+        {
+            var index = Transactions.IndexOf(SelectedTransaction);
+            if (index != -1)
+            {
+                Transactions[index] = updatedTransaction;
             }
         }
     }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="RuKiSo.UI.Views.ErrorPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:ui="clr-namespace:RuKiSo.UI"
+    Color="Transparent">
+    <Border
+        Margin="20"
+        Padding="20"
+        BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
+        StrokeShape="RoundRectangle 10"
+        StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
+        VerticalOptions="Center">
+        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="15">
+            <Label
+                Grid.Row="0"
+                FontAttributes="Bold"
+                FontSize="{x:Static ui:AppDimens.FontSize20}"
+                Text="Có lỗi xảy ra"
+                TextColor="Red" />
+            <Label
+                Grid.Row="1"
+                Text="{Binding ErrorMessage}"
+                TextColor="Black" />
+        </Grid>
+    </Border>
+</toolkit:Popup>

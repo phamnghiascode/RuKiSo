@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -23,7 +24,9 @@ namespace RuKiSo.ViewModels
 
         public ObservableCollection<ProductRespone> Products { get; } = new();
 
-        public ProductViewModel(IGenericService<ProductRespone, ProductRequest> productService, BatchReminderViewModel reminderViewModel)
+        public ProductViewModel(IGenericService<ProductRespone, ProductRequest> productService, 
+                                BatchReminderViewModel reminderViewModel,
+                                IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
             this.productService = productService;
             ReminderViewModel = reminderViewModel;

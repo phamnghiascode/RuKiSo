@@ -1,4 +1,5 @@
 ﻿using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 
@@ -60,7 +61,8 @@ namespace RuKiSo.ViewModels
             IGenericService<IngredientRespone, IngredientRequest> ingredientService,
             IGenericService<TransactionResponse, TransactionRequest> transactionService,
             IGenericService<BatchResponse, BatchRequest> batchService,
-            BatchReminderViewModel reminderViewModel)
+            BatchReminderViewModel reminderViewModel,
+            IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
             this.productService = productService;
             this.ingredientService = ingredientService;
@@ -221,8 +223,8 @@ namespace RuKiSo.ViewModels
                     .Select(g => new ProfitDTO
                     {
                         Date = g.Key,
-                        Profit = g.Where(t => t.TranType) // Chỉ lấy giao dịch bán hàng
-                                 .Sum(t => t.Value * 0.20) // Tính 20% lợi nhuận
+                        Profit = g.Where(t => t.TranType) 
+                                 .Sum(t => t.Value * 0.20) 
                     })
                     .OrderBy(x => x.Date)
                     .Take(10)

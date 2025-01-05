@@ -168,6 +168,9 @@
 	  <MauiXaml Update="UI\Converters\CustomConverters.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="UI\Views\ErrorPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UI\Views\Header.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

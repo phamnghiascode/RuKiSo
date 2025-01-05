@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
+using RuKiSo.Features.Services;
+using RuKiSo.Resources.Text;
 using RuKiSo.Utils;
 using RuKiSo.Utils.MVVM;
 using RuKiSoBackEnd.Models.DTOs;
@@ -10,6 +12,10 @@ namespace RuKiSo.ViewModels
 {
     public partial class BatchViewModel : BaseViewModel
     {
+        private readonly IGenericService<ProductRespone, ProductRequest> _productService;
+        private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
+        private readonly IGenericService<BatchResponse, BatchRequest> _batchService;
+
         private BatchResponse selectedBatch;
         private ProductRespone? selectedProduct;
         private bool isEditCookPopupOpen;
@@ -19,27 +25,32 @@ namespace RuKiSo.ViewModels
         private DateTime startDate = DateTime.Now;
         private DateTime estimateEndDate = DateTime.Now;
 
-        private readonly IGenericService<ProductRespone, ProductRequest> productService;
-        private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
-        private readonly IGenericService<BatchResponse, BatchRequest> batchService;
-        public BatchReminderViewModel ReminderViewModel { get; }
-
         public BatchViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
             IGenericService<IngredientRespone, IngredientRequest> ingredientService,
             IGenericService<BatchResponse, BatchRequest> batchService,
-            BatchReminderViewModel reminderViewModel)
+            BatchReminderViewModel reminderViewModel,
+            IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
-            this.productService = productService;
-            this.ingredientService = ingredientService;
-            this.batchService = batchService;
+            _productService = productService;
+            _ingredientService = ingredientService;
+            _batchService = batchService;
             ReminderViewModel = reminderViewModel;
 
+            InitializeCollections();
+            InitializeCommands();
+        }
+
+        private void InitializeCollections()
+        {
             Batches = new();
             Ingredients = new();
             AllBatches = new();
             Products = new();
+        }
 
+        private void InitializeCommands()
+        {
             ResetCommand = new RelayCommand(Reset);
             EditCookBatchCommand = new RelayCommand<BatchResponse>(EditCookBatch);
             SaveBatchCommand = new RelayCommand(SaveBatch);
@@ -127,16 +138,17 @@ namespace RuKiSo.ViewModels
             }
         }
 
-        public ICommand AddBatchCommand { get; }
-        public ICommand EditCookBatchCommand { get; }
-        public ICommand DeleteBatchCommand { get; }
-        public ICommand SaveBatchCommand { get; }
-        public ICommand ResetCommand { get; }
+        public ICommand AddBatchCommand { get; set; }
+        public ICommand EditCookBatchCommand { get; set; }
+        public ICommand DeleteBatchCommand { get; set; }
+        public ICommand SaveBatchCommand { get; set; }
+        public ICommand ResetCommand { get; set; }
 
-        public ObservableCollection<BatchResponse> Batches { get; }
-        public ObservableCollection<BatchIngredientDTO> Ingredients { get; }
-        public ObservableCollection<BatchResponse> AllBatches { get; }
-        public ObservableCollection<ProductRespone> Products { get; }
+        public ObservableCollection<BatchResponse> Batches { get; set; }
+        public ObservableCollection<BatchIngredientDTO> Ingredients { get; set; }
+        public ObservableCollection<BatchResponse> AllBatches { get; set;}
+        public ObservableCollection<ProductRespone> Products { get; set; }
+        public BatchReminderViewModel ReminderViewModel { get; set; }
 
         protected override async Task LoadDataAsync()
         {
@@ -150,7 +162,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error loading dashboard data", ex);
+                HandleException(ErrorMessages.LOADING_DASHBOARD, ex);
             }
         }
 
@@ -158,7 +170,7 @@ namespace RuKiSo.ViewModels
         {
             try
             {
-                var response = await productService.GetAllAsync();
+                var response = await _productService.GetAllAsync();
                 if (response != null)
                 {
                     Products.Clear();
@@ -170,7 +182,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error loading products", ex);
+                HandleException(ErrorMessages.LOADING_PRODUCTS, ex);
             }
         }
 
@@ -178,7 +190,7 @@ namespace RuKiSo.ViewModels
         {
             try
             {
-                var response = await ingredientService.GetAllAsync();
+                var response = await _ingredientService.GetAllAsync();
                 if (response != null)
                 {
                     Ingredients.Clear();
@@ -190,7 +202,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error loading ingredients", ex);
+                HandleException(ErrorMessages.LOADING_INGREDIENTS, ex);
             }
         }
 
@@ -198,7 +210,7 @@ namespace RuKiSo.ViewModels
         {
             try
             {
-                var response = await batchService.GetAllAsync();
+                var response = await _batchService.GetAllAsync();
                 if (response != null)
                 {
                     AllBatches.Clear();
@@ -211,7 +223,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error loading batches", ex);
+                HandleException(ErrorMessages.LOADING_BATCHES, ex);
             }
         }
 
@@ -232,53 +244,50 @@ namespace RuKiSo.ViewModels
         {
             if (SelectedBatch == null) return;
 
-            var request = new BatchRequest
-            {
-                ProductId = SelectedBatch.Product?.Id ?? 0,
-                StartDate = SelectedBatch.StartDate,
-                EstimateEndDate = SelectedBatch.EstimateEndDate,
-                Yield = SelectedBatch.Yield,
-                BatchIngredients = SelectedBatch.Ingredients.Select(i => new BatchIngredientAPIRequest
-                {
-                    IngredientId = i.Id,
-                    Quantity = (int)i.UsedQuantity
-                }).ToList()
-            };
-
             try
             {
-                var updatedBatch = await batchService.UpdateAsync(SelectedBatch.Id, request);
+                var request = CreateBatchRequest(SelectedBatch);
+                var updatedBatch = await _batchService.UpdateAsync(SelectedBatch.Id, request);
+
                 if (updatedBatch != null)
                 {
-                    var index = AllBatches.IndexOf(SelectedBatch);
-                    if (index != -1)
-                    {
-                        if (updatedBatch.Yield > 0)
-                        {
-                            // Nếu batch đã hoàn thành, xóa khỏi AllBatches
-                            AllBatches.RemoveAt(index);
-                        }
-                        else
-                        {
-                            // Nếu chưa hoàn thành, cập nhật trong AllBatches
-                            AllBatches[index] = updatedBatch;
-                        }
-                    }
-                    UpdateBatches();
+                    UpdateBatchInCollection(updatedBatch);
                     IsEditCookPopupOpen = false;
                 }
             }
             catch (Exception ex)
             {
-                HandleException("Error updating batch", ex);
+                HandleException(ErrorMessages.UPDATING_BATCH, ex);
             }
+        }
+
+        private BatchRequest CreateBatchRequest(BatchResponse batch)
+        {
+            return new BatchRequest
+            {
+                ProductId = batch.Product?.Id ?? 0,
+                StartDate = batch.StartDate,
+                EstimateEndDate = batch.EstimateEndDate,
+                Yield = batch.Yield,
+                BatchIngredients = batch.Ingredients.Select(i => new BatchIngredientAPIRequest
+                {
+                    IngredientId = i.Id,
+                    Quantity = (int)i.UsedQuantity
+                }).ToList()
+            };
         }
 
         private void EditCookBatch(BatchResponse batch)
         {
             if (batch == null) return;
 
-            SelectedBatch = new BatchResponse
+            SelectedBatch = CreateEditBatchCopy(batch);
+            IsEditCookPopupOpen = true;
+        }
+
+        private BatchResponse CreateEditBatchCopy(BatchResponse batch)
+        {
+            return new BatchResponse
             {
                 Id = batch.Id,
                 StartDate = batch.StartDate,
@@ -295,8 +304,6 @@ namespace RuKiSo.ViewModels
                     IsSelected = true
                 }).ToList()
             };
-
-            IsEditCookPopupOpen = true;
         }
 
         private async void DeleteBatch(BatchResponse batch)
@@ -305,7 +312,7 @@ namespace RuKiSo.ViewModels
 
             try
             {
-                var success = await batchService.DeleteAsync(batch.Id);
+                var success = await _batchService.DeleteAsync(batch.Id);
                 if (success)
                 {
                     AllBatches.Remove(batch);
@@ -314,13 +321,8 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error deleting batch", ex);
+                HandleException(ErrorMessages.DELETING_BATCH, ex);
             }
-        }
-
-        private List<BatchIngredientDTO> GetSelectedIngredients()
-        {
-            return Ingredients.Where(i => i.IsSelected && i.UsedQuantity > 0).ToList();
         }
 
         private async void AddBatch()
@@ -328,21 +330,21 @@ namespace RuKiSo.ViewModels
             var selectedIngredients = GetSelectedIngredients();
             if (!selectedIngredients.Any() || SelectedProduct == null) return;
 
-            var request = new BatchRequest
-            {
-                ProductId = SelectedProduct.Id,
-                StartDate = StartDate,
-                EstimateEndDate = EstimateEndDate,
-                BatchIngredients = selectedIngredients.Select(i => new BatchIngredientAPIRequest
-                {
-                    IngredientId = i.Id,
-                    Quantity = (int)i.UsedQuantity
-                }).ToList()
-            };
-
             try
             {
-                var newBatch = await batchService.CreateAsync(request);
+                var request = new BatchRequest
+                {
+                    ProductId = SelectedProduct.Id,
+                    StartDate = StartDate,
+                    EstimateEndDate = EstimateEndDate,
+                    BatchIngredients = selectedIngredients.Select(i => new BatchIngredientAPIRequest
+                    {
+                        IngredientId = i.Id,
+                        Quantity = (int)i.UsedQuantity
+                    }).ToList()
+                };
+
+                var newBatch = await _batchService.CreateAsync(request);
                 if (newBatch != null)
                 {
                     AllBatches.Add(newBatch);
@@ -352,8 +354,30 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error creating batch", ex);
+                HandleException(ErrorMessages.CREATING_BATCH, ex);
             }
+        }
+
+        private List<BatchIngredientDTO> GetSelectedIngredients()
+        {
+            return Ingredients.Where(i => i.IsSelected && i.UsedQuantity > 0).ToList();
+        }
+
+        private void UpdateBatchInCollection(BatchResponse updatedBatch)
+        {
+            var index = AllBatches.IndexOf(SelectedBatch);
+            if (index != -1)
+            {
+                if (updatedBatch.Yield > 0)
+                {
+                    AllBatches.RemoveAt(index);
+                }
+                else
+                {
+                    AllBatches[index] = updatedBatch;
+                }
+            }
+            UpdateBatches();
         }
 
         private void UpdateBatches()
@@ -375,14 +399,7 @@ namespace RuKiSo.ViewModels
 
         private double CalculateProjectedYield()
         {
-            // Implementation of yield calculation logic
             return Batches.Count * 12;
-        }
-
-        private void HandleException(string message, Exception ex)
-        {
-            // Implement your error handling logic here
-            Console.WriteLine($"{message}: {ex.Message}");
         }
     }
 }

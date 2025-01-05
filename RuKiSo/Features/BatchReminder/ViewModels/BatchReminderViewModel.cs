@@ -26,7 +26,8 @@ namespace RuKiSo.ViewModels
         public ICommand CloseCommand { get; }
         public ICommand OpenCommand { get; }
 
-        public BatchReminderViewModel(IReminderService reminderService)
+        public BatchReminderViewModel(IReminderService reminderService,
+                                    IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
             _reminderService = reminderService;
             Batches = new ObservableCollection<BatchResponse>();
@@ -52,7 +53,6 @@ namespace RuKiSo.ViewModels
                 {
                     HasNotifications = Batches.Any();
                 });
-                //HasNotifications = Batches.Any();
             }
             catch (Exception ex)
             {
