@@ -1,200 +1,229 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Features.Services;
+using RuKiSo.Resources.Text;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
 {
-    public class IngredientViewModel : BaseViewModel
+    public partial class IngredientViewModel : BaseViewModel
     {
+        private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
+
         private IngredientRespone? selectedIngredient;
         private int totalIngredient;
         private double totalValue;
         private double estimateOutput;
-        private string name;
-        private string unit;
+        private string name = string.Empty;
+        private string unit = string.Empty;
         private int quantity;
         private double purchasePrice;
         private bool isQuantityEnabled;
         private bool isPurchasePriceEnabled;
-        private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
 
-        public ICommand UpSertIngredientCommand { get; set; }
-        public ICommand OpenClosePopupCommand { get; set; }
-        public ICommand DeleteIngredientCommand { get; set; }
-        public ICommand EditIngredientCommand { get; set; }
-        public ICommand QuantityFilterCommand { get; set; }
-        public ICommand PurchasePriceFilterCommand { get; set; }
-        public ICommand ResetCommand { get; set; }
+        public IngredientViewModel(
+            IGenericService<IngredientRespone, IngredientRequest> ingredientService,
+            BatchReminderViewModel reminderViewModel,
+            IErrorHandlingService errorHandlingService) : base(errorHandlingService)
+        {
+            _ingredientService = ingredientService;
+            ReminderViewModel = reminderViewModel;
+
+            InitializeCommands();
+            InitializeCollections();
+        }
+
+        #region Properties
+
+        public ObservableCollection<IngredientRespone> Ingredients { get; private set; }
+        public BatchReminderViewModel ReminderViewModel { get; }
+
+        public IngredientRespone? SelectedIngredient
+        {
+            get => selectedIngredient;
+            set
+            {
+                selectedIngredient = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool IsQuantityEnabled
         {
-            get { return isQuantityEnabled; }
+            get => isQuantityEnabled;
             set
             {
                 isQuantityEnabled = value;
-                OnPropertyChanged(nameof(IsQuantityEnabled));
+                OnPropertyChanged();
             }
         }
 
         public bool IsPurchasePriceEnabled
         {
-            get { return isPurchasePriceEnabled; }
+            get => isPurchasePriceEnabled;
             set
             {
                 isPurchasePriceEnabled = value;
-                OnPropertyChanged(nameof(IsPurchasePriceEnabled));
+                OnPropertyChanged();
             }
         }
-        public IngredientRespone? SelectedIngredient
-        {
-            get { return selectedIngredient; }
-            set
-            {
-                selectedIngredient = value;
-                OnPropertyChanged(nameof(SelectedIngredient));
-            }
-        }
+
         public string Name
         {
-            get { return name; }
+            get => name;
             set
             {
                 name = value;
-                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged();
             }
         }
 
         public string Unit
         {
-            get { return unit; }
+            get => unit;
             set
             {
                 unit = value;
-                OnPropertyChanged(nameof(Unit));
+                OnPropertyChanged();
             }
         }
 
         public double PurchasePrice
         {
-            get { return purchasePrice; }
+            get => purchasePrice;
             set
             {
                 purchasePrice = value;
-                OnPropertyChanged(nameof(PurchasePrice));
+                OnPropertyChanged();
             }
         }
 
         public int Quantity
         {
-            get { return quantity; }
+            get => quantity;
             set
             {
                 quantity = value;
-                OnPropertyChanged(nameof(Quantity));
+                OnPropertyChanged();
             }
         }
+
         public int TotalIngredient
         {
-            get { return totalIngredient; }
+            get => totalIngredient;
             set
             {
                 totalIngredient = value;
-                OnPropertyChanged(nameof(TotalIngredient));
+                OnPropertyChanged();
             }
         }
 
         public double TotalValue
         {
-            get { return totalValue; }
+            get => totalValue;
             set
             {
                 totalValue = value;
-                OnPropertyChanged(nameof(TotalValue));
+                OnPropertyChanged();
             }
         }
 
         public double EstimatedOutput
         {
-            get { return estimateOutput; }
+            get => estimateOutput;
             set
             {
                 estimateOutput = value;
-                OnPropertyChanged(nameof(EstimatedOutput));
+                OnPropertyChanged();
             }
         }
-        public ObservableCollection<IngredientRespone> Ingredients { get; set; } = new();
-        public BatchReminderViewModel ReminderViewModel { get; }
-        public IngredientViewModel(IGenericService<IngredientRespone, IngredientRequest> ingredientService, 
-                                    BatchReminderViewModel reminderViewModel,
-                                    IErrorHandlingService errorHandlingService) : base(errorHandlingService)
-        {
-            this.ingredientService = ingredientService;
-            ReminderViewModel = reminderViewModel;
 
+        #endregion
+
+        #region Commands
+
+        public ICommand UpSertIngredientCommand { get; private set; }
+        public ICommand DeleteIngredientCommand { get; private set; }
+        public ICommand EditIngredientCommand { get; private set; }
+        public ICommand QuantityFilterCommand { get; private set; }
+        public ICommand PurchasePriceFilterCommand { get; private set; }
+        public ICommand ResetCommand { get; private set; }
+
+        private void InitializeCommands()
+        {
             ResetCommand = new RelayCommand(Reset);
             EditIngredientCommand = new RelayCommand<IngredientRespone>(EditIngredient);
             PurchasePriceFilterCommand = new RelayCommand(FilterByPurchasePrice);
-            QuantityFilterCommand = new RelayCommand(FilterByquantity);
+            QuantityFilterCommand = new RelayCommand(FilterByQuantity);
             DeleteIngredientCommand = new RelayCommand<IngredientRespone>(DeleteIngredient);
             UpSertIngredientCommand = new RelayCommand(UpSertIngredient);
         }
 
+        #endregion
+
+        #region Initialization
+
+        private void InitializeCollections()
+        {
+            Ingredients = new ObservableCollection<IngredientRespone>();
+        }
+
+        protected override async Task LoadDataAsync()
+        {
+            try
+            {
+                var response = await _ingredientService.GetAllAsync();
+                if (response != null)
+                {
+                    Ingredients.Clear();
+                    foreach (var item in response)
+                    {
+                        Ingredients.Add(item);
+                    }
+                    UpdateCardsInfo();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.LOADING_INGREDIENTS, ex);
+            }
+        }
+
+        #endregion
+
+        #region Command Handlers
+
         private void EditIngredient(IngredientRespone? ingredient)
         {
-            if (ingredient != null)
-            {
-                IsPurchasePriceEnabled = true;
-                IsQuantityEnabled = true;
-                SelectedIngredient = ingredient;
-                Name = SelectedIngredient.Name;
-                Unit = SelectedIngredient.Unit;
-                PurchasePrice = SelectedIngredient.PurchasePrice;
-                Quantity = SelectedIngredient.Quantity;
-            }
-            else return;
-        }
+            if (ingredient == null) return;
 
-        private void UpdateFilteredIngredients(IEnumerable<IngredientRespone> filteredIngredients)
-        {
-            Ingredients.Clear();
-            foreach (var item in filteredIngredients)
-            {
-                Ingredients.Add(item);
-            }
-        }
-        private void FilterByquantity()
-        {
-            var filteredIngredients = Ingredients.OrderByDescending(p => p.Quantity).ToList();
-            UpdateFilteredIngredients(filteredIngredients);
-        }
-
-        private void FilterByPurchasePrice()
-        {
-            var filteredIngredients = Ingredients.OrderByDescending(p => p.PurchasePrice).ToList();
-            UpdateFilteredIngredients(filteredIngredients);
+            IsPurchasePriceEnabled = true;
+            IsQuantityEnabled = true;
+            SelectedIngredient = ingredient;
+            Name = SelectedIngredient.Name;
+            Unit = SelectedIngredient.Unit;
+            PurchasePrice = SelectedIngredient.PurchasePrice;
+            Quantity = SelectedIngredient.Quantity;
         }
 
         private async void DeleteIngredient(IngredientRespone? ingredient)
         {
-            if (ingredient != null && Ingredients.Contains(ingredient))
+            if (ingredient == null || !Ingredients.Contains(ingredient)) return;
+
+            try
             {
-                try
+                bool isDeleted = await _ingredientService.DeleteAsync(ingredient.Id);
+                if (isDeleted)
                 {
-                    bool isDeleted = await ingredientService.DeleteAsync(ingredient.Id);
-                    if (isDeleted)
-                    {
-                        Ingredients.Remove(ingredient);
-                        UpdateCardsInfo();
-                    }
-                    else return;
+                    Ingredients.Remove(ingredient);
+                    UpdateCardsInfo();
                 }
-                catch (Exception ex)
-                {
-                    HandleException("Error retrieving data", ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ErrorMessages.DELETING_INGREDIENT, ex);
             }
         }
 
@@ -212,37 +241,35 @@ namespace RuKiSo.ViewModels
 
         private async void CreateIngredient()
         {
-            IngredientRequest ingredient = new()
+            var ingredient = new IngredientRequest
             {
                 Name = Name,
                 Unit = Unit,
                 PurchasePrice = PurchasePrice,
                 Quantity = Quantity,
             };
+
             try
             {
-                IngredientRespone? respone = await ingredientService.CreateAsync(ingredient);
-                if (respone != null)
+                var response = await _ingredientService.CreateAsync(ingredient);
+                if (response != null)
                 {
-                    Ingredients.Add(respone);
+                    Ingredients.Add(response);
                     UpdateCardsInfo();
                     Reset();
                 }
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving data", ex);
+                HandleException(ErrorMessages.CREATING_INGREDIENT, ex);
             }
         }
 
         private async void UpdateIngredient()
         {
-            SelectedIngredient.Name = Name;
-            SelectedIngredient.Unit = Unit;
-            SelectedIngredient.PurchasePrice = PurchasePrice;
-            SelectedIngredient.Quantity = Quantity;
+            if (SelectedIngredient == null) return;
 
-            IngredientRequest updateIngredient = new IngredientRequest
+            var updateIngredient = new IngredientRequest
             {
                 Name = Name,
                 Unit = Unit,
@@ -252,42 +279,53 @@ namespace RuKiSo.ViewModels
 
             try
             {
-                IngredientRespone? respone = await ingredientService.UpdateAsync(SelectedIngredient.Id, updateIngredient);
-                if (respone != null)
+                var response = await _ingredientService.UpdateAsync(SelectedIngredient.Id, updateIngredient);
+                if (response != null)
                 {
                     var index = Ingredients.IndexOf(SelectedIngredient);
-                    if (index >= 0) { Ingredients[index] = respone; }
+                    if (index >= 0)
+                    {
+                        Ingredients[index] = response;
+                    }
                     UpdateCardsInfo();
-                    SelectedIngredient = null;
                     Reset();
                 }
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving data", ex);
+                HandleException(ErrorMessages.UPDATING_INGREDIENT, ex);
             }
         }
 
-        protected override async Task LoadDataAsync()
+        #endregion
+
+        #region Filtering
+
+        private void FilterByQuantity()
         {
-            try
+            var filteredIngredients = Ingredients.OrderByDescending(p => p.Quantity).ToList();
+            UpdateFilteredIngredients(filteredIngredients);
+        }
+
+        private void FilterByPurchasePrice()
+        {
+            var filteredIngredients = Ingredients.OrderByDescending(p => p.PurchasePrice).ToList();
+            UpdateFilteredIngredients(filteredIngredients);
+        }
+
+        private void UpdateFilteredIngredients(IEnumerable<IngredientRespone> filteredIngredients)
+        {
+            Ingredients.Clear();
+            foreach (var item in filteredIngredients)
             {
-                var respone = await ingredientService.GetAllAsync();
-                if (respone != null)
-                {
-                    Ingredients.Clear();
-                    foreach (var item in respone)
-                    {
-                        Ingredients.Add(item);
-                    }
-                    UpdateCardsInfo();
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleException("Error retrieving data", ex);
+                Ingredients.Add(item);
             }
         }
+
+        #endregion
+
+        #region Helpers
+
         private void UpdateCardsInfo()
         {
             TotalIngredient = Ingredients.Count;
@@ -305,5 +343,7 @@ namespace RuKiSo.ViewModels
             Quantity = 0;
             PurchasePrice = 0;
         }
+
+        #endregion
     }
 }

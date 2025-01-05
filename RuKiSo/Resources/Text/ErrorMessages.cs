@@ -5,6 +5,15 @@
         public const string LOADING_DASHBOARD = "Lỗi khi tải dữ liệu tổng quan";
         public const string LOADING_PRODUCTS = "Lỗi khi tải danh sách sản phẩm";
         public const string LOADING_INGREDIENTS = "Lỗi khi tải danh sách nguyên liệu";
+
+        public const string UPDATING_PRODUCT = "Lỗi khi cập nhật sản phẩm";
+        public const string DELETING_PRODUCT = "Lỗi khi xóa sản phẩm";
+        public const string CREATING_PRODUCT = "Lỗi khi tạo sản phẩm mới";
+
+        public const string UPDATING_INGREDIENT = "Lỗi khi cập nhật nguyên liệu";
+        public const string DELETING_INGREDIENT = "Lỗi khi xóa nguyên liệu";
+        public const string CREATING_INGREDIENT = "Lỗi khi tạo nguyên liệu mới";
+
         public const string LOADING_BATCHES = "Lỗi khi tải danh sách lô sản xuất";
         public const string UPDATING_BATCH = "Lỗi khi cập nhật lô sản xuất";
         public const string DELETING_BATCH = "Lỗi khi xóa lô sản xuất";

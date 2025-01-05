@@ -86,7 +86,7 @@
                                     WidthRequest="{x:Static ui:AppDimens.Height127}" />
                                 <Button
                                     Margin="24,0,0,0"
-                                    Command="{Binding UpSertProductCommand}"
+                                    Command="{Binding UpsertProductCommand}"
                                     HorizontalOptions="Center"
                                     Text="{Binding SelectedProduct, Converter={StaticResource UpSertButtonConverter}}"
                                     TextColor="{x:Static ui:AppColors.Black}"

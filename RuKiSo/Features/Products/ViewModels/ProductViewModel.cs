@@ -1,19 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using RuKiSo.Features.Models;
 using RuKiSo.Features.Services;
+using RuKiSo.Resources.Text;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace RuKiSo.ViewModels
 {
-    public class ProductViewModel : BaseViewModel
+    public partial class ProductViewModel : BaseViewModel
     {
-        private readonly IGenericService<ProductRespone, ProductRequest> productService;
-        public BatchReminderViewModel ReminderViewModel { get; }
+        private readonly IGenericService<ProductRespone, ProductRequest> _productService;
         private const double PercentProfit = 0.2;
 
-        private ProductRespone? selectedProduct;
+        private ProductRespone selectedProduct;
         private string name = string.Empty;
         private string description = string.Empty;
         private int quantity;
@@ -21,28 +21,45 @@ namespace RuKiSo.ViewModels
         private int totalProduct;
         private double totalValue;
         private double estimatedProfit;
+        private bool isPopupOpen;
 
-        public ObservableCollection<ProductRespone> Products { get; } = new();
-
-        public ProductViewModel(IGenericService<ProductRespone, ProductRequest> productService, 
-                                BatchReminderViewModel reminderViewModel,
-                                IErrorHandlingService errorHandlingService) : base(errorHandlingService)
+        public ProductViewModel(
+            IGenericService<ProductRespone, ProductRequest> productService,
+            BatchReminderViewModel reminderViewModel,
+            IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
-            this.productService = productService;
+            _productService = productService;
             ReminderViewModel = reminderViewModel;
+
+            InitializeCollections();
             InitializeCommands();
         }
 
-        public ProductRespone? SelectedProduct
+        private void InitializeCollections()
+        {
+            Products = new();
+        }
+
+        private void InitializeCommands()
+        {
+            ResetCommand = new RelayCommand(Reset);
+            UpsertProductCommand = new RelayCommand(UpsertProduct);
+            EditProductCommand = new RelayCommand<ProductRespone>(EditProduct);
+            DeleteProductCommand = new RelayCommand<ProductRespone>(DeleteProduct);
+            QuantityFilterCommand = new RelayCommand(SortByQuantity);
+            PriceFilterCommand = new RelayCommand(SortByPrice);
+        }
+
+        public ObservableCollection<ProductRespone> Products { get; set; }
+        public BatchReminderViewModel ReminderViewModel { get; }
+
+        public ProductRespone SelectedProduct
         {
             get => selectedProduct;
             set
             {
-                if (selectedProduct != value)
-                {
-                    selectedProduct = value;
-                    OnPropertyChanged();
-                }
+                selectedProduct = value;
+                OnPropertyChanged();
             }
         }
 
@@ -51,11 +68,8 @@ namespace RuKiSo.ViewModels
             get => name;
             set
             {
-                if (name != value)
-                {
-                    name = value;
-                    OnPropertyChanged();
-                }
+                name = value;
+                OnPropertyChanged();
             }
         }
 
@@ -64,11 +78,8 @@ namespace RuKiSo.ViewModels
             get => description;
             set
             {
-                if (description != value)
-                {
-                    description = value;
-                    OnPropertyChanged();
-                }
+                description = value;
+                OnPropertyChanged();
             }
         }
 
@@ -77,11 +88,8 @@ namespace RuKiSo.ViewModels
             get => quantity;
             set
             {
-                if (quantity != value)
-                {
-                    quantity = value;
-                    OnPropertyChanged();
-                }
+                quantity = value;
+                OnPropertyChanged();
             }
         }
 
@@ -90,11 +98,8 @@ namespace RuKiSo.ViewModels
             get => price;
             set
             {
-                if (price != value)
-                {
-                    price = value;
-                    OnPropertyChanged();
-                }
+                price = value;
+                OnPropertyChanged();
             }
         }
 
@@ -103,11 +108,8 @@ namespace RuKiSo.ViewModels
             get => totalProduct;
             set
             {
-                if (totalProduct != value)
-                {
-                    totalProduct = value;
-                    OnPropertyChanged();
-                }
+                totalProduct = value;
+                OnPropertyChanged();
             }
         }
 
@@ -116,11 +118,8 @@ namespace RuKiSo.ViewModels
             get => totalValue;
             set
             {
-                if (totalValue != value)
-                {
-                    totalValue = value;
-                    OnPropertyChanged();
-                }
+                totalValue = value;
+                OnPropertyChanged();
             }
         }
 
@@ -129,37 +128,34 @@ namespace RuKiSo.ViewModels
             get => estimatedProfit;
             set
             {
-                if (estimatedProfit != value)
-                {
-                    estimatedProfit = value;
-                    OnPropertyChanged();
-                }
+                estimatedProfit = value;
+                OnPropertyChanged();
             }
         }
 
-        public ICommand ResetCommand { get; private set; }
-        public ICommand UpSertProductCommand { get; private set; }
-        public ICommand EditProductCommand { get; private set; }
-        public ICommand DeleteProductCommand { get; private set; }
-        public ICommand QuantityFilterCommand { get; private set; }
-        public ICommand PriceFilterCommand { get; private set; }
-
-        private void InitializeCommands()
+        public bool IsPopupOpen
         {
-            ResetCommand = new RelayCommand(Reset);
-            UpSertProductCommand = new RelayCommand(UpSertProduct);
-            EditProductCommand = new RelayCommand<ProductRespone>(EditProduct);
-            DeleteProductCommand = new RelayCommand<ProductRespone>(DeleteProduct);
-            QuantityFilterCommand = new RelayCommand(OnQuantityFilter);
-            PriceFilterCommand = new RelayCommand(OnPriceFilter);
+            get => isPopupOpen;
+            set
+            {
+                isPopupOpen = value;
+                OnPropertyChanged();
+            }
         }
 
+        public ICommand ResetCommand { get; set; }
+        public ICommand UpsertProductCommand { get; set; }
+        public ICommand EditProductCommand { get; set; }
+        public ICommand DeleteProductCommand { get; set; }
+        public ICommand QuantityFilterCommand { get; private set; }
+        public ICommand PriceFilterCommand { get; set; }
+    
         protected override async Task LoadDataAsync()
         {
             try
             {
-                var response = await productService.GetAllAsync();
-                if (response != null)
+                var response = await _productService.GetAllAsync();
+                if (response?.Any() == true)
                 {
                     Products.Clear();
                     foreach (var item in response)
@@ -171,67 +167,51 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error retrieving data", ex);
+                HandleException(ErrorMessages.LOADING_PRODUCTS, ex);
             }
         }
 
-        private void UpSertProduct()
+        private async void UpsertProduct()
         {
             if (SelectedProduct != null)
             {
-                UpdateProduct();
+                await UpdateProduct();
             }
             else
             {
-                CreateProduct();
+                await CreateProduct();
             }
         }
 
-        private async void UpdateProduct()
+        private async Task UpdateProduct()
         {
             if (SelectedProduct == null) return;
 
-            var updateProduct = new ProductRequest
-            {
-                Name = Name,
-                Description = Description,
-                Price = Price,
-                Quantity = Quantity
-            };
-
             try
             {
-                var response = await productService.UpdateAsync(SelectedProduct.Id, updateProduct);
+                var request = CreateProductRequest();
+                var response = await _productService.UpdateAsync(SelectedProduct.Id, request);
+
                 if (response != null)
                 {
-                    var index = Products.IndexOf(SelectedProduct);
-                    if (index >= 0)
-                    {
-                        Products[index] = response;
-                    }
+                    UpdateProductInCollection(response);
                     UpdateCardsInfo();
                     Reset();
                 }
             }
             catch (Exception ex)
             {
-                HandleException("Error updating product", ex);
+                HandleException(ErrorMessages.UPDATING_PRODUCT, ex);
             }
         }
 
-        private async void CreateProduct()
+        private async Task CreateProduct()
         {
-            var product = new ProductRequest
-            {
-                Name = Name,
-                Description = Description,
-                Price = Price,
-                Quantity = Quantity,
-            };
-
             try
             {
-                var response = await productService.CreateAsync(product);
+                var request = CreateProductRequest();
+                var response = await _productService.CreateAsync(request);
+
                 if (response != null)
                 {
                     Products.Add(response);
@@ -241,7 +221,27 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error creating product", ex);
+                HandleException(ErrorMessages.CREATING_PRODUCT, ex);
+            }
+        }
+
+        private ProductRequest CreateProductRequest()
+        {
+            return new ProductRequest
+            {
+                Name = Name,
+                Description = Description,
+                Price = Price,
+                Quantity = Quantity
+            };
+        }
+
+        private void UpdateProductInCollection(ProductRespone updatedProduct)
+        {
+            var index = Products.IndexOf(SelectedProduct);
+            if (index != -1)
+            {
+                Products[index] = updatedProduct;
             }
         }
 
@@ -252,9 +252,10 @@ namespace RuKiSo.ViewModels
             Description = string.Empty;
             Quantity = 0;
             Price = 0;
+            IsPopupOpen = false;
         }
 
-        private void EditProduct(ProductRespone? product)
+        private void EditProduct(ProductRespone product)
         {
             if (product == null) return;
 
@@ -263,15 +264,16 @@ namespace RuKiSo.ViewModels
             Description = product.Description;
             Quantity = product.Quantity;
             Price = product.Price;
+            IsPopupOpen = true;
         }
 
-        private async void DeleteProduct(ProductRespone? product)
+        private async void DeleteProduct(ProductRespone product)
         {
             if (product == null || !Products.Contains(product)) return;
 
             try
             {
-                bool isDeleted = await productService.DeleteAsync(product.Id);
+                var isDeleted = await _productService.DeleteAsync(product.Id);
                 if (isDeleted)
                 {
                     Products.Remove(product);
@@ -280,7 +282,7 @@ namespace RuKiSo.ViewModels
             }
             catch (Exception ex)
             {
-                HandleException("Error deleting product", ex);
+                HandleException(ErrorMessages.DELETING_PRODUCT, ex);
             }
         }
 
@@ -291,22 +293,22 @@ namespace RuKiSo.ViewModels
             EstimatedProfit = Math.Floor(TotalValue * PercentProfit);
         }
 
-        private void OnQuantityFilter()
+        private void SortByQuantity()
         {
-            var filteredProducts = Products.OrderByDescending(p => p.Quantity).ToList();
-            UpdateProductList(filteredProducts);
+            var sortedProducts = Products.OrderByDescending(p => p.Quantity).ToList();
+            UpdateProductList(sortedProducts);
         }
 
-        private void OnPriceFilter()
+        private void SortByPrice()
         {
-            var filteredProducts = Products.OrderByDescending(p => p.Price).ToList();
-            UpdateProductList(filteredProducts);
+            var sortedProducts = Products.OrderByDescending(p => p.Price).ToList();
+            UpdateProductList(sortedProducts);
         }
 
-        private void UpdateProductList(IEnumerable<ProductRespone> filteredProducts)
+        private void UpdateProductList(IEnumerable<ProductRespone> sortedProducts)
         {
             Products.Clear();
-            foreach (var product in filteredProducts)
+            foreach (var product in sortedProducts)
             {
                 Products.Add(product);
             }

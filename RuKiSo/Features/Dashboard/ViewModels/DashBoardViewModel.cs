@@ -1,5 +1,6 @@
 ﻿using RuKiSo.Features.Models;
 using RuKiSo.Features.Services;
+using RuKiSo.Resources.Text;
 using RuKiSo.Utils.MVVM;
 using System.Collections.ObjectModel;
 
@@ -7,54 +8,15 @@ namespace RuKiSo.ViewModels
 {
     public partial class DashBoardViewModel : BaseViewModel
     {
-        private ObservableCollection<WeeklyHistoryDTO> _weeklyHistories;
-        public ObservableCollection<WeeklyHistoryDTO> WeeklyHistories
-        {
-            get => _weeklyHistories;
-            set
-            {
-                _weeklyHistories = value;
-                OnPropertyChanged(nameof(WeeklyHistories));
-            }
-        }
+        private readonly IGenericService<ProductRespone, ProductRequest> _productService;
+        private readonly IGenericService<IngredientRespone, IngredientRequest> _ingredientService;
+        private readonly IGenericService<TransactionResponse, TransactionRequest> _transactionService;
+        private readonly IGenericService<BatchResponse, BatchRequest> _batchService;
 
-        private ObservableCollection<TopSellerDTO> _topSellers;
-        public ObservableCollection<TopSellerDTO> TopSellers
-        {
-            get => _topSellers;
-            set
-            {
-                _topSellers = value;
-                OnPropertyChanged(nameof(TopSellers));
-            }
-        }
-
-        private ObservableCollection<MostUsedIngredient> _mostUsedIngredients;
-        public ObservableCollection<MostUsedIngredient> MostUsedIngredients
-        {
-            get => _mostUsedIngredients;
-            set
-            {
-                _mostUsedIngredients = value;
-                OnPropertyChanged(nameof(MostUsedIngredients));
-            }
-        }
-
-        private ObservableCollection<ProfitDTO> _monthlyProfit;
-        public ObservableCollection<ProfitDTO> MonthlyProfit
-        {
-            get => _monthlyProfit;
-            set
-            {
-                _monthlyProfit = value;
-                OnPropertyChanged(nameof(MonthlyProfit));
-            }
-        }
-        private readonly IGenericService<ProductRespone, ProductRequest> productService;
-        private readonly IGenericService<IngredientRespone, IngredientRequest> ingredientService;
-        private readonly IGenericService<TransactionResponse, TransactionRequest> transactionService;
-        private readonly IGenericService<BatchResponse, BatchRequest> batchService;
-        public BatchReminderViewModel ReminderViewModel { get; }
+        private ObservableCollection<WeeklyHistoryDTO> weeklyHistories;
+        private ObservableCollection<TopSellerDTO> topSellers;
+        private ObservableCollection<MostUsedIngredient> mostUsedIngredients;
+        private ObservableCollection<ProfitDTO> monthlyProfit;
 
         public DashBoardViewModel(
             IGenericService<ProductRespone, ProductRequest> productService,
@@ -64,40 +26,87 @@ namespace RuKiSo.ViewModels
             BatchReminderViewModel reminderViewModel,
             IErrorHandlingService errorHandlingService) : base(errorHandlingService)
         {
-            this.productService = productService;
-            this.ingredientService = ingredientService;
-            this.transactionService = transactionService;
-            this.batchService = batchService;
+            _productService = productService;
+            _ingredientService = ingredientService;
+            _transactionService = transactionService;
+            _batchService = batchService;
             ReminderViewModel = reminderViewModel;
 
-            // Initialize collections
-            WeeklyHistories = new ObservableCollection<WeeklyHistoryDTO>();
-            TopSellers = new ObservableCollection<TopSellerDTO>();
-            MostUsedIngredients = new ObservableCollection<MostUsedIngredient>();
-            MonthlyProfit = new ObservableCollection<ProfitDTO>();
+            InitializeCollections();
         }
+
+        private void InitializeCollections()
+        {
+            WeeklyHistories = new();
+            TopSellers = new();
+            MostUsedIngredients = new();
+            MonthlyProfit = new();
+        }
+
+        public ObservableCollection<WeeklyHistoryDTO> WeeklyHistories
+        {
+            get => weeklyHistories;
+            set
+            {
+                weeklyHistories = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<TopSellerDTO> TopSellers
+        {
+            get => topSellers;
+            set
+            {
+                topSellers = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<MostUsedIngredient> MostUsedIngredients
+        {
+            get => mostUsedIngredients;
+            set
+            {
+                mostUsedIngredients = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<ProfitDTO> MonthlyProfit
+        {
+            get => monthlyProfit;
+            set
+            {
+                monthlyProfit = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public BatchReminderViewModel ReminderViewModel { get; }
+
         protected override async Task LoadDataAsync()
         {
             try
             {
                 await Task.WhenAll(
-                    GetWeeklyHistoryAsync(),
-                    GetTopSellersAsync(),
-                    GetMostUsedIngredientsAsync(),
-                    GetMonthlyProfitAsync()
+                    LoadWeeklyHistoryAsync(),
+                    LoadTopSellersAsync(),
+                    LoadMostUsedIngredientsAsync(),
+                    LoadMonthlyProfitAsync()
                 );
             }
             catch (Exception ex)
             {
-                HandleException("Error loading dashboard data", ex);
+                HandleException(ErrorMessages.LOADING_DASHBOARD, ex);
             }
         }
 
-        private async Task GetWeeklyHistoryAsync()
+        private async Task LoadWeeklyHistoryAsync()
         {
             try
             {
-                var transactions = await transactionService.GetAllAsync();
+                var transactions = await _transactionService.GetAllAsync();
                 if (transactions == null) return;
 
                 var endDate = DateTime.Today;
@@ -109,133 +118,158 @@ namespace RuKiSo.ViewModels
                         Date = t.TranDate.ToString("ddd"),
                         t.TranType
                     })
-                    .Select(g => new {
-                        g.Key.Date,
-                        g.Key.TranType,
+                    .Select(g => new WeeklyTransactionData
+                    {
+                        Date = g.Key.Date,
+                        TranType = g.Key.TranType,
                         Total = g.Sum(t => t.Quantity)
                     })
                     .ToList();
 
-                var histories = new List<WeeklyHistoryDTO>();
-                var daysOfWeek = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-
-                foreach (var day in daysOfWeek)
-                {
-                    var sells = weeklyData.FirstOrDefault(x => x.Date == day && x.TranType)?.Total ?? 0;
-                    var purchases = weeklyData.FirstOrDefault(x => x.Date == day && !x.TranType)?.Total ?? 0;
-
-                    histories.Add(new WeeklyHistoryDTO
-                    {
-                        Date = day,
-                        Sell = sells,
-                        Purchase = purchases
-                    });
-                }
-
-                WeeklyHistories = new ObservableCollection<WeeklyHistoryDTO>(histories);
+                var histories = GenerateWeeklyHistories(weeklyData);
+                WeeklyHistories = new(histories);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting weekly history: {ex.Message}");
+                HandleException(ErrorMessages.WEEKLY_HISTORY, ex);
             }
         }
 
-        private async Task GetTopSellersAsync()
+        private class WeeklyTransactionData
+        {
+            public string Date { get; set; }
+            public bool TranType { get; set; }
+            public double Total { get; set; }
+        }
+
+        private static List<WeeklyHistoryDTO> GenerateWeeklyHistories(List<WeeklyTransactionData> weeklyData)
+        {
+            var histories = new List<WeeklyHistoryDTO>();
+            var daysOfWeek = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+
+            foreach (var day in daysOfWeek)
+            {
+                var sells = weeklyData.FirstOrDefault(x => x.Date == day && x.TranType)?.Total ?? 0;
+                var purchases = weeklyData.FirstOrDefault(x => x.Date == day && !x.TranType)?.Total ?? 0;
+
+                histories.Add(new WeeklyHistoryDTO
+                {
+                    Date = day,
+                    Sell = sells,
+                    Purchase = purchases
+                });
+            }
+
+            return histories;
+        }
+
+        private async Task LoadTopSellersAsync()
         {
             try
             {
-                var transactions = await transactionService.GetAllAsync();
-                var products = await productService.GetAllAsync();
+                var transactions = await _transactionService.GetAllAsync();
+                var products = await _productService.GetAllAsync();
 
                 if (transactions == null || products == null) return;
 
-                var topProducts = transactions
-                    .Where(t => t.TranType && t.ProductId.HasValue)
-                    .GroupBy(t => t.ProductId)
-                    .Select(g => new {
-                        ProductId = g.Key,
-                        TotalQuantity = g.Sum(t => t.Quantity)
-                    })
-                    .OrderByDescending(x => x.TotalQuantity)
-                    .Take(3)
-                    .Join(
-                        products,
-                        t => t.ProductId,
-                        p => p.Id,
-                        (t, p) => new TopSellerDTO
-                        {
-                            Name = p.Name,
-                            Quantity = t.TotalQuantity
-                        }
-                    )
-                    .ToList();
-
-                TopSellers = new ObservableCollection<TopSellerDTO>(topProducts);
+                var topProducts = GetTopSellingProducts(transactions, products);
+                TopSellers = new(topProducts);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting top sellers: {ex.Message}");
+                HandleException(ErrorMessages.TOP_SELLERS, ex);
             }
         }
 
-        private async Task GetMostUsedIngredientsAsync()
+        private async Task LoadMostUsedIngredientsAsync()
         {
             try
             {
-                var batches = await batchService.GetAllAsync();
-                var ingredients = await ingredientService.GetAllAsync();
+                var batches = await _batchService.GetAllAsync();
+                var ingredients = await _ingredientService.GetAllAsync();
 
                 if (batches == null || ingredients == null) return;
 
-                var topIngredients = batches
-                    .SelectMany(b => b.Ingredients)
-                    .GroupBy(bi => bi.IngredientName)  // Group by name since we don't have IngredientId
-                    .Select(g => new {
-                        IngredientName = g.Key,
-                        TotalQuantity = g.Sum(bi => bi.UsedQuantity)  // Use UsedQuantity instead of Quantity
-                    })
-                    .OrderByDescending(x => x.TotalQuantity)
-                    .Take(5)
-                    .Select(x => new MostUsedIngredient
-                    {
-                        Name = x.IngredientName,
-                        Quantity = (int)x.TotalQuantity
-                    })
-                    .ToList();
-
-                MostUsedIngredients = new ObservableCollection<MostUsedIngredient>(topIngredients);
+                var topIngredients = GetMostUsedIngredients(batches);
+                MostUsedIngredients = new(topIngredients);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error getting most used ingredients: {ex.Message}");
+                HandleException(ErrorMessages.MOST_USED, ex);
             }
         }
 
-        private async Task GetMonthlyProfitAsync()
+        private async Task LoadMonthlyProfitAsync()
         {
             try
             {
-                var transactions = await transactionService.GetAllAsync();
+                var transactions = await _transactionService.GetAllAsync();
                 if (transactions == null) return;
 
-                var monthlyData = transactions
-                    .GroupBy(t => new DateTime(t.TranDate.Year, t.TranDate.Month, 1))
-                    .Select(g => new ProfitDTO
-                    {
-                        Date = g.Key,
-                        Profit = g.Where(t => t.TranType) 
-                                 .Sum(t => t.Value * 0.20) 
-                    })
-                    .OrderBy(x => x.Date)
-                    .Take(10)
-                    .ToList();
-
-                MonthlyProfit = new ObservableCollection<ProfitDTO>(monthlyData);
+                var monthlyData = CalculateMonthlyProfit(transactions);
+                MonthlyProfit = new(monthlyData);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error calculating monthly profit: {ex.Message}");
+                HandleException(ErrorMessages.MONTHLY_PROFIT, ex);
             }
+        }
+
+        private static List<TopSellerDTO> GetTopSellingProducts(
+            IEnumerable<TransactionResponse> transactions,
+            IEnumerable<ProductRespone> products)
+        {
+            return transactions
+                .Where(t => t.TranType && t.ProductId.HasValue)
+                .GroupBy(t => t.ProductId)
+                .Select(g => new { ProductId = g.Key, TotalQuantity = g.Sum(t => t.Quantity) })
+                .OrderByDescending(x => x.TotalQuantity)
+                .Take(3)
+                .Join(
+                    products,
+                    t => t.ProductId,
+                    p => p.Id,
+                    (t, p) => new TopSellerDTO
+                    {
+                        Name = p.Name,
+                        Quantity = t.TotalQuantity
+                    }
+                )
+                .ToList();
+        }
+
+        private static List<MostUsedIngredient> GetMostUsedIngredients(IEnumerable<BatchResponse> batches)
+        {
+            return batches
+                .SelectMany(b => b.Ingredients)
+                .GroupBy(bi => bi.IngredientName)
+                .Select(g => new
+                {
+                    IngredientName = g.Key,
+                    TotalQuantity = g.Sum(bi => bi.UsedQuantity)
+                })
+                .OrderByDescending(x => x.TotalQuantity)
+                .Take(5)
+                .Select(x => new MostUsedIngredient
+                {
+                    Name = x.IngredientName,
+                    Quantity = (int)x.TotalQuantity
+                })
+                .ToList();
+        }
+
+        private static List<ProfitDTO> CalculateMonthlyProfit(IEnumerable<TransactionResponse> transactions)
+        {
+            return transactions
+                .GroupBy(t => new DateTime(t.TranDate.Year, t.TranDate.Month, 1))
+                .Select(g => new ProfitDTO
+                {
+                    Date = g.Key,
+                    Profit = g.Where(t => t.TranType).Sum(t => t.Value * 0.20)
+                })
+                .OrderBy(x => x.Date)
+                .Take(10)
+                .ToList();
         }
     }
 }
