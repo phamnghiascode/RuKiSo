@@ -8,7 +8,8 @@
     xmlns:resource="clr-namespace:RuKiSo.Resources"
     xmlns:ui="clr-namespace:RuKiSo.UI"
     xmlns:vm="clr-namespace:RuKiSo.ViewModels"
-    x:Name="root">
+    x:Name="root"
+    x:DataType="vm:DashBoardViewModel">
     <Grid BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}" RowDefinitions="auto, *">
         <controls:Header
             Title="{x:Static resource:AppTexts.DashBoard}"

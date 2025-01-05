@@ -11,8 +11,9 @@
         Margin="20"
         Padding="20"
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
-        HeightRequest="400"
+        HeightRequest="{x:Static ui:AppDimens.Height400}"
         StrokeShape="RoundRectangle 10"
+        StrokeThickness="{x:Static ui:AppDimens.Stroke0}"
         VerticalOptions="Center">
         <Grid RowDefinitions="Auto,*">
             <Label
@@ -21,6 +22,12 @@
                 FontSize="{x:Static ui:AppDimens.FontSize20}"
                 Text="{x:Static resource:AppTexts.BatchReminderPopupTitle}" />
             <CollectionView Grid.Row="1" ItemsSource="{Binding Batches}">
+                <CollectionView.EmptyView>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{x:Static resource:AppTexts.NullReminderBatch}"
+                        VerticalOptions="Center" />
+                </CollectionView.EmptyView>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="{x:Static ui:AppDimens.Space7}" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>

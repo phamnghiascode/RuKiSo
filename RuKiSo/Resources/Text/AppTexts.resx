@@ -304,6 +304,9 @@
     <value>Mẻ rượu sắp tới ngày nấu</value>
   </data>
   <data name="EstimateBatch" xml:space="preserve">
-    <value>Ngày có thể nấu rượu dự tính: {0:d}</value>
+    <value>Ngày có thể nấu rượu dự tính: {0:dd/MM/yyyy}</value>
+  </data>
+  <data name="NullReminderBatch" xml:space="preserve">
+    <value>Không có mẻ rượu đang ủ nào sắp tới ngày nấu</value>
   </data>
 </root>

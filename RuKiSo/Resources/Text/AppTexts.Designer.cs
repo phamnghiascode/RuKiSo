@@ -223,7 +223,7 @@ namespace RuKiSo.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ngày có thể nấu rượu dự tính: {0:d}.
+        ///   Looks up a localized string similar to Ngày có thể nấu rượu dự tính: {0:dd/MM/yyyy}.
         /// </summary>
         internal static string EstimateBatch {
             get {
@@ -354,6 +354,15 @@ namespace RuKiSo.Resources {
         internal static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Không có mẻ rượu đang ủ nào sắp tới ngày nấu.
+        /// </summary>
+        internal static string NullReminderBatch {
+            get {
+                return ResourceManager.GetString("NullReminderBatch", resourceCulture);
             }
         }
         

@@ -17,14 +17,18 @@ namespace RuKiSo.Features.Services
         public async Task<List<BatchResponse>> GetDueBatchesAsync() 
         {
             var allBatches = await batchService.GetAllAsync();
-            //return allBatches?
-            //    .Where(b => {
-            //        var daysRemaining = (b.EstimateEndDate.Date - DateTime.Today).Days;
-            //        //return daysRemaining is >= 0 and <= 3;
-            //        return daysRemaining;
-            //    })
-            //    .ToList() ?? new List<BatchResponse>();
-            return allBatches.ToList() ?? new List<BatchResponse>();
+            var today = DateTime.Today;
+            var threeDaysAgo = today.AddDays(-365);
+            var result = allBatches
+            .Where(b => b.Yield == 0)
+            .Where(b =>
+                b.EstimateEndDate.Date >= threeDaysAgo &&
+                b.EstimateEndDate.Date <= today
+            )
+            .OrderBy(b => b.EstimateEndDate)
+            .ToList() ?? new List<BatchResponse>();
+
+            return result;
         }
 
         public void ShowPopup(Popup popup)

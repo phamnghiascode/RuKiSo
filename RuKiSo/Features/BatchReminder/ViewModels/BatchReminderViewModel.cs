@@ -35,7 +35,7 @@ namespace RuKiSo.ViewModels
             OpenCommand = new RelayCommand(LoadAndShowPopupAsync);
 
             _timer = Application.Current.Dispatcher.CreateTimer();
-            _timer.Interval = TimeSpan.FromHours(1);
+            _timer.Interval = TimeSpan.FromHours(8);
             _timer.Tick += async (s, e) => await CheckBatches();
             _timer.Start();
 
@@ -48,15 +48,11 @@ namespace RuKiSo.ViewModels
             try
             {
                 await LoadAllBatches();
-                //MainThread.BeginInvokeOnMainThread(() =>
-                //{
-                //    HasNotifications = Batches.Any(b =>
-                //    {
-                //        var daysRemaining = (b.EstimateEndDate.Date - DateTime.Today).Days;
-                //        return daysRemaining is >= 0 and <= 3;
-                //    });
-                //});
-                HasNotifications = true;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    HasNotifications = Batches.Any();
+                });
+                //HasNotifications = Batches.Any();
             }
             catch (Exception ex)
             {
