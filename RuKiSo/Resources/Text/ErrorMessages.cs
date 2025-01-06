@@ -9,10 +9,13 @@
         public const string UPDATING_PRODUCT = "Lỗi khi cập nhật sản phẩm";
         public const string DELETING_PRODUCT = "Lỗi khi xóa sản phẩm";
         public const string CREATING_PRODUCT = "Lỗi khi tạo sản phẩm mới";
+        public const string INVALID_PRODUCT = "Tên và mô tả cần có độ dài <= 30 ký tự, giá và số lượng phải là số >= 0";
+
 
         public const string UPDATING_INGREDIENT = "Lỗi khi cập nhật nguyên liệu";
         public const string DELETING_INGREDIENT = "Lỗi khi xóa nguyên liệu";
         public const string CREATING_INGREDIENT = "Lỗi khi tạo nguyên liệu mới";
+        public const string INVALID_INGREDIENT = "Tên và đơn vị cần có độ dài <= 30 ký tự, giá nhập và số lượng phải là số >= 0";
 
         public const string LOADING_BATCHES = "Lỗi khi tải danh sách lô sản xuất";
         public const string UPDATING_BATCH = "Lỗi khi cập nhật lô sản xuất";
@@ -28,5 +31,6 @@
         public const string UPDATING_TRANSACTION = "Lỗi khi cập nhật giao dịch";
         public const string DELETING_TRANSACTION = "Lỗi khi xóa giao dịch";
         public const string CREATING_TRANSACTION = "Lỗi khi tạo giao dịch mới";
+        public const string INVALID_TRANSACTION = "Số lượng phải là số > 0";
     }
 }

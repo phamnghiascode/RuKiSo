@@ -84,7 +84,7 @@ namespace YourNamespace.Controllers
                     return BadRequest("Không đủ số lượng sản phẩm để xuất");
 
                 product.Quantity -= transactionRequest.Quantity;
-                domainTransaction.Name = product.Name; // Đặt tên transaction là tên sản phẩm
+                domainTransaction.Name = product.Name;
             }
 
             await dbContext.Transactions.AddAsync(domainTransaction);

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using RuKiSo.Entities;
 using RuKiSo.Features.Models;
 using RuKiSo.Features.Services;
 using RuKiSo.Resources.Text;
@@ -220,8 +221,11 @@ namespace RuKiSo.ViewModels
 
         private async void AddSellTransaction(TransactionProductDTO? product)
         {
-            if (product == null) return;
-
+            if (product == null || !IsValidQuantity(product.UsedQuantity.ToString()))
+            {
+                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Số lượng không hợp lệ"));
+                return;
+            }
             try
             {
                 var request = new TransactionRequest
@@ -249,8 +253,11 @@ namespace RuKiSo.ViewModels
 
         private async void AddPurchaseTransaction(TransactionIngredientDTO? ingredient)
         {
-            if (ingredient == null) return;
-
+            if (ingredient == null || !IsValidQuantity(ingredient.UsedQuantity.ToString()))
+            {
+                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Số lượng không hợp lệ"));
+                return;
+            }
             try
             {
                 var request = new TransactionRequest
@@ -302,6 +309,17 @@ namespace RuKiSo.ViewModels
             {
                 Transactions[index] = updatedTransaction;
             }
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private bool IsValidQuantity(string input)
+        {
+            return !string.IsNullOrEmpty(input) &&
+                   int.TryParse(input, out int value) &&
+                   value >= 0;
         }
 
         #endregion

@@ -233,6 +233,11 @@ namespace RuKiSo.ViewModels
 
         private void UpSertIngredient()
         {
+            if (!IsIngredientValid())
+            {
+                HandleException(ErrorMessages.INVALID_INGREDIENT, new Exception("Nguyên liệu không hợp lệ"));
+                return;
+            }
             if (SelectedIngredient != null)
             {
                 UpdateIngredient();
@@ -329,7 +334,15 @@ namespace RuKiSo.ViewModels
         #endregion
 
         #region Helpers
-
+        private bool IsIngredientValid()
+        {
+            return !(string.IsNullOrWhiteSpace(Name)
+                    || string.IsNullOrWhiteSpace(Unit)
+                    || Name.Length > 30
+                    || Unit.Length > 30
+                    || PurchasePrice < 0
+                    || Quantity < 0);
+        }
         private void UpdateCardsInfo()
         {
             TotalIngredient = Ingredients.Count;

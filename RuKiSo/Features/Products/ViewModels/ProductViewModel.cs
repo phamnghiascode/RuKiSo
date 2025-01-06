@@ -167,6 +167,24 @@ namespace RuKiSo.ViewModels
         #endregion
 
         #region Helpers
+        private bool IsProductValid()
+        {
+            // Validate empty/length
+            if (string.IsNullOrWhiteSpace(Name)
+                || string.IsNullOrWhiteSpace(Description)
+                || Name.Length > 30
+                || Description.Length > 30)
+                return false;
+
+            // Validate numeric format
+            if (!double.TryParse(Price.ToString(), out _)
+                || !int.TryParse(Quantity.ToString(), out _))
+                return false;
+
+            // Validate values
+            return Price >= 0 && Quantity >= 0;
+        }
+
         private void Reset()
         {
             SelectedProduct = null;
@@ -234,6 +252,11 @@ namespace RuKiSo.ViewModels
         #region Command Handlers
         private async void UpsertProduct()
         {
+            if (!IsProductValid())
+            {
+                HandleException(ErrorMessages.INVALID_PRODUCT, new Exception("Sản phẩm không hợp lệ"));
+                return;
+            }
             if (SelectedProduct != null)
             {
                 await UpdateProduct();

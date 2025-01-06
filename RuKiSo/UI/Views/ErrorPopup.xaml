@@ -8,7 +8,6 @@
     Color="Transparent">
     <Border
         Margin="20"
-        Padding="20"
         BackgroundColor="{x:Static ui:AppColors.PrimaryBackGround}"
         StrokeShape="RoundRectangle 10"
         StrokeThickness="{x:Static ui:AppDimens.Stroke0}"

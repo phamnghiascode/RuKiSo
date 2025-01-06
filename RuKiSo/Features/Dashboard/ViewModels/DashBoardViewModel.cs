@@ -8,7 +8,7 @@ namespace RuKiSo.ViewModels
 {
     public partial class DashBoardViewModel : BaseViewModel
     {
-
+          
         #region Fields
 
         private readonly IGenericService<ProductRespone, ProductRequest> _productService;
