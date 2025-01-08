@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using RuKiSo.Entities;
 using RuKiSo.Features.Models;
 using RuKiSo.Features.Services;
 using RuKiSo.Resources.Text;
@@ -219,13 +218,27 @@ namespace RuKiSo.ViewModels
             IsPopupOpen = true;
         }
 
+
         private async void AddSellTransaction(TransactionProductDTO? product)
         {
-            if (product == null || !IsValidQuantity(product.UsedQuantity.ToString()))
+            if (product == null)
             {
-                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Số lượng không hợp lệ"));
+                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Sản phẩm không tồn tại"));
                 return;
             }
+
+            if (!ValidateTransactionQuantity(product.UsedQuantity))
+            {
+                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Số lượng phải lớn hơn 0"));
+                return;
+            }
+
+            if (product.UsedQuantity > product.Quantity)
+            {
+                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception($"Số lượng vượt quá tồn kho (còn {product.Quantity})"));
+                return;
+            }
+
             try
             {
                 var request = new TransactionRequest
@@ -253,11 +266,18 @@ namespace RuKiSo.ViewModels
 
         private async void AddPurchaseTransaction(TransactionIngredientDTO? ingredient)
         {
-            if (ingredient == null || !IsValidQuantity(ingredient.UsedQuantity.ToString()))
+            if (ingredient == null)
             {
-                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Số lượng không hợp lệ"));
+                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Nguyên liệu không tồn tại"));
                 return;
             }
+
+            if (!ValidateTransactionQuantity(ingredient.UsedQuantity))
+            {
+                HandleException(ErrorMessages.INVALID_TRANSACTION, new Exception("Số lượng phải lớn hơn 0"));
+                return;
+            }
+
             try
             {
                 var request = new TransactionRequest
@@ -315,11 +335,34 @@ namespace RuKiSo.ViewModels
 
         #region Helpers
 
+        private bool ValidateTransactionQuantity(int quantity)
+        {
+            return quantity > 0;
+        }
+
+        // Replace old IsValidQuantity with a more comprehensive validation
         private bool IsValidQuantity(string input)
         {
-            return !string.IsNullOrEmpty(input) &&
-                   int.TryParse(input, out int value) &&
-                   value >= 0;
+            // Check if input is null or empty
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return false;
+            }
+
+            // Check if input contains only digits
+            if (!input.All(char.IsDigit))
+            {
+                return false;
+            }
+
+            // Try parse to integer and validate value
+            if (!int.TryParse(input, out int quantity))
+            {
+                return false;
+            }
+
+            // Check if quantity is positive
+            return quantity > 0;
         }
 
         #endregion

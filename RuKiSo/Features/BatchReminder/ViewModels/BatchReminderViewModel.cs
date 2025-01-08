@@ -14,7 +14,6 @@ namespace RuKiSo.ViewModels
         private readonly IReminderService _reminderService;
         private readonly IDispatcherTimer _timer;
         private Popup? _currentPopup;
-
         private bool _hasNotifications;
         public bool HasNotifications
         {
@@ -31,27 +30,38 @@ namespace RuKiSo.ViewModels
         {
             _reminderService = reminderService;
             Batches = new ObservableCollection<BatchResponse>();
-
             CloseCommand = new RelayCommand(ClosePopupAsync);
             OpenCommand = new RelayCommand(LoadAndShowPopupAsync);
 
+            // Update timer to check more frequently (e.g., every 15 minutes)
             _timer = Application.Current.Dispatcher.CreateTimer();
-            _timer.Interval = TimeSpan.FromHours(8);
+            _timer.Interval = TimeSpan.FromMinutes(15);
             _timer.Tick += async (s, e) => await CheckBatches();
             _timer.Start();
 
             // Initial check
-            Task.Run(async () => await CheckBatches());
+            MainThread.BeginInvokeOnMainThread(async () => await CheckBatches());
         }
 
         private async Task CheckBatches()
         {
             try
             {
-                await LoadAllBatches();
+                var dueBatches = await _reminderService.GetDueBatchesAsync();
+
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
+                    Batches.Clear();
+                    foreach (var batch in dueBatches)
+                    {
+                        Batches.Add(batch);
+                    }
+
+                    // Update HasNotifications based on batches
                     HasNotifications = Batches.Any();
+
+                    // Force UI update
+                    OnPropertyChanged(nameof(HasNotifications));
                 });
             }
             catch (Exception ex)
@@ -105,17 +115,16 @@ namespace RuKiSo.ViewModels
                     {
                         Batches.Add(batch);
                     }
+
+                    // Update HasNotifications whenever batches are loaded
+                    HasNotifications = Batches.Any();
+                    OnPropertyChanged(nameof(HasNotifications));
                 });
             }
             catch (Exception ex)
             {
                 HandleException("Error loading batches", ex);
             }
-        }
-
-        private void HandleException(string message, Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"{message}: {ex}");
         }
     }
 }
