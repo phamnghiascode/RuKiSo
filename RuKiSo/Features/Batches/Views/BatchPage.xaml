@@ -37,7 +37,7 @@
                     Title="{x:Static resource:AppTexts.ProjectedYield}"
                     Grid.Column="4"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
-                    DesciptionText="{Binding ProjectedYield, StringFormat={x:Static resource:AppTexts.MoneyFormat}}"
+                    DesciptionText="{Binding ProjectedYield}"
                     ImageSource="{x:Static ui:StaticImage.EstimatedOutput}" />
             </Grid>
             <Grid

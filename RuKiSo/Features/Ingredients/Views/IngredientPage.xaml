@@ -33,7 +33,7 @@
                     DesciptionText="{Binding TotalValue, StringFormat={x:Static resource:AppTexts.MoneyFormat}}"
                     ImageSource="{x:Static ui:StaticImage.TotalValue}" />
                 <controls:OverViewCard
-                    Title="{x:Static resource:AppTexts.EstimatedProfit}"
+                    Title="Doanh thu ước tính"
                     Grid.Column="4"
                     CustomWidthRequest="{x:Static ui:AppDimens.Height300}"
                     DesciptionText="{Binding EstimatedOutput, StringFormat={x:Static resource:AppTexts.MoneyFormat}}"

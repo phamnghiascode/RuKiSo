@@ -18,12 +18,12 @@ namespace RuKiSo.Features.Services
         {
             var allBatches = await batchService.GetAllAsync();
             var today = DateTime.Today;
-            var threeDaysAgo = today.AddDays(-365);
+            var oneWeekAfter = today.AddDays(+7);
             var result = allBatches
             .Where(b => b.Yield == 0)
             .Where(b =>
-                b.EstimateEndDate.Date >= threeDaysAgo &&
-                b.EstimateEndDate.Date <= today
+                b.EstimateEndDate.Date >= today &&
+                b.EstimateEndDate.Date <= oneWeekAfter
             )
             .OrderBy(b => b.EstimateEndDate)
             .ToList() ?? new List<BatchResponse>();

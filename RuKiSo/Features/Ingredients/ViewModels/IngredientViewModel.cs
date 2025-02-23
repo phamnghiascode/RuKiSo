@@ -347,7 +347,7 @@ namespace RuKiSo.ViewModels
         {
             TotalIngredient = Ingredients.Count;
             TotalValue = Ingredients.Sum(i => i.TotalValue);
-            EstimatedOutput = Math.Floor(TotalValue);
+            EstimatedOutput = Math.Floor(TotalValue) * 2;
         }
 
         private void Reset()
